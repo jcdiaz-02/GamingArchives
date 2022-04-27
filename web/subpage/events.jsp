@@ -508,14 +508,21 @@
             }();
 
             !function () {
+                         <% if(!recordList.isEmpty()) {  %>
                 var data = [
+   
             <%
+                
                 for (int i = 0; i < recordList.size() - 1; i++) {
             %>
                     {date: "<%= recordList.get(i).getDate()%>", eventName: "<%= recordList.get(i).getName()%>", calendar: 'Work', color: 'orange'},
             <% }%>
                     {date: "<%= recordList.get(recordList.size() - 1).getDate()%>", eventName: "<%= recordList.get(recordList.size() - 1).getName()%>", calendar: 'Work', color: 'orange'}];
-                //    { eventName: 'Game vs Portalnd', calendar: 'Sports', color: 'blue' },
+                                <%        
+                } else {%>
+                        var data =[];
+              <%  }%>
+ //    { eventName: 'Game vs Portalnd', calendar: 'Sports', color: 'blue' },
                 //    { eventName: 'Game vs Houston', calendar: 'Sports', color: 'blue' },
                 //    { eventName: 'Game vs Denver', calendar: 'Sports', color: 'blue' },
                 //    { eventName: 'Game vs San Degio', calendar: 'Sports', color: 'blue' },
