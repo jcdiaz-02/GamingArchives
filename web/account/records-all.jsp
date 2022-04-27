@@ -5,6 +5,7 @@
 --%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.ResultSet"%>
+<%@page session="true" %>
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -20,10 +21,10 @@
     String password = "app";
     Connection conn;
     try {
-        Class.forName(driver);
+	Class.forName(driver);
 
     } catch (ClassNotFoundException e) {
-        e.printStackTrace();
+	e.printStackTrace();
     }
     Connection connection = null;
     Statement statement = null;
@@ -89,19 +90,21 @@
             </div>
         </div>
         <%
-            response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
-            String uname = (String) session.getAttribute("username");
-            //session.setAttribute("verify", session.getAttribute("verify"));
+	    response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
+	    String uname = (String) session.getAttribute("username");
+	    //session.setAttribute("verify", session.getAttribute("verify"));
 
-            String role = (String) session.getAttribute("role");
-            if (uname == null) {
-                response.sendRedirect("home.jsp");
-            }
+	    String role = (String) session.getAttribute("role");
+	    if (uname == null) {
+		response.sendRedirect("home.jsp");
+	    }
         %>
         <section class="all-records-section">
             <div class="all-records-container">
                 <div class="all-records-head">
-                    <h2>All Records</h2>          
+                    <h2>All Records</h2>        
+		    ${sessionScope.notif}
+
                 </div>
                 <div class="table-container">
                     <table class="records-table">
@@ -110,7 +113,6 @@
 			    <td>Course</td>
 			    <td>Email</td>
 			    <td>Username</td>
-
 			    <td>Age</td>
 			    <td>Birthday</td>
 			    <td>Gender</td>
@@ -148,14 +150,14 @@
 			    pstmt = conn.prepareStatement(query1);
 			    records = pstmt.executeQuery();
 			    while (records.next()) {
-				
+
 			%>
 			<tr>
 			    <td><%=records.getString("NAME")%></td>
 			    <td><%=records.getString("COURSE")%></td>
 			    <td><%=records.getString("EMAIL")%></td>
 			    <td><%=records.getString("USERNAME")%></td>
-			   <td><%=records.getString("AGE")%></td>
+			    <td><%=records.getString("AGE")%></td>
 			    <td><%=records.getString("BIRTHDAY")%></td>
 			    <td><%=records.getString("GENDER")%></td>
 			    <td><%=records.getString("STUDENTNUMBER")%></td>
@@ -195,17 +197,19 @@
                 </div>      
             </div>
         </section>
-
+	<%
+	    session.removeAttribute("notif");
+	%>
 
         <div id="deleteForm" class="modal-section">
             <form action="../DeleteRecordServlet" class="modal-content">
                 <h3 class="modal-header">Delete Record</h3>
                 <%
-                    session.setAttribute("ident", "all");
+		    session.setAttribute("ident", "all");
                 %>
                 <label class="modal-msg" for="uname"><b>Username of record being deleted</b></label>
                 <input class="modal-input" type="text" placeholder="Enter Username" name="uname" required>
-               
+
                 <span class="modal-buttoncon"> 
                     <button  class="close modal-button" type="button" class="cancel" onclick="deleteCloseForm()">Cancel</button>
                     <button  class="modal-button"  type="submit" class="submit">Submit</button>
@@ -217,7 +221,7 @@
             <form action="../TransferRecordServlet" class="modal-content">
                 <h3 class="modal-header">Verify Record</h3>
                 <%
-                    session.setAttribute("ident", "all");
+		    session.setAttribute("ident", "all");
                 %>
                 <label class="modal-msg" for="uname"><b>Username of record being verified</b></label>
                 <input class="modal-input"  type="text" placeholder="Enter Username" name="uname" required>
@@ -249,7 +253,7 @@
                 <form class="modal-buttoncon" method="POST" action ="../PDFServlet">
                     <button class="modal-button"  name="pdfbutton" value="alluserpdf">Download PDF</button>
                 </form>
-            </div>"
+            </div>
         </section> 
 
         <!--        <section id="modalSection" class="modal-section">
@@ -263,43 +267,43 @@
                     </div>
                 </section>-->
         <script>
-            function openForm() {
-                event.preventDefault();
-                document.getElementById("myForm").style.display = "block";
-            }
-            ;
-            function closeForm() {
-                event.preventDefault();
-                document.getElementById("myForm").style.display = "none";
+	    function openForm() {
+		event.preventDefault();
+		document.getElementById("myForm").style.display = "block";
+	    }
+	    ;
+	    function closeForm() {
+		event.preventDefault();
+		document.getElementById("myForm").style.display = "none";
 
-            }
-            ;
-            function verifyOpenForm() {
-                event.preventDefault();
-                document.getElementById("verifyForm").style.display = "block";
-            }
-            ;
-            function verifyCloseForm() {
-                event.preventDefault();
-                document.getElementById("verifyForm").style.display = "none";
-            }
-            ;
-            function deleteOpenForm() {
-                event.preventDefault();
-                document.getElementById("deleteForm").style.display = "block";
-            }
-            ;
-            function deleteCloseForm() {
-                event.preventDefault();
-                document.getElementById("deleteForm").style.display = "none";
-            }
-            ;
+	    }
+	    ;
+	    function verifyOpenForm() {
+		event.preventDefault();
+		document.getElementById("verifyForm").style.display = "block";
+	    }
+	    ;
+	    function verifyCloseForm() {
+		event.preventDefault();
+		document.getElementById("verifyForm").style.display = "none";
+	    }
+	    ;
+	    function deleteOpenForm() {
+		event.preventDefault();
+		document.getElementById("deleteForm").style.display = "block";
+	    }
+	    ;
+	    function deleteCloseForm() {
+		event.preventDefault();
+		document.getElementById("deleteForm").style.display = "none";
+	    }
+	    ;
 
-            window.onclick = function (event) {
-                if (event.target === document.getElementById("myForm")) {
-                    document.getElementById("myForm").style.display = "none";
-                }
-            };
+	    window.onclick = function (event) {
+		if (event.target === document.getElementById("myForm")) {
+		    document.getElementById("myForm").style.display = "none";
+		}
+	    };
 
         </script>
     </body>

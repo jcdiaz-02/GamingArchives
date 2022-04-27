@@ -6,6 +6,7 @@
 import Exceptions.AuthenticationExceptionUsername;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.System.out;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -37,7 +39,7 @@ public class UpdateRecordServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
 	username = config.getInitParameter("DBusername");
 	password = config.getInitParameter("DBpassword");
-        stringKey = config.getInitParameter("publicKey");//retrieves the public key (hutaocomehomepls) from web xml
+	stringKey = config.getInitParameter("publicKey");//retrieves the public key (hutaocomehomepls) from web xml
 
 	super.init(config);
 	try {
@@ -60,19 +62,19 @@ public class UpdateRecordServlet extends HttpServlet {
 	for (int i = 0; i < key.length; i++) {
 	    key[i] = (byte) stringKey.charAt(i);
 	}
+
 	try {
 	    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu-MM-dd");
 	    LocalDate now = LocalDate.now();
 	    String date = dtf.format(now);
-	    HttpSession session = request.getSession();
-	    String u = (String) session.getAttribute("primaryusername");
+	    HttpSession httpsession = request.getSession();
+	    String u = (String) httpsession.getAttribute("primaryusername");
 
 	    String butt = request.getParameter("recbutton");
 	    String uname = request.getParameter("uname");
 	    String name = request.getParameter("myname");
 	    String pass = request.getParameter("pass");
 	    String email = request.getParameter("email");
-	    String age = request.getParameter("age");
 	    String birthday = request.getParameter("birthday");
 	    String course = request.getParameter("course");
 	    String address = request.getParameter("homeaddress");
@@ -83,48 +85,114 @@ public class UpdateRecordServlet extends HttpServlet {
 	    String role = request.getParameter("userrole");
 	    String ePass = Security.encrypt(pass, key);//encrypts the password the user has inputted and compares it to the encrypted password in DB
 
-	    if (butt.equals("update")) {
-		String query = "UPDATE APP.VERIFIEDDB set NAME=?, COURSE=?, AGE=?, BIRTHDAY=?, GENDER=?, STUDENTNUMBER=?, "
-			+ "FAVORITEGAME=?, CONTACTNUMBER=?, ADDRESS=?, ROLE=?, EMAIL=?, USERNAME=?, PASSWORD=?, DATE=? where USERNAME =?";
-		PreparedStatement pst = conn.prepareStatement(query);
+	    out.print(birthday);
+	    int yr = Integer.parseInt(birthday.substring(0, 4));
+	    int mm = Integer.parseInt(birthday.substring(5, 7));
+	    int dd = Integer.parseInt(birthday.substring(8));
+	    out.print("date" + yr);
+	    out.print(mm);
+	    out.print(dd);
 
-		pst.setString(1, name);
-		pst.setString(2, course);
-		pst.setString(3, age);
-		pst.setString(4, birthday);
-		pst.setString(5, gender);
-		pst.setString(6, snumber);
-		pst.setString(7, favgame);
-		pst.setString(8, cnumber);
-		pst.setString(9, address);
-		pst.setString(10, role);
-		pst.setString(11, email);
-		pst.setString(12, uname);
-		pst.setString(13, ePass);
-		pst.setString(14, date);
-		pst.setString(15, u);
-		pst.executeUpdate();
-		response.sendRedirect("account/addRecordAdmin.jsp");
+	    long currentTime = System.currentTimeMillis();
+	    Calendar today = Calendar.getInstance();
+	    today.setTimeInMillis(currentTime);
+	    int age = today.get(Calendar.YEAR) - yr;
+	    if (today.get(Calendar.MONTH) < mm) {
+		age -= 1;
+	    }
+	    if (today.get(Calendar.MONTH) <= mm) {
+		if (today.get(Calendar.DATE) < dd) {
+		    age -= 1;
+
+		}
+	    }
+	    String a = String.valueOf(age);
+
+	    if (butt.equals("update")) {
+		String iemail = (String) httpsession.getAttribute("iemail");
+		String query1 = "SELECT * FROM APP.USERDB where EMAIL =?";
+		PreparedStatement pst = conn.prepareStatement(query1);
+		pst.setString(1, email);
+		ResultSet records = pst.executeQuery();
+
+		if (records.next() == false) {
+		    query1 = "SELECT * FROM APP.VERIFIEDDB where EMAIL =?";
+		    pst = conn.prepareStatement(query1);
+		    pst.setString(1, email);
+		    records = pst.executeQuery();
+		    if (records.next() == false || iemail.equals(records.getString("EMAIL"))) {
+			String query = "UPDATE APP.VERIFIEDDB set NAME=?, COURSE=?, AGE=?, BIRTHDAY=?, GENDER=?, STUDENTNUMBER=?, "
+				+ "FAVORITEGAME=?, CONTACTNUMBER=?, ADDRESS=?, ROLE=?, EMAIL=?, USERNAME=?, PASSWORD=?, DATE=? where USERNAME =?";
+			pst = conn.prepareStatement(query);
+
+			pst.setString(1, name);
+			pst.setString(2, course);
+			pst.setString(3, a);
+			pst.setString(4, birthday);
+			pst.setString(5, gender);
+			pst.setString(6, snumber);
+			pst.setString(7, favgame);
+			pst.setString(8, cnumber);
+			pst.setString(9, address);
+			pst.setString(10, role);
+			pst.setString(11, email);
+			pst.setString(12, uname);
+			pst.setString(13, ePass);
+			pst.setString(14, date);
+			pst.setString(15, u);
+			pst.executeUpdate();
+			response.sendRedirect("account/records-all.jsp");
+		    } else {
+			httpsession.setAttribute("notif", "Email already exists");
+			response.sendRedirect("account/records-all.jsp");
+
+		    }
+		} else {
+		    httpsession.setAttribute("notif", "Email already exists");
+		    response.sendRedirect("account/records-all.jsp");
+
+		}
 	    } else if (butt.equals("add")) {
-		String query = "INSERT INTO APP.VERIFIEDDB(NAME, COURSE, AGE, BIRTHDAY, GENDER, STUDENTNUMBER, "
-			+ "FAVORITEGAME, CONTACTNUMBER, ADDRESS, ROLE, EMAIL, USERNAME, PASSWORD, DATE)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		PreparedStatement pst = conn.prepareStatement(query);
-		pst.setString(1, name);
-		pst.setString(2, course);
-		pst.setString(3, age);
-		pst.setString(4, birthday);
-		pst.setString(5, gender);
-		pst.setString(6, snumber);
-		pst.setString(7, favgame);
-		pst.setString(8, cnumber);
-		pst.setString(9, address);
-		pst.setString(10, role);
-		pst.setString(11, email);
-		pst.setString(12, uname);
-		pst.setString(13, ePass);
-		pst.setString(14, date);
-		pst.executeUpdate();
-		response.sendRedirect("account/addRecordAdmin.jsp");
+		String query1 = "SELECT * FROM APP.USERDB where EMAIL =?";
+		PreparedStatement pst = conn.prepareStatement(query1);
+		pst.setString(1, email);
+		ResultSet records = pst.executeQuery();
+
+		if (records.next() == false) {
+		    query1 = "SELECT * FROM APP.VERIFIEDDB where EMAIL =?";
+		    pst = conn.prepareStatement(query1);
+		    pst.setString(1, email);
+		    records = pst.executeQuery();
+		    if (records.next() == false) {
+			String query = "INSERT INTO APP.VERIFIEDDB(NAME, COURSE, AGE, BIRTHDAY, GENDER, STUDENTNUMBER, "
+				+ "FAVORITEGAME, CONTACTNUMBER, ADDRESS, ROLE, EMAIL, USERNAME, PASSWORD, DATE)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			pst = conn.prepareStatement(query);
+			pst.setString(1, name);
+			pst.setString(2, course);
+			pst.setString(3, a);
+			pst.setString(4, birthday);
+			pst.setString(5, gender);
+			pst.setString(6, snumber);
+			pst.setString(7, favgame);
+			pst.setString(8, cnumber);
+			pst.setString(9, address);
+			pst.setString(10, role);
+			pst.setString(11, email);
+			pst.setString(12, uname);
+			pst.setString(13, ePass);
+			pst.setString(14, date);
+			pst.executeUpdate();
+			response.sendRedirect("account/addRecordAdmin.jsp");
+		    } else {
+			httpsession.setAttribute("notif", "Email already exists");
+			response.sendRedirect("account/addRecordAdmin.jsp");
+
+		    }
+		} else {
+		    httpsession.setAttribute("notif", "Email already exists");
+		    response.sendRedirect("account/addRecordAdmin.jsp");
+
+		}
 	    }
 
 	} catch (SQLException sqle) {

@@ -288,6 +288,18 @@
     <servlet>
 	<servlet-name>UserVerification</servlet-name>
 	<servlet-class>UserVerification</servlet-class>
+	<init-param>
+	    <param-name>DBurl</param-name>
+	    <param-value>jdbc:derby://localhost:1527/userDB</param-value>
+	</init-param>
+	<init-param>
+	    <param-name>DBusername</param-name>
+	    <param-value>app</param-value>
+	</init-param>
+	<init-param>
+	    <param-name>DBpassword</param-name>
+	    <param-value>app</param-value>
+	</init-param>
     </servlet>
     <servlet>
 	<servlet-name>EventOverview</servlet-name>

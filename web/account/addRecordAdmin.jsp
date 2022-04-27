@@ -6,6 +6,8 @@
 
 <%@page import="java.sql.PreparedStatement"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page session="true" %>
+
 <!DOCTYPE html>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.ResultSet"%>
@@ -72,6 +74,8 @@
             <div class="personal-records-container">
 
 		<form class="personal-records-info-container0" method="POST" action="../UpdateRecordServlet">
+		    ${sessionScope.notif}
+
 		    <div class='personal-records-info-container1'>
 			<h1>Email: </h1><input required  pattern="[a-z0-9._%+-]+@ust.edu.ph$" type="text" placeholder="Enter Email (@ust.edu.ph)" name="email"><br>
                     </div>
@@ -81,23 +85,25 @@
                     </div>
 
                     <div class='personal-records-info-container1'>
-			<h1>Username: </h1><input required type="text" placeholder= "Enter Username"name="uname"><br>
+			<h1>Username: </h1><input required type="text" placeholder= "Enter Username (minimum of 5 characters)" name="uname" minlength="5"><br>
 		    </div>
 
                     <div class='personal-records-info-container1'>
-			<h1>Password: </h1><input required type="text" placeholder="Enter Password" name="pass"><br>
+			<h1>Password: </h1><input required type="text" placeholder="Enter Password (minimum of 8 characters)" name="pass" minlength="8"><br>
 		    </div>
 
 		    <div class='personal-records-info-container1'>
-			<h1>Course: </h1><input required type="text" placeholder="Enter Course" name="course"><br>
+			<h1>Course: </h1>
+			<select id="gender" name="course">
+			    <option value="Computer Science">Computer Science</option>
+			    <option value="Information Technology">Information Technology</option>
+			    <option value="Data Science">Data Science</option>
+			</select><br>
                     </div>
 
-		    <div class='personal-records-info-container1'>
-			<h1>Age: </h1><input required type="number" placeholder="Enter Age" name="age"><br>
-                    </div>
 
 		    <div class='personal-records-info-container1'>
-			<h1>Birthday: </h1><input required type="date" placeholder="Enter Birthday" name="birthday"><br>
+			<h1>Birthday(Age reflects given birth date): </h1><input required type="date" placeholder="Enter Birthday" name="birthday"><br>
                     </div>
 
 		    <div class='personal-records-info-container1'>
@@ -109,11 +115,11 @@
                     </div>
 
 		    <div class='personal-records-info-container1'>
-			<h1>Student Number: </h1><input required type="number" placeholder="Enter Student Number" name="snumber"><br>
+			<h1>Student Number: </h1><input required type="number" placeholder="Enter Student Number" name="snumber" minlength="10" maxlength="10"><br>
                     </div>
 
 		    <div class='personal-records-info-container1'>
-			<h1>Contact Number: </h1><input required type="number" placeholder="Enter Contact Number" name="cnumber"><br>
+			<h1>Contact Number: </h1><input required type="number" placeholder="Enter Contact Number(+63)" name="cnumber" minlength="10" maxlength="10"><br>
                     </div>
 
 		    <div class='personal-records-info-container1'>
@@ -144,7 +150,9 @@
 
 		</form>
 
-
+		<%
+		    session.removeAttribute("notif");
+		%>
 
             </div>
         </section>       

@@ -6,6 +6,7 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.System.out;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -36,7 +37,7 @@ public class SignUpServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
 	username = config.getInitParameter("DBusername");
 	password = config.getInitParameter("DBpassword");
-        stringKey = config.getInitParameter("publicKey");//retrieves the public key (hutaocomehomepls) from web xml
+	stringKey = config.getInitParameter("publicKey");//retrieves the public key (hutaocomehomepls) from web xml
 
 	super.init(config);
 	try {
@@ -74,20 +75,38 @@ public class SignUpServlet extends HttpServlet {
 	try {
 
 	    if (code.equals(verify)) {
-
-		String query = "INSERT INTO APP.USERDB(username,password,email,role,date)VALUES(?,?,?,?,?)";
-
+		String query = "SELECT * FROM APP.USERDB where EMAIL =?";
 		PreparedStatement pst = conn.prepareStatement(query);
+		pst.setString(1, email);
+		ResultSet records = pst.executeQuery();
+		if (records.next() == false) {
+		    query = "SELECT * FROM APP.VERIFIEDDB where EMAIL =?";
+		    pst = conn.prepareStatement(query);
+		    pst.setString(1, email);
+		    records = pst.executeQuery();
+		    if (records.next() == false) {
+			query = "INSERT INTO APP.USERDB(username,password,email,role,date)VALUES(?,?,?,?,?)";
+			pst = conn.prepareStatement(query);
+			pst.setString(1, uname);
+			pst.setString(2, ePass);
+			pst.setString(3, email);
+			pst.setString(4, "member");
+			pst.setString(5, date);
+			pst.executeUpdate();
+			response.sendRedirect("home.jsp");
+		    } else {
+			httpsession.setAttribute("notif", "Email Already Exists");
+			response.sendRedirect("signup/signup.jsp");
+			out.print("verified failed");
+		    }
+		} else {
+		    httpsession.setAttribute("notif", "Email Already Exists");
+		    response.sendRedirect("signup/signup.jsp");
+			out.print("userdb failed");
 
-		pst.setString(1, uname);
-		pst.setString(2, ePass);
-		pst.setString(3, email);
-		pst.setString(4, "member");
-		pst.setString(5, date);
-		pst.executeUpdate();
-		response.sendRedirect("home.jsp");
+		}
 	    } else {
-		request.setAttribute("Incorrect", "Incorrect code");
+		httpsession.setAttribute("Incorrect", "Incorrect code");
 		request.getRequestDispatcher("verificationPage.jsp").forward(request, response);
 	    }
 

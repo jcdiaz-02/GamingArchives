@@ -7,6 +7,8 @@
 
 <%@page import="java.sql.PreparedStatement"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page session="true" %>
+
 <!DOCTYPE html>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.ResultSet"%>
@@ -117,68 +119,78 @@
 
 		%>
                 <h3> Update Record</h3>
-                <form class="personal-records-info-container0" method="POST" action="UpdateRecordServlet">
+                <form class="personal-records-info-container0" method="POST" action="../UpdateRecordServlet">
 		    <div class="personal-records-info-container1">
-			<h1>Email: </h1><input type="email" placeholder="<%=records.getString("EMAIL")%>" name="email">
+			${sessionScope.notif}
+			<h1>Email: </h1><input required type="email" placeholder="<%=records.getString("EMAIL")%>" name="email">
+		    <%session.setAttribute("iemail",records.getString("EMAIL"));%>
 		    </div>
 
 		    <div class="personal-records-info-container1">
-			<h1>Username: </h1><input type="text" placeholder="<%=records.getString("USERNAME")%>" name="uname">
+			<h1>Username: </h1><input required type="text" placeholder="<%=records.getString("USERNAME")%> (minimum of 5 characters)" name="uname" minlength="5">
 		    </div>
 
 		    <div class="personal-records-info-container1">
-			<h1>Password: </h1><input type="text" placeholder="Password" name="pass">
+			<h1>Password: </h1><input required  type="text" placeholder="Password (minimum of 8 characters)" name="pass" minlength="8">
 		    </div>
 		    <div class="personal-records-info-container1">
 
-			<h1>Name: </h1><input type="text" placeholder="<%=records.getString("NAME")%>" name="myname">
-		    </div>
-		    <div class="personal-records-info-container1">
-
-			<h1>Course: </h1><input type="text" placeholder="<%=records.getString("COURSE")%>" name="course">
-		    </div>
-		    <div class="personal-records-info-container1">
-
-			<h1>Age: </h1><input type="number" placeholder="<%=records.getString("AGE")%>" name="age">
+			<h1>Name: </h1><input required type="text" placeholder="<%=records.getString("NAME")%>" name="myname">
 		    </div>
 
-		    <div class="personal-records-info-container1">
-
-			<h1>Birthday: </h1><input type="date" placeholder="<%=records.getString("BIRTHDAY")%>" name="birthday">
-		    </div>
+		    <div class='personal-records-info-container1'>
+			<h1>Course: </h1>
+			<select id="gender" name="course">
+			    <option value="Computer Science">Computer Science</option>
+			    <option value="Information Technology">Information Technology</option>
+			    <option value="Data Science">Data Science</option>
+			</select><br>
+                    </div>
 
 		    <div class="personal-records-info-container1">
 
-			<h1>Gender: </h1><input type="text" placeholder="<%=records.getString("GENDER")%>" name="gender">
+			<h1>Birthday(Age reflects given birth date): </h1><input required type="date" placeholder="<%=records.getString("BIRTHDAY")%>" name="birthday">
 		    </div>
+
+		    <div class='personal-records-info-container1'>
+			<h1>Gender: </h1>
+			<select id="gender" name="gender">
+			    <option value="male">Male</option>
+			    <option value="female">Female</option>
+			</select><br>
+                    </div>
 
 		    <div class="personal-records-info-container1">
 
-			<h1>Student Number: </h1><input type="number" placeholder="<%=records.getString("STUDENTNUMBER")%>" name="snumber">
-		    </div>
-
-		    <div class="personal-records-info-container1">
-
-			<h1>Favorite Game: </h1><input type="text" placeholder="<%=records.getString("FAVORITEGAME")%>" name="favgame">
-		    </div>
-
-		    <div class="personal-records-info-container1">
-
-			<h1>Contact Number: </h1><input type="number" placeholder="<%=records.getString("CONTACTNUMBER")%>" name="cnumber">
+			<h1>Student Number: </h1><input required type="number" placeholder="<%=records.getString("STUDENTNUMBER")%>" name="snumber" minlength="10" maxlength="10">
 		    </div>
 
 		    <div class="personal-records-info-container1">
 
-			<h1>Address: </h1><input type="text" placeholder="<%=records.getString("ADDRESS")%>" name="homeaddress">
+			<h1>Favorite Game: </h1><input required type="text" placeholder="<%=records.getString("FAVORITEGAME")%>" name="favgame">
 		    </div>
+
 		    <div class="personal-records-info-container1">
 
-			<h1>Role: </h1><input type="text" placeholder="<%=records.getString("ROLE")%>" name="userrole">
+			<h1>Contact Number: </h1><input required type="number" placeholder="<%=records.getString("CONTACTNUMBER")%>(+63)" name="cnumber" minlength="10" maxlength="10">
+		    </div>
+
+		    <div class="personal-records-info-container1">
+
+			<h1>Address: </h1><input required type="text" placeholder="<%=records.getString("ADDRESS")%>" name="homeaddress">
+		    </div>
+		    <div class='personal-records-info-container1'>
+			<h1>Role: </h1>
+			<select id="userrole" name="userrole">
+			    <option value="member">Member</option>
+			    <option value="admin">Admin</option>
+			</select>
+
 		    </div>
 
 		    <div class="personal-records-buttons"> 
                         <input type="button" onclick="location.href = 'records-all.jsp';" value="GO BACK" class="button" />
-                        <input type="submit" id="modalBtn" value="UPDATE" class="button" />
+                        <button type="submit" id="modalBtn" value="update" class="button" name="recbutton">Update</button>
                         <button type="button" onclick="location.href = '../LogoutServlet';" class="button">
 			    <span class="material-icons-outlined">power_settings_new</span>
 			    Logout</button>
@@ -190,7 +202,10 @@
 			    records.close();
 			} catch (Exception e) {
 			    e.printStackTrace();
-			}%>
+			}
+			session.removeAttribute("notif");
+
+		    %>
 
                 </form> 
             </div>
