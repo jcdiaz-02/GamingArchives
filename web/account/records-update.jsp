@@ -123,7 +123,7 @@
 		    <div class="personal-records-info-container1">
 			${sessionScope.notif}
 			<h1>Email: </h1><input required type="email" placeholder="<%=records.getString("EMAIL")%>" name="email">
-		    <%session.setAttribute("iemail",records.getString("EMAIL"));%>
+			<%session.setAttribute("iemail", records.getString("EMAIL"));%>
 		    </div>
 
 		    <div class="personal-records-info-container1">
@@ -187,6 +187,15 @@
 			</select>
 
 		    </div>
+		    <div class='personal-records-info-container1'>
+			<h1>Status: </h1>
+			<select id="userrole" name="status">
+			    <option value="student">Student</option>
+			    <option value="alumni">Alumni</option>
+			</select>
+
+		    </div>
+
 
 		    <div class="personal-records-buttons"> 
                         <input type="button" onclick="location.href = 'records-all.jsp';" value="GO BACK" class="button" />

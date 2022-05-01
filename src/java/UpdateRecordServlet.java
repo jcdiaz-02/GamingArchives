@@ -83,6 +83,8 @@ public class UpdateRecordServlet extends HttpServlet {
 	    String favgame = request.getParameter("favgame");
 	    String gender = request.getParameter("gender");
 	    String role = request.getParameter("userrole");
+	    String status = request.getParameter("status");
+
 	    String ePass = Security.encrypt(pass, key);//encrypts the password the user has inputted and compares it to the encrypted password in DB
 
 	    out.print(birthday);
@@ -122,7 +124,7 @@ public class UpdateRecordServlet extends HttpServlet {
 		    records = pst.executeQuery();
 		    if (records.next() == false || iemail.equals(records.getString("EMAIL"))) {
 			String query = "UPDATE APP.VERIFIEDDB set NAME=?, COURSE=?, AGE=?, BIRTHDAY=?, GENDER=?, STUDENTNUMBER=?, "
-				+ "FAVORITEGAME=?, CONTACTNUMBER=?, ADDRESS=?, ROLE=?, EMAIL=?, USERNAME=?, PASSWORD=?, DATE=? where USERNAME =?";
+				+ "FAVORITEGAME=?, CONTACTNUMBER=?, ADDRESS=?, ROLE=?, EMAIL=?, USERNAME=?, PASSWORD=?, DATE=?, STATUS=? where USERNAME =?";
 			pst = conn.prepareStatement(query);
 
 			pst.setString(1, name);
@@ -139,7 +141,9 @@ public class UpdateRecordServlet extends HttpServlet {
 			pst.setString(12, uname);
 			pst.setString(13, ePass);
 			pst.setString(14, date);
-			pst.setString(15, u);
+			pst.setString(15, status);
+			pst.setString(16, u);
+
 			pst.executeUpdate();
 			response.sendRedirect("account/records-all.jsp");
 		    } else {
@@ -165,7 +169,7 @@ public class UpdateRecordServlet extends HttpServlet {
 		    records = pst.executeQuery();
 		    if (records.next() == false) {
 			String query = "INSERT INTO APP.VERIFIEDDB(NAME, COURSE, AGE, BIRTHDAY, GENDER, STUDENTNUMBER, "
-				+ "FAVORITEGAME, CONTACTNUMBER, ADDRESS, ROLE, EMAIL, USERNAME, PASSWORD, DATE)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ "FAVORITEGAME, CONTACTNUMBER, ADDRESS, ROLE, EMAIL, USERNAME, PASSWORD, DATE, STATUS)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			pst = conn.prepareStatement(query);
 			pst.setString(1, name);
 			pst.setString(2, course);
@@ -181,6 +185,7 @@ public class UpdateRecordServlet extends HttpServlet {
 			pst.setString(12, uname);
 			pst.setString(13, ePass);
 			pst.setString(14, date);
+			pst.setString(15, status);
 			pst.executeUpdate();
 			response.sendRedirect("account/addRecordAdmin.jsp");
 		    } else {

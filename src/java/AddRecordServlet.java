@@ -102,7 +102,7 @@ public class AddRecordServlet extends HttpServlet {
 	    String a = String.valueOf(age);
 
 	    String query = "UPDATE APP.VERIFIEDDB set NAME=?, COURSE=?, AGE=?, BIRTHDAY=?, GENDER=?,"
-		    + "STUDENTNUMBER=?, FAVORITEGAME=?, CONTACTNUMBER=?, ADDRESS=?, ROLE=?, DATE=? where USERNAME=?";
+		    + "STUDENTNUMBER=?, FAVORITEGAME=?, CONTACTNUMBER=?, ADDRESS=?, ROLE=?, DATE=?, STATUS=? where USERNAME=?";
 
 	    PreparedStatement pst = conn.prepareStatement(query);
 
@@ -117,7 +117,8 @@ public class AddRecordServlet extends HttpServlet {
 	    pst.setString(9, address);
 	    pst.setString(10, "member");
 	    pst.setString(11, date);
-	    pst.setString(12, u);
+	    pst.setString(12, "student");
+	    pst.setString(13, u);
 
 	    pst.executeUpdate();
 	    response.sendRedirect("account/profile-page.jsp");

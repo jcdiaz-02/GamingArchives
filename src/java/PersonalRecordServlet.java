@@ -40,7 +40,7 @@ public class PersonalRecordServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
 	username = config.getInitParameter("DBusername");
 	password = config.getInitParameter("DBpassword");
-        stringKey = config.getInitParameter("publicKey");//retrieves the public key (hutaocomehomepls) from web xml
+	stringKey = config.getInitParameter("publicKey");//retrieves the public key (hutaocomehomepls) from web xml
 
 	super.init(config);
 	try {
@@ -96,6 +96,7 @@ public class PersonalRecordServlet extends HttpServlet {
 		    session.setAttribute("favgame", records.getString("FAVORITEGAME"));
 		    session.setAttribute("cnumber", records.getString("CONTACTNUMBER"));
 		    session.setAttribute("address", records.getString("ADDRESS"));
+		    session.setAttribute("status", records.getString("STATUS"));
 
 		    response.sendRedirect("account/records-personal-1.jsp");
 		}

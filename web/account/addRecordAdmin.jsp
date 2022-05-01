@@ -136,8 +136,13 @@
 			    <option value="member">Member</option>
 			    <option value="admin">Admin</option>
 			</select>
-
 		    </div>
+		    
+		    <h1>Status: </h1>
+			<select id="userrole" name="status">
+			    <option value="student">Student</option>
+			    <option value="alumni">Alumni</option>
+			</select>
 
 
 		    <div class="personal-records-buttons"> 

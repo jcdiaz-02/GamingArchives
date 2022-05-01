@@ -121,6 +121,8 @@
 			    <td>Contact Number</td>
 			    <td>Address</td>
 			    <td>Verification</td>
+			    <td>Status</td>
+
 			</tr>
 			<%
 			    try {
@@ -142,7 +144,9 @@
 			    <td>null</td>
 			    <td>null</td>
 			    <td>null</td>
-			    <td>UNVERIFIED</td>	 
+			    <td>UNVERIFIED</td>	
+			    <td>student</td>
+
 			</tr>
 			<%
 			    }
@@ -165,6 +169,8 @@
 			    <td><%=records.getString("CONTACTNUMBER")%></td>
 			    <td><%=records.getString("ADDRESS")%></td>
 			    <td>VERIFIED</td>	 
+			    <td><%=records.getString("STATUS")%></td>
+
 			</tr>
 			<%
 				}

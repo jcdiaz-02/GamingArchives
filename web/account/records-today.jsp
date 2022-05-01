@@ -23,10 +23,10 @@
 
     Connection conn;
     try {
-        Class.forName(driver);
+	Class.forName(driver);
 
     } catch (ClassNotFoundException e) {
-        e.printStackTrace();
+	e.printStackTrace();
     }
     Connection connection = null;
     Statement statement = null;
@@ -65,16 +65,16 @@
     </head>
     <body>
         <%
-            response.setHeader("Cache-Control", "no-cache");
-            response.setHeader("Cache-Control", "no-store");
-            response.setHeader("Pragma", "no-cache");
-            response.setDateHeader("Expires", 0);
+	    response.setHeader("Cache-Control", "no-cache");
+	    response.setHeader("Cache-Control", "no-store");
+	    response.setHeader("Pragma", "no-cache");
+	    response.setDateHeader("Expires", 0);
 
-            session.setAttribute("verify", session.getAttribute("verify"));
+	    session.setAttribute("verify", session.getAttribute("verify"));
 
-            if (session.getAttribute("username") == null) {
-                response.sendRedirect("login.jsp");
-            }
+	    if (session.getAttribute("username") == null) {
+		response.sendRedirect("login.jsp");
+	    }
 
         %>
         <!--TODO: CONNECT TO DATABASE AND ACCESS ALL RECORDS DATA -->
@@ -127,6 +127,8 @@
 			    <td>Contact Number</td>
 			    <td>Address</td>
 			    <td>Verification</td>
+			    <td>Status</td>
+
 			</tr>
 			<% try {
 
@@ -154,6 +156,8 @@
 			    <td>null</td>
 			    <td>null</td>
 			    <td>UNVERIFIED</td>	 
+			    <td>student</td>
+
 			</tr>
 			<%
 			    }
@@ -177,6 +181,8 @@
 			    <td><%=records.getString("CONTACTNUMBER")%></td>
 			    <td><%=records.getString("ADDRESS")%></td>
 			    <td>VERIFIED</td>	 
+			    <td><%=records.getString("STATUS")%></td>
+
 			</tr>
 			<%
 				}
@@ -215,7 +221,7 @@
             <form action="../DeleteRecordServlet" class="form-container">
                 <h1>Delete Record</h1>
                 <%
-                    session.setAttribute("ident", "all");
+		    session.setAttribute("ident", "all");
                 %>
                 <label for="uname"><b>Username of record being deleted</b></label>
                 <input type="text" placeholder="Enter Username" name="uname" required>
@@ -229,7 +235,7 @@
             <form action="../TransferRecordServlet" class="modal-content">
                 <h3 class="modal-header">Verify Record</h3>
                 <%
-                    session.setAttribute("ident", "all");
+		    session.setAttribute("ident", "all");
                 %>
                 <label class="modal-msg" for="uname"><b>Username of record being verified</b></label>
                 <input class="modal-input"  type="text" placeholder="Enter Username" name="uname" required>
@@ -274,37 +280,43 @@
                     </div>
                 </section>-->
         <script>
-            function openForm() {
-                event.preventDefault();
-                document.getElementById("myForm").style.display = "block";
-            };
-            function closeForm() {
-                event.preventDefault();
-                document.getElementById("myForm").style.display = "none";
+	    function openForm() {
+		event.preventDefault();
+		document.getElementById("myForm").style.display = "block";
+	    }
+	    ;
+	    function closeForm() {
+		event.preventDefault();
+		document.getElementById("myForm").style.display = "none";
 
-            };
-            function verifyOpenForm() {
-                event.preventDefault();
-                document.getElementById("verifyForm").style.display = "block";
-            };
-            function verifyCloseForm() {
-                event.preventDefault();
-                document.getElementById("verifyForm").style.display = "none";
-            };
-            function deleteOpenForm() {
-                event.preventDefault();
-                document.getElementById("deleteForm").style.display = "block";
-            };
-            function deleteCloseForm() {
-                event.preventDefault();
-                document.getElementById("deleteForm").style.display = "none";
-            };
+	    }
+	    ;
+	    function verifyOpenForm() {
+		event.preventDefault();
+		document.getElementById("verifyForm").style.display = "block";
+	    }
+	    ;
+	    function verifyCloseForm() {
+		event.preventDefault();
+		document.getElementById("verifyForm").style.display = "none";
+	    }
+	    ;
+	    function deleteOpenForm() {
+		event.preventDefault();
+		document.getElementById("deleteForm").style.display = "block";
+	    }
+	    ;
+	    function deleteCloseForm() {
+		event.preventDefault();
+		document.getElementById("deleteForm").style.display = "none";
+	    }
+	    ;
 
-            window.onclick = function (event) {
-                if (event.target === document.getElementById("myForm")) {
-                    document.getElementById("myForm").style.display = "none";
-                }
-            };
+	    window.onclick = function (event) {
+		if (event.target === document.getElementById("myForm")) {
+		    document.getElementById("myForm").style.display = "none";
+		}
+	    };
 
         </script>
     </body>
