@@ -5,6 +5,7 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.System.out;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,7 +15,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,8 +24,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author merki
  */
-@WebServlet(name = "DeleteRecordServlet", urlPatterns = {"/DeleteRecordServlet"})
-public class DeleteRecordServlet extends HttpServlet {
+public class ArchiveMembersServlet extends HttpServlet {
 
     String username;
     String password;
@@ -36,6 +35,7 @@ public class DeleteRecordServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
 	username = config.getInitParameter("DBusername");
 	password = config.getInitParameter("DBpassword");
+
 	super.init(config);
 	try {
 	    Class.forName(config.getInitParameter("DBdriver"));
@@ -53,58 +53,65 @@ public class DeleteRecordServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
-
 	try {
+	    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu-MM-dd");
+	    LocalDate today = LocalDate.now();
+	    String date = dtf.format(today);
+
 	    HttpSession session = request.getSession();
-	    String uname = request.getParameter("uname");
-	    String ident = (String) session.getAttribute("ident");
-	    String primaryuname = (String) session.getAttribute("uname");
 
-	    if (uname.isEmpty()) {
-		if (ident.equals("all")) {
-		    response.sendRedirect("account/records-all.jsp");
-		} else if (ident.equals("today")) {
-		    response.sendRedirect("account/records-today.jsp");
-		} else if (ident.equals("arch")) {
-		    response.sendRedirect("account/records-archive.jsp");
-		}
-	    }
+	    String[] selectedrows = request.getParameterValues("selectedRows");
+	   // out.print("number: " + selectedrows.length);
 
-
-	    if (ident.equals("arch")) {
-		String query = "DELETE FROM APP.ARCHIVEDB where USERNAME = ?";
+	    for (int x = 0; x < selectedrows.length; x++) {
+		String query = "SELECT * FROM APP.VERIFIEDDB where EMAIL = ?";
 		PreparedStatement pst = conn.prepareStatement(query);
-		pst.setString(1, uname);
+		pst.setString(1, selectedrows[x]);
+		ResultSet records = pst.executeQuery();
+		records.next();
+
+		String uname1 = records.getString("USERNAME");
+		String name = records.getString("NAME");
+		String pass = records.getString("PASSWORD");
+		String email = records.getString("EMAIL");
+		String age = records.getString("AGE");
+		String birthday = records.getString("BIRTHDAY");
+		String course = records.getString("COURSE");
+		String address = records.getString("ADDRESS");
+		String snumber = records.getString("STUDENTNUMBER");
+		String cnumber = records.getString("CONTACTNUMBER");
+		String favgame = records.getString("FAVORITEGAME");
+		String gender = records.getString("GENDER");
+		String role = records.getString("ROLE");
+		String status = records.getString("STATUS");
+
+		query = "INSERT INTO APP.ARCHIVEDB(NAME, COURSE, AGE, BIRTHDAY, GENDER, STUDENTNUMBER, "
+			+ "FAVORITEGAME, CONTACTNUMBER, ADDRESS, ROLE, EMAIL, USERNAME, PASSWORD, DATE, STATUS)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		pst = conn.prepareStatement(query);
+		pst.setString(1, name);
+		pst.setString(2, course);
+		pst.setString(3, age);
+		pst.setString(4, birthday);
+		pst.setString(5, gender);
+		pst.setString(6, snumber);
+		pst.setString(7, favgame);
+		pst.setString(8, cnumber);
+		pst.setString(9, address);
+		pst.setString(10, role);
+		pst.setString(11, email);
+		pst.setString(12, uname1);
+		pst.setString(13, pass);
+		pst.setString(14, date);
+		pst.setString(15, status);
 		pst.executeUpdate();
 
-	    } else {
-		if (uname.equals(primaryuname)) {
-		    if (ident.equals("all")) {
-			response.sendRedirect("account/records-all.jsp");
-		    } else if (ident.equals("today")) {
-			response.sendRedirect("account/records-today.jsp");
-		    }
-		} else {
-		    String query = "DELETE FROM APP.USERDB where USERNAME = ?";
-		    PreparedStatement pst = conn.prepareStatement(query);
-		    pst.setString(1, uname);
-		    pst.executeUpdate();
-
-		    query = "DELETE FROM APP.VERIFIEDDB where USERNAME = ?";
-		    pst = conn.prepareStatement(query);
-		    pst.setString(1, uname);
-		    pst.executeUpdate();
-
-		}
+		String query1 = "DELETE FROM APP.VERIFIEDDB where EMAIL = ?";
+		pst = conn.prepareStatement(query1);
+		pst.setString(1, selectedrows[x]);
+		pst.executeUpdate();
 	    }
+	    response.sendRedirect("account/records-all.jsp");
 
-	    if (ident.equals("all")) {
-		response.sendRedirect("account/records-all.jsp");
-	    } else if (ident.equals("today")) {
-		response.sendRedirect("account/records-today.jsp");
-	    } else if (ident.equals("arch")) {
-		response.sendRedirect("account/records-archive.jsp");
-	    }
 	} catch (SQLException sqle) {
 	    response.sendRedirect("errPages/Error404.jsp");
 	}

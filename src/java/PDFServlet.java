@@ -163,6 +163,9 @@ public class PDFServlet extends HttpServlet {
 	response.setContentType("application/pdf;charset=UTF-8");
 	response.setHeader("Content-Disposition", "attachment; filename=" + filename + ".pdf");
 	String query1 = null;
+
+	String ident = (String) session.getAttribute("ident");
+
 	try (ServletOutputStream sOut = response.getOutputStream();) {
 
 	    String u = (String) session.getAttribute("username");//name to be displayed
@@ -328,6 +331,37 @@ public class PDFServlet extends HttpServlet {
 			}
 			ctr++;
 		    }
+		} else if (btn.equals("archpdf")) {
+		    query1 = "SELECT * FROM APP.ARCHIVEDB";
+		    stmt = conn.prepareStatement(query1);
+		    rs1 = stmt.executeQuery();
+		    while (rs1.next()) {
+			table.addCell(new Phrase(String.valueOf(ctr), FontFactory.getFont(FontFactory.HELVETICA, 8)));
+			table.addCell(new Phrase(rs1.getString("NAME"), FontFactory.getFont(FontFactory.HELVETICA, 8)));
+			table.addCell(new Phrase(rs1.getString("COURSE"), FontFactory.getFont(FontFactory.HELVETICA, 8)));
+			table.addCell(new Phrase(rs1.getString("EMAIL"), FontFactory.getFont(FontFactory.HELVETICA, 8)));
+			table.addCell(new Phrase(rs1.getString("USERNAME"), FontFactory.getFont(FontFactory.HELVETICA, 8)));
+			table.addCell(new Phrase(rs1.getString("AGE"), FontFactory.getFont(FontFactory.HELVETICA, 8)));
+			table.addCell(new Phrase(rs1.getString("BIRTHDAY"), FontFactory.getFont(FontFactory.HELVETICA, 8)));
+			table.addCell(new Phrase(rs1.getString("GENDER"), FontFactory.getFont(FontFactory.HELVETICA, 8)));
+			table.addCell(new Phrase(rs1.getString("STUDENTNUMBER"), FontFactory.getFont(FontFactory.HELVETICA, 8)));
+			table.addCell(new Phrase(rs1.getString("FAVORITEGAME"), FontFactory.getFont(FontFactory.HELVETICA, 8)));
+			table.addCell(new Phrase(rs1.getString("CONTACTNUMBER"), FontFactory.getFont(FontFactory.HELVETICA, 8)));
+			table.addCell(new Phrase(rs1.getString("ADDRESS"), FontFactory.getFont(FontFactory.HELVETICA, 8)));
+			table.addCell(new Phrase(rs1.getString("ROLE"), FontFactory.getFont(FontFactory.HELVETICA, 8)));
+			table.addCell(new Phrase("verified", FontFactory.getFont(FontFactory.HELVETICA, 8)));
+			table.addCell(new Phrase(rs1.getString("STATUS"), FontFactory.getFont(FontFactory.HELVETICA, 8)));
+
+			if (ctr % 30 == 0) {
+			    document.add(table);
+			    document.newPage();
+			    document.add(new Phrase("\n"));
+			    table = new PdfPTable(15);
+			    table.setSpacingBefore(8f);
+			}
+		    }
+		    ctr++;
+
 		}
 		rs1.close();
 		stmt.close();

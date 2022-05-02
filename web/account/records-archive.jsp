@@ -102,7 +102,7 @@
         <section class="all-records-section">
             <div class="all-records-container">
                 <div class="all-records-head">
-                    <h2>All Records</h2>        
+                    <h2>Archived Records</h2>        
 		    ${sessionScope.notif}
 
                 </div>
@@ -128,34 +128,11 @@
 			<%
 			    try {
 				conn = DriverManager.getConnection(url, username, password);
-				String query = "SELECT * FROM APP.USERDB";
+				String query = "SELECT * FROM APP.ARCHIVEDB";
 				PreparedStatement pstmt = conn.prepareStatement(query);
 				ResultSet records = pstmt.executeQuery();
-				while (records.next()) {
-			%>
-			<tr>
-			    <td>null</td>
-			    <td>null</td>
-			    <td><%=records.getString("EMAIL")%></td>
-			    <td><%=records.getString("USERNAME")%></td>
-			    <td>null</td>
-			    <td>null</td>
-			    <td>null</td>
-			    <td>null</td>
-			    <td>null</td>
-			    <td>null</td>
-			    <td>null</td>
-			    <td>UNVERIFIED</td>	
-			    <td>student</td>
-			    <td> </td>
 
-			</tr>
-			<%
-			    }
-			    String query1 = "SELECT * FROM APP.VERIFIEDDB";
-			    pstmt = conn.prepareStatement(query1);
-			    records = pstmt.executeQuery();
-			    while (records.next()) {
+				while (records.next()) {
 
 			%>
 			<tr>
@@ -173,14 +150,13 @@
 			    <td>VERIFIED</td>	 
 			    <td><%=records.getString("STATUS")%></td>
 			    <td>
-                                <form id="myform" action="../ArchiveMembersServlet"  method="get">
-                                    <label class="checkbox-container">
-                                        <input form="myform" type="checkbox" id="rows" name="selectedRows" value="<%=records.getString("EMAIL")%>">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </form>
-                            </td>
-
+				<form id="myform" action="../ArchiveTransferServlet"  method="get">
+				    <label class="checkbox-container">
+					<input form="myform" type="checkbox" id="rows" name="selectedRows" value="<%=records.getString("EMAIL")%>">
+					<span class="checkmark"></span>
+				    </label>
+				</form>
+			    </td>
 			</tr>
 			<%
 				}
@@ -192,28 +168,22 @@
                 </div>       
 
                 <div class="all-records-buttons"> 
-                    <form  action="profile-page-admin.jsp">
+                    <form  action="records-all.jsp">
                         <input type="submit" value="GO BACK"  class="button"/>
                     </form>
                     <form onclick ="deleteOpenForm()">
                         <button class="button" onclick="">DELETE</button>
-                    </form>
-                    <form onclick="verifyOpenForm()" >
-                        <button class="button"  onclick="verifyOpenForm()">VERIFY </button>
-                    </form>
-                    <form onclick="openForm()" >
-                        <button class="button"  onclick="openForm()">UPDATE</button>
-                    </form>
+                    </form>    
                     <button id="modalBtn"  class="button"/>GENERATE PDF</button>
+
                     <form  action="../LogoutServlet">
                         <input type="submit" value="LOGOUT"  class="button"/>
                     </form>
 
-		    <button onclick="document.getElementById('myform').submit()"  class="button"/>ARCHIVE</button>
 
-		    <form  action="records-archive.jsp">
-                        <input type="submit" value="ARCHIVED RECORDS"  class="button"/>
-                    </form>
+		    <button onclick="document.getElementById('myform').submit()"  class="button" >RESTORE</button>
+
+
 
                 </div>      
             </div>
@@ -226,7 +196,7 @@
             <form action="../DeleteRecordServlet" class="modal-content">
                 <h3 class="modal-header">Delete Record</h3>
                 <%
-		    session.setAttribute("ident", "all");
+		    session.setAttribute("ident", "arch");
                 %>
                 <label class="modal-msg" for="uname"><b>Username of record being deleted</b></label>
                 <input class="modal-input" type="text" placeholder="Enter Username" name="uname" required>
@@ -238,60 +208,30 @@
             </form>
         </div>
 
-        <div id="verifyForm" class="modal-section">
-            <form action="../TransferRecordServlet" class="modal-content">
-                <h3 class="modal-header">Verify Record</h3>
-                <%
-		    session.setAttribute("ident", "all");
-                %>
-                <label class="modal-msg" for="uname"><b>Username of record being verified</b></label>
-                <input class="modal-input"  type="text" placeholder="Enter Username" name="uname" required>
-                <span class="modal-buttoncon"> 
-                    <button class="close modal-button" type="button" class="cancel" onclick="verifyCloseForm()">Cancel</button>
-                    <button class="modal-button" type="submit" class="submit">Submit</button>
-
-                </span>
-            </form>
-        </div>
-
-        <div id="myForm" class="modal-section" >
-            <form action="records-update.jsp" class="modal-content">
-                <h3 class="modal-header">Update Record</h3>
-
-                <label class="modal-msg" for="uname"><b>Username of record being updated </b>  <b> (verified usernames only) </b></label>
-                <input class="modal-input" type="text" placeholder="Enter Username" name="uname" required>
-                <span class="modal-buttoncon"> 
-                    <button class="close modal-button" type="button" class="cancel" onclick="closeForm()">Cancel</button>
-                    <button class="modal-button" type="submit" class="submit">Submit</button>
-                </span>
-            </form>
-        </div>
 
         <section id="modalSection" class="modal-section">
             <div class="modal-content">
-		<%
-		    session.setAttribute("ident", "all");
-                %>
                 <h3 class="modal-header">SUCCESS!</h3>
                 <p class="modal-msg">Your PDF has been generated.</p>   
                 <form class="modal-buttoncon" method="POST" action ="../PDFServlet">
-                    <button class="modal-button"  name="pdfbutton" value="alluserpdf">Download PDF</button>
+                    <button class="modal-button"  name="pdfbutton" value="archpdf">Download PDF</button>
                 </form>
             </div>
         </section> 
 
+        
 
-        <!--        <section id="modalSection" class="modal-section">
-                    <div class="modal-content">
-                        <h3 class="modal-header">ARE YOU SURE?</h3>
-                        <p class="modal-msg">Please confirm that you have selected the correct event/s. You cannot reverse this action after pressing the delete button.</p>
-                        <span class="modal-buttoncon">
-                            <span onclick="Close()" class="close modal-button">Cancel</span>
-                            <span class="modal-button">Delete</span> 
-                        </span>
-                    </div>
-                </section>-->
-        <script>
+	<!--        <section id="modalSection" class="modal-section">
+		    <div class="modal-content">
+			<h3 class="modal-header">ARE YOU SURE?</h3>
+			<p class="modal-msg">Please confirm that you have selected the correct event/s. You cannot reverse this action after pressing the delete button.</p>
+			<span class="modal-buttoncon">
+			    <span onclick="Close()" class="close modal-button">Cancel</span>
+			    <span class="modal-button">Delete</span> 
+			</span>
+		    </div>
+		</section>-->
+	<script>
 	    function openForm() {
 		event.preventDefault();
 		document.getElementById("myForm").style.display = "block";
@@ -324,13 +264,12 @@
 	    }
 	    ;
 
-
 	    window.onclick = function (event) {
 		if (event.target === document.getElementById("myForm")) {
 		    document.getElementById("myForm").style.display = "none";
 		}
 	    };
 
-        </script>
+	</script>
     </body>
 </html>
