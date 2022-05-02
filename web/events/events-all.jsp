@@ -110,7 +110,7 @@
                                 <%= recordList.get(i).getDescription()%>
                             </td>
                             <td>
-                                <%= recordList.get(i).getDate()%>
+                                <%= recordList.get(i).getDate()%>-<%= recordList.get(i).getEndDate()%>
                             </td>
                         </tr>
                         <% } catch (Exception e) {

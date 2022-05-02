@@ -512,14 +512,22 @@
                 var data = [
    
             <%
-                
+                DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 for (int i = 0; i < recordList.size() - 1; i++) {
+                    LocalDate temp = LocalDate.parse(recordList.get(i).getDate(), f);
+                    LocalDate endDate = LocalDate.parse(recordList.get(i).getEndDate(),f);
+                    while(!temp.equals(endDate.plusDays(1))){
             %>
-                    {date: "<%= recordList.get(i).getDate()%>", eventName: "<%= recordList.get(i).getName()%>", calendar: 'Work', color: 'orange'},
-            <% }%>
-                    {date: "<%= recordList.get(recordList.size() - 1).getDate()%>", eventName: "<%= recordList.get(recordList.size() - 1).getName()%>", calendar: 'Work', color: 'orange'}];
-                                <%        
-                } else {%>
+                    {date: "<%= temp.toString()%>", eventName: "<%= recordList.get(i).getName()%>", calendar: 'Work', color: 'orange'},
+                    <% temp = temp.plusDays(1); }}
+                    LocalDate temp = LocalDate.parse(recordList.get(recordList.size() - 1).getDate(), f);
+                    LocalDate endDate = LocalDate.parse(recordList.get(recordList.size() - 1).getEndDate(),f);
+                    while(!temp.equals(endDate)){
+                    %>
+                    {date: "<%= temp.toString()%>", eventName: "<%= recordList.get(recordList.size() - 1).getName()%>", calendar: 'Work', color: 'orange'},
+                                <% temp = temp.plusDays(1);  }     %>
+                    {date: "<%= recordList.get(recordList.size() - 1).getEndDate()%>", eventName: "<%= recordList.get(recordList.size() - 1).getName()%>", calendar: 'Work', color: 'orange'}];
+               <%    } else {%>
                         var data =[];
               <%  }%>
  //    { eventName: 'Game vs Portalnd', calendar: 'Sports', color: 'blue' },

@@ -53,6 +53,7 @@ public class AddEvent extends HttpServlet {
                 String name = request.getParameter("ename");
                 String desc = request.getParameter("edescription");
                 String date = request.getParameter("edate");
+                String endDate = request.getParameter("dateEnd");
                String eventImage = "none";
                 if (request.getParameter("imageInput") != "") {
                                    // event image
@@ -76,9 +77,9 @@ public class AddEvent extends HttpServlet {
 
  
 
-                String query = "INSERT INTO event_record (event_name, event_description, event_date, event_image) VALUES (?, ?, ?, ?)";
+                String query = "INSERT INTO event_record (event_name, event_description, event_date, event_end_date, event_image) VALUES (?, ?, ?, ?, ?)";
                 // List<String> var = new ArrayList<String>();
-                db.updateQuery(query, new String[] { name, desc, date, eventImage }, conn);
+                db.updateQuery(query, new String[] { name, desc, date, endDate, eventImage }, conn);
                 response.sendRedirect("events/events-add.jsp");
             } else {
                 // not an admin cant add event

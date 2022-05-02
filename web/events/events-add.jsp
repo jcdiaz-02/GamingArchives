@@ -90,7 +90,12 @@
                     
                     <div class="input">
                         <label for="edate"><b>Event Date:</b></label>
-                        <input type="date" placeholder="Enter Event Date" name="edate" required>
+                        <input type="date" placeholder="Enter Event Start Date" name="edate" required>
+                    </div>
+                    
+                    <div class="input">
+                        <label for="dateEnd"><b>Event Date:</b></label>
+                        <input type="date" placeholder="Enter Event End Date" name="dateEnd" required>
                     </div>
                     
                     <div class="input">

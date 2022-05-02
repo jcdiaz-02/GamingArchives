@@ -14,26 +14,30 @@ public class EventRecord {
     private String name;
     private String description;
     private String date;
+    private String endDate;
     private String imgURL;
 
-    public EventRecord(int id, String name, String description, String date, String imgURL) {
+    public EventRecord(int id, String name, String description, String date, String endDate, String imgURL) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.date = date;
+        this.endDate = endDate;
         this.imgURL = imgURL;
     }
 
-    public EventRecord(String name, String description, String date) {
+    public EventRecord(String name, String description, String date, String endDate) {
         this.name = name;
         this.description = description;
         this.date = date;
+        this.endDate = endDate;
     }
 
-    public EventRecord(String name, String description, String date, String imgURL) {
+    public EventRecord(String name, String description, String date, String imgURL, String endDate) {
         this.name = name;
         this.description = description;
         this.date = date;
+        this.endDate = endDate;
         this.imgURL = imgURL;
     }
 
@@ -47,6 +51,9 @@ public class EventRecord {
 
     public String getDate() {
         return date;
+    }
+    public String getEndDate(){
+        return endDate;
     }
 
     public String getDescription() {
