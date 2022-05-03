@@ -46,7 +46,7 @@
                     <a class="option" href="../subpage/events.jsp">Events</a>
                     <a class="option" href="../subpage/contact.jsp">Contact</a>
                     <form action="../login/login.jsp">
-                        <input type="submit" value="Login"  class="button"/>
+                       <button type="submit" value="Login"  class="button"/>Login</button>
                     </form>
             
                 </div>

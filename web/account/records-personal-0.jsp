@@ -35,14 +35,17 @@
         <title>UST-TGS</title>
     </head>
     <body>
-        <!--TODO: CONNECT TO DATABASE TO ACCESS PERSONAL RECORD -->
-        <!--TODO: FUNCTIONALITY OF SORT BUTTONS-->
         <!-- navbar -->
         <div class="bar"> 
             <input type="checkbox" id="check">
             <label for="check" class="checkbtn">
                 <i class="fas fa-bars"></i>
             </label>
+
+            <div class="logo-container" >
+                <a href="../home.jsp"><img class="nav-logo nav-logo2" src="../assets/logo.svg" ></a>
+            </div>
+
             <div class="nav-content">
                 <div class="nav-title">
                     <img class="nav-logo" src="../assets/logo.svg" alt="UST-TGS logo">
@@ -51,13 +54,13 @@
                     </a>
                 </div>
                 <div class="nav-options" >
-		    <a class="option" href="../subpage/authenticatedHome.jsp">Home</a>
+                    <a class="option" href="../subpage/authenticatedHome.jsp">Home</a>
                     <a class="option" href="../subpage/authenticatedAbout.jsp">About</a>
                     <a class="option" href="../EventOverview">Events</a>
                     <a class="option" href="../subpage/authenticatedContacts.jsp">Contact</a>
                     <form style="color:#B92432;" action="../MyAccountServlet">
-			<input type="hidden" name="verify" value="${verify}" />
-                        <input type="submit" value="My Account"  class="button"/>
+                        <input type="hidden" name="verify" value="${verify}" />
+                        <button type="submit" value="My Account"  class="button"/>My Account</button>
                     </form>
 
                 </div>
@@ -66,13 +69,13 @@
 
         <section class="personal-records-section-0">
             <div class="personal-records-container">
-		<%
-		    response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
-		    String uname = (String) session.getAttribute("username");
+                <%
+                    response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
+                    String uname = (String) session.getAttribute("username");
 
-		    if (uname == null) {
-			response.sendRedirect("home.jsp");
-		    }
+                    if (uname == null) {
+                        response.sendRedirect("home.jsp");
+                    }
                 %>
                 <h3> View Personal Record </h3>
                 <form class="personal-records-info-container0" action="/">
@@ -101,14 +104,14 @@
 
                     <span class='verification-container'>
                         <span class="material-icons verification-icon" style="color:red;">
-			    cancel
+                            cancel
                         </span> 
                         Your account has not been verified.
                     </span>
 
                     <div class="personal-records-buttons"> 
-			<input type="button" onclick="location.href = 'profile-page-unverified.jsp';" value="GO BACK" class="button" />
-			<input type="button" onclick="location.href = '../LogoutServlet';" value="LOGOUT" class="button" />
+                        <button type="button" onclick="location.href = 'profile-page-unverified.jsp';" value="GO BACK" class="button" >GO BACK</button>
+                        <button type="button" onclick="location.href = '../LogoutServlet';" value="LOGOUT" class="button" />LOGOUT</button>
                     </div>    
                 </form> 
             </div>

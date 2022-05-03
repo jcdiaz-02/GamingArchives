@@ -9,16 +9,15 @@ and open the template in the editor.
 */
 
 .signup-section{
-    -ms-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, 0);
     background: white;
     border-radius: 40px;
-    height: 52rem;
-    margin: 0;
+
+    margin-top: 8rem;
     position: absolute;
     left: 50%;
-    top: 50%;
-    transform: translate(-50%, -45%);
-    width: 50rem; 
+    transform: translate(-50%, 0);
+    width: 45rem; 
     box-shadow: 20px 20px var(--brown1);
 }
 
@@ -49,18 +48,17 @@ and open the template in the editor.
 }
 
 .signup-section .signup-container a{
-   color: var(--brown4);
-   font-family: var(--font2);
-   font-size: 1.6rem;
+    color: var(--brown4);
+    font-family: var(--font2);
 }
 
 .signup-section .signup-container .input-container{
-    width: 60%;
+    width: 70%;
     height: 90%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    
+
 }
 
 .signup-section .signup-container .input-container label{
@@ -69,7 +67,7 @@ and open the template in the editor.
     font-size: 1.6rem;
     font-weight: 600;
     margin-bottom: 20px;
-    
+
 }
 
 
@@ -98,7 +96,7 @@ and open the template in the editor.
     height: 5rem;
     width: 100%; 
     padding: 20px 40px;
-   
+
 }
 
 .signup-section .signup-container .input-container .input .psw-show{
@@ -112,17 +110,91 @@ and open the template in the editor.
     margin-bottom: 20px;
     font-family: var(--font2);
     font-size: 1.6rem;
-    width: 60%;
+    width: 70%;
 }
 
 .signup-section .signup-container  button{
-   background: var(--brown1);
-   border: none;
-   border-radius: 10px;
-   color: #ffffff;
-   font-family: var(--font2);
-   font-size: 3rem;
-   height: 4rem;
-   margin-bottom: 20px;
-   width: 60%;
+    background: var(--brown1);
+    border: none;
+    border-radius: 10px;
+    color: #ffffff;
+    font-family: var(--font2);
+    font-size: 3rem;
+    height: 4rem;
+    margin-bottom: 20px;
+    width: 70%;
+}
+
+@media(max-width: 800px){
+    .signup-section{
+        width: 90%;
+    }
+
+    .signup-section .signup-container h2{
+        font-size: 1.8rem;
+    }
+
+    .signup-section .signup-container h3{
+        font-size: 1.5rem;
+    }
+}
+
+@media(max-width: 500px){
+    .signup-section{
+        width: 95%;
+        border-radius: 20px;
+    }
+}
+
+@media(max-width: 500px){
+    .signup-section{
+        width: 95%;
+        border-radius: 20px;
+    }
+
+    .signup-section .signup-container h2{
+        font-size: 1.5rem;
+    }
+
+    .signup-section .signup-container h3{
+        font-size: 1.3rem;
+    }
+
+    .signup-section .signup-container  button{
+        font-size: 2rem;
+    }
+
+    .signup-section .signup-container .input-container{
+        width: 85%;
+    }
+
+    .signup-section .signup-container .input-container .input {
+        height: 4rem;
+    }
+
+    .signup-section .signup-container .input-container .input input{
+        height: 4rem;
+        font-size: 1.2rem;
+    }
+
+    .signup-section .signup-container .input-container .input .psw-show{
+        font-size: 24px;
+    }
+
+    .signup-section .signup-container .input-container .input .input-icon{
+        font-size: 24px;
+
+    }
+
+    .signup-section .signup-container .privacy-policy{
+        font-size: 1.2rem;
+        width: 85%;
+    }
+
+    .signup-section .signup-container  button{
+        height: 4rem;
+        width: 85%;
+    }
+
+
 }

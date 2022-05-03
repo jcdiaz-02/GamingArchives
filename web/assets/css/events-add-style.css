@@ -9,16 +9,14 @@ and open the template in the editor.
 */
 
 .add-events-section{
-    -ms-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, 0);
     background: white;
     border-radius: 40px;
-    height: 30rem;
-    margin: 0;
+    margin-top: 10rem;
     position: absolute;
     left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 70rem;   
+    transform: translate(-50%, 0);
+    width: 50rem;   
 }
 
 .add-events-section .add-events-container{
@@ -44,7 +42,6 @@ and open the template in the editor.
 .add-events-section .add-events-container .add-events-form .input{
     display: flex;
     justify-content: space-between;
-    align-items: center;
     margin-bottom: 1rem;
 }
 
@@ -66,9 +63,9 @@ and open the template in the editor.
 
 .add-events-section .add-events-container .add-event-buttons{
     display: flex;
-    width: 95%;
-    justify-content: center;
-    margin: 2rem 0 0 0;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .add-events-section .add-events-container .add-event-buttons .button{
@@ -82,6 +79,57 @@ and open the template in the editor.
     font-size: 2.2rem;
     height: 3rem;
     padding: 0px 50px;
-    margin-right: 3rem;
+}
+
+@media(max-width: 800px){
+    .add-events-section{
+        border-radius: 20px;
+        margin-top: 8rem;
+        width: 90%;
+    }
+
+    .add-events-section .add-events-container .add-event-buttons .button{
+        font-size: 2rem;
+        height: 2.5rem;
+        padding: 0px 30px;
+    }
+}
+
+@media(max-width: 500px){
+    .add-events-section{
+        width: 95%;
+    }
+    .add-events-section .add-events-container{
+        align-items: center;
+        margin: 1.5rem auto;
+    }
+
+    .add-events-section .add-events-container .add-events-form .input{
+        flex-direction: column;
+    }
+
+    .add-events-section .add-events-container .add-events-form .input label{
+        font-size: 1.5rem;
+    }
+
+    .add-events-section .add-events-container .add-events-form .input input{
+        width: 100%;
+        padding: 20px 10px;
+        font-size: 1rem;
+    }
+    
+    .add-events-section .add-events-container .add-event-buttons{
+        margin-top: 2rem;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .add-events-section .add-events-container .add-event-buttons .button{
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    /*    .add-events-section .add-events-container .add-event-buttons .button{
+            width: 80%;
+        }*/
 }
 

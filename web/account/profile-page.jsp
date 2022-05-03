@@ -3,7 +3,6 @@
     Created on : 03 19, 22, 2:59:24 AM
     Author     : Admin
 --%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
@@ -21,10 +20,10 @@
     String password = "app";
     Connection conn;
     try {
-	Class.forName(driver);
+        Class.forName(driver);
 
     } catch (ClassNotFoundException e) {
-	e.printStackTrace();
+        e.printStackTrace();
     }
     Connection connection = null;
     Statement statement = null;
@@ -55,29 +54,31 @@
 
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+        <script src="https://kit.fontawesome.com/db09b338f9.js" crossorigin="anonymous"></script>
+        <title>UST-TGS</title>
     </head>
     <body>
-	<%
-	    response.setHeader("Cache-Control", "no-cache");
-	    response.setHeader("Cache-Control", "no-store");
-	    response.setHeader("Pragma", "no-cache");
-	    response.setDateHeader("Expires", 0);
-	    String uname = (String) session.getAttribute("username");
-	    String verify = (String) session.getAttribute("verify");
+        <%
+            response.setHeader("Cache-Control", "no-cache");
+            response.setHeader("Cache-Control", "no-store");
+            response.setHeader("Pragma", "no-cache");
+            response.setDateHeader("Expires", 0);
+            String uname = (String) session.getAttribute("username");
+            String verify = (String) session.getAttribute("verify");
 
-	    session.setAttribute("username", uname);
-	    if (uname == null) {
-		response.sendRedirect("../login.jsp");
-	    }
-	    try {
-		conn = DriverManager.getConnection(url, username, password);
-		String query = "SELECT NAME FROM APP.VERIFIEDDB where USERNAME=?";
-		PreparedStatement pstmt = conn.prepareStatement(query);
-		pstmt.setString(1, uname);
-		ResultSet records = pstmt.executeQuery();
+            session.setAttribute("username", uname);
+            if (uname == null) {
+                response.sendRedirect("../login.jsp");
+            }
+            try {
+                conn = DriverManager.getConnection(url, username, password);
+                String query = "SELECT NAME FROM APP.VERIFIEDDB where USERNAME=?";
+                PreparedStatement pstmt = conn.prepareStatement(query);
+                pstmt.setString(1, uname);
+                ResultSet records = pstmt.executeQuery();
 
-	%>
-        <!--TODO: CONNECT ACCOUNT AND CHECK IF VERIFIED OR NOT--> 
+        %>
         <!-- navbar -->
         <div class="bar"> 
             <input type="checkbox" id="check">
@@ -96,9 +97,9 @@
                     <a class="option" href="../subpage/authenticatedAbout.jsp">About</a>
                     <a class="option" href="../EventOverview">Events</a>
                     <a class="option" href="../subpage/authenticatedContacts.jsp">Contact</a>
-                    <form style="color:#B92432;" action="../MyAccountServlet">
-			<input type="hidden" name="verify" value="${verify}" />
-                        <input type="submit" value="My Account"  class="button"/>
+                    <form class="button-nav-form" style="color:#B92432;" action="../MyAccountServlet">
+                        <input type="hidden" name="verify" value="${verify}" />
+                        <button type="submit" value="My Account"  class="button"/>My Account</button>
                     </form>
 
 
@@ -110,12 +111,12 @@
         <section class="profile-section">
             <div class="profile-container">
 
-                <button type="button" onclick="location.href = '../PersonalRecordServlet';" name="uname" value ="<c:out value="${username}"/>"  class="button">
+                <button type="button" onclick="location.href = '../PersonalRecordServlet';" name="uname" value ="${username}"  class="button">
                     <span class="material-icons-outlined">badge</span> 
                     View Personal Record
                 </button>
 
-                <button type="button" onclick="location.href = 'addRecord.jsp';"  name="uname" value="<c:out value="${username}"/>" ${ records.getString("AGE") != null ? 'disabled="disabled"': ''}" class="button">
+                <button type="button" onclick="location.href = 'addRecord.jsp';"  name="uname" value="${username}"  class="button">
                     <span class="material-icons-outlined">person_add_alt</span>
                     Add Record
                 </button>
@@ -130,10 +131,10 @@
                     <p> Your account has been verified and you can now add your record.</p>
                 </div>
 
-		<%} catch (Exception e) {
-			e.printStackTrace();
-		    }
-		%>
+                <%} catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                %>
             </div>
         </section>       
     </body>

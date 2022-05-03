@@ -32,8 +32,17 @@
         <title>UST-TGS</title>
     </head>
     <body>
-	<!-- navbar -->
+        <!-- navbar -->
         <div class="bar"> 
+            <input type="checkbox" id="check">
+            <label for="check" class="checkbtn">
+                <i class="fas fa-bars"></i>
+            </label>
+
+            <div class="logo-container" >
+                <a href="home.jsp"><img class="nav-logo nav-logo2" src="../assets/logo.svg" ></a>
+            </div>
+
             <div class="nav-content">
                 <div class="nav-title">
                     <img class="nav-logo" src="../assets/logo.svg" alt="UST-TGS logo">
@@ -46,21 +55,21 @@
                     <a class="option" href="../subpage/about.jsp">About</a>
                     <a class="option" href="../subpage/events.jsp">Events</a>
                     <a class="option" href="../subpage/contact.jsp">Contact</a>
-                    <form action="../login/login.jsp">
-                        <input type="submit" value="Login"  class="button"/>
+                    <form class="button-nav-form" action="../login/login.jsp">
+                        <button type="submit" value="Login"  class="button"/>Login</button>
                     </form>
 
                 </div>
             </div>
         </div>
-	<%
-	    session.setAttribute("identifier", "signup");
-	%>
+        <%
+            session.setAttribute("identifier", "signup");
+        %>
         <section class="signup-section">
             <form class="signup-container" method="post" action="../UserVerification">
                 <h2>Sign Up</h2>
                 <h3>Already registered? <a href="../login/login.jsp">Login</a></h3>
-		
+
                 <div class="input-container">
 
                     <label for="email"><b>Email</b></label>    
@@ -77,20 +86,20 @@
                     <label for="psw"><b>Password</b></label>
                     <div class="input">
 
-                        <input type="password" placeholder="Enter Password" name="psw" required>
-                        <span class="material-icons-outlined psw-show">visibility_off</span>
+                        <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
+                        <span onclick="toggleVisibility()" class="material-icons-outlined psw-show">visibility_off</span>
                     </div>
 
                     <div class="input">
-                        <input type="password" placeholder="Confirm Password" name="cpsw" required>
-                        <span class="material-icons-outlined psw-show">&#xe8f5;</span>
+                        <input type="password" placeholder="Confirm Password" name="cpsw" id="cpsw" required>
+                        <span onclick="toggleVisibility1()" class="material-icons-outlined psw-show">&#xe8f5;</span>
                     </div>
 
                 </div>
 
 
                 <div class="privacy-policy"> 
-                    <input type="checkbox" id="privacy-policy" name="privacy-policy" value='' >
+                    <input type="checkbox" id="privacy-policy" name="privacy-policy" value='' required>
                     <label for="privacy-policy"> 
                         I have read and agreed to the website's <a href="privacypolicy.jsp">Privacy Policy</a>
                     </label>
@@ -100,4 +109,24 @@
             </form>
         </section>       
     </body>
+
+    <script>
+        function toggleVisibility() {
+            var psw = document.getElementById("psw");
+            if (psw.type === "password") {
+                psw.type = "text";
+            } else {
+                psw.type = "password";
+            }
+        }
+
+        function toggleVisibility1() {
+            var cpsw = document.getElementById("cpsw");
+            if (cpsw.type === "password") {
+                cpsw.type = "text";
+            } else {
+                cpsw.type = "password";
+            }
+        }
+    </script>
 </html>

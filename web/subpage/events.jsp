@@ -4,11 +4,11 @@
     Author     : Admin
 --%>
 
-<%@page import="java.time.LocalDate"%>
+<%@page import="java.time.*"%>
 <%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="java.util.*"%>
+<%@page import="EventsRecordKeeper.EventRecord"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="EventsRecordKeeper.EventRecord;"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -46,13 +46,13 @@
         <%
             response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
             String role = (String) session.getAttribute("role");
+//            String role = "admin";
+//            session.setAttribute("role", "admin");
             if (role == null) {
                 role = "guest";
             }
         %>
-        <!-- TODO: ALLOW TO ACCESS DATABASE FOR CALENDAR -->
-        <!-- TODO: ALLOW TO ACCESS DATABASE ITEMS TO LIST PLANNED AND ORGANIZED EVENTS -->
-        <!-- TODO: MAKE ADD AND DELETE BUTTONS ONLY AVAILABLE TO ADMIN -->
+
         <!-- navbar -->
         <div class="bar"> 
             <input type="checkbox" id="check">
@@ -79,18 +79,18 @@
                     <a class="option" href="authenticatedAbout.jsp">About</a>
                     <a class="option" style="color:#B92432;" href="../EventOverview">Events</a>
                     <a class="option" href="authenticatedContacts.jsp">Contact</a>
-                    <form action="../MyAccountServlet">
+                    <form class="button-nav-form" action="../MyAccountServlet">
                         <input type="hidden" name="verify" value="${verify}" />
-                        <input type="submit" value="My Account"  class="button"/>
+                        <button type="submit" value="My Account"  class="button"/>My Account</button>
                     </form>
                     <%    } else if (role.equalsIgnoreCase("admin")) { %>
                     <a class="option" href="authenticatedHome.jsp">Home</a>
                     <a class="option" href="authenticatedAbout.jsp">About</a>
                     <a class="option" style="color:#B92432;" href="../EventOverview">Events</a>
                     <a class="option" href="authenticatedContacts.jsp">Contact</a>
-                    <form action="../MyAccountServlet">
+                    <form class="button-nav-form" action="../MyAccountServlet">
                         <input type="hidden" name="verify" value="${verify}" />
-                        <input type="submit" value="ADMIN"  class="button"/>
+                        <button type="submit" value="ADMIN"  class="button"/>ADMIN</button>
                     </form>
                     <% } else {%> 
                     <a class="option" href="../home.jsp">Home</a>
@@ -98,7 +98,7 @@
                     <a class="option" style="color:#B92432;" href="../EventOverview">Events</a>
                     <a class="option" href="../subpage/contact.jsp">Contact</a>
                     <form class="button-nav-form" action="../login/login.jsp">
-                        <input type="submit" value="Login"  class="button"/>
+                        <button type="submit" value="Login"  class="button"/>Login</button>
                     </form>
                     <%}%>
 
@@ -110,10 +110,34 @@
         <section class="events-section">
             <div class="events-container">
                 <div class="events-list-container">
-                    <h2>Planned Events</h2>
+                    <h2>Organized Events</h2>
+                    <ul class="organized-events">
+                        <%
+                            for (int i = 0; i < recordList.size(); i++) {
+                        %>
+                        <li>
+                            <% try {
+
+
+                            %>
+                            <div>
+                                <p><%= recordList.get(i).getName()%></p>
+                                <%if (recordList.get(i).getImgURL().contains("Images")) {
+                                        out.println("<img src=" + "\"../" + recordList.get(i).getImgURL() + "\">");
+                                    }%>
+                            </div>
+                            <% } catch (Exception e) {
+                                }%>
+                        </li>    
+                        <% }%>
+                    </ul>
+                </div>  
+
+                <div class="events-list-container">
+                    <h2>Upcoming Events</h2>
                     <ul class="planned-events">
                         <%
-                            
+
                             for (int i = 0; i < recordList.size(); i++) {
                                 try {
                                     DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -129,32 +153,8 @@
                     </ul>
                 </div>
 
-                <div class="events-list-container">
-                    <h2>Organized Events</h2>
-                    <ul class="organized-events">
-                        <%
-                            for (int i = 0; i < recordList.size(); i++) {
-                        %>
-                        <li>
-                            <% try {
-                                    
-                               
-                            %>
-                            <div>
-                                <p><%= recordList.get(i).getName()%></p>
-                                <%if (recordList.get(i).getImgURL().contains("Images")) {
-                                        out.println("<img src=" + "\"../" + recordList.get(i).getImgURL() + "\">");
-                                    }%>
-                            </div>
-                            <% } catch (Exception e) {
-                                }%>
-                        </li>    
-                        <% }%>
-                    </ul>
-                </div>  
-
                 <div class="upcoming-events-container">
-                    <h2>Upcoming Events</h2>
+                    <h2>Calendar of Events</h2>
                     <%
                         if (role.equalsIgnoreCase("admin")) {
                     %>
@@ -167,10 +167,10 @@
                         %>
                     <div class="event-buttons"> 
                         <form  action="../events/events-add.jsp">
-                            <input type="submit" value="Add Event"  class="button"/>
+                            <button type="submit" value="Add Event"  class="button">Add Event</button>
                         </form>
                         <form  action="../events/events-delete.jsp">
-                            <input type="submit" value="Delete Event"  class="button"/>
+                            <button type="submit" value="Delete Event"  class="button">Delete Event</button>
                         </form>
                     </div>
                     <% }%>
@@ -508,21 +508,21 @@
             }();
 
             !function () {
-                         <% if(!recordList.isEmpty()) {  %>
+            <% if (!recordList.isEmpty()) {  %>
                 var data = [
-   
+
             <%
-                
+
                 for (int i = 0; i < recordList.size() - 1; i++) {
             %>
                     {date: "<%= recordList.get(i).getDate()%>", eventName: "<%= recordList.get(i).getName()%>", calendar: 'Work', color: 'orange'},
             <% }%>
                     {date: "<%= recordList.get(recordList.size() - 1).getDate()%>", eventName: "<%= recordList.get(recordList.size() - 1).getName()%>", calendar: 'Work', color: 'orange'}];
-                                <%        
-                } else {%>
-                        var data =[];
-              <%  }%>
- //    { eventName: 'Game vs Portalnd', calendar: 'Sports', color: 'blue' },
+            <%
+            } else {%>
+                var data = [];
+            <%  }%>
+                //    { eventName: 'Game vs Portalnd', calendar: 'Sports', color: 'blue' },
                 //    { eventName: 'Game vs Houston', calendar: 'Sports', color: 'blue' },
                 //    { eventName: 'Game vs Denver', calendar: 'Sports', color: 'blue' },
                 //    { eventName: 'Game vs San Degio', calendar: 'Sports', color: 'blue' },

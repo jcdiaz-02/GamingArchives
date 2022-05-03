@@ -1,0 +1,91 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 05 1, 22, 5:09:18 PM
+    Author     : Admin
+*/
+
+.error-section{
+    -ms-transform: translate(-50%, 0);
+    margin-top: 8rem;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 100%; 
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.error-logo{
+    width: 40rem;
+}
+
+.error-title h2{
+    font-family: var(--font3);
+    color: #E13365;
+    font-size: 6rem;
+
+}
+
+.error-title h3{
+    margin-top: 2rem;
+    font-family: var(--font1);
+    color: var(--red1);
+    font-size: 2rem;
+}
+
+
+.error-section .error-sub button{
+    align-items: center;
+    background: #AE9279;
+    border: 1px solid #AE9279;
+    border-radius: 16px;
+    color: white;
+    cursor: pointer;
+    font-family: var(--font2);
+    font-size: 2rem;
+    height: 4rem;
+    margin-top: 4rem;
+    width: 20rem;
+}
+
+@media(max-width: 800px){
+    .error-section{
+        width: 90%;
+    }
+    
+    .error-logo{
+        width: 100%;
+    }
+
+    .error-title h2{
+        font-size: 4rem;
+    }
+
+    .error-title h3{
+        margin-top: 1.8rem;
+        font-size: 1.8rem;
+    }
+}
+
+@media(max-width: 450px){
+    .error-title h2{
+        font-size: 3.5rem;
+    }
+    
+    .error-title h3{
+        font-size: 1.5rem;
+    }
+    
+    .error-section .error-sub button{
+        font-size: 1.5rem;
+        height: 3rem;
+        width: 12rem;
+    }
+    
+}

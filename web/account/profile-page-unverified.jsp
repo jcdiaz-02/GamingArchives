@@ -1,9 +1,8 @@
 <%-- 
-    Document   : profile-page
-    Created on : 03 19, 22, 2:59:24 AM
-    Author     : Admin
+Document   : profile-page
+Created on : 03 19, 22, 2:59:24 AM
+Author     : Admin
 --%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html>
@@ -30,21 +29,23 @@
 
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+        <script src="https://kit.fontawesome.com/db09b338f9.js" crossorigin="anonymous"></script>
+        <title>UST-TGS</title>
     </head>
     <body>
-	<%
-	    response.setHeader("Cache-Control", "no-cache");
-	    response.setHeader("Cache-Control", "no-store");
-	    response.setHeader("Pragma", "no-cache");
-	    response.setDateHeader("Expires", 0);
-	    String uname = (String) session.getAttribute("username");
+        <%
+            response.setHeader("Cache-Control", "no-cache");
+            response.setHeader("Cache-Control", "no-store");
+            response.setHeader("Pragma", "no-cache");
+            response.setDateHeader("Expires", 0);
+            String uname = (String) session.getAttribute("username");
 
-	    if (uname == null) {
-		response.sendRedirect("../login.jsp");
-	    }
+            if (uname == null) {
+                response.sendRedirect("../login.jsp");
+            }
 
-	%>
-        <!--TODO: CONNECT ACCOUNT AND CHECK IF VERIFIED OR NOT--> 
+        %>
         <!-- navbar -->
         <div class="bar"> 
             <input type="checkbox" id="check">
@@ -63,9 +64,9 @@
                     <a class="option" href="../subpage/authenticatedAbout.jsp">About</a>
                     <a class="option" href="../EventOverview">Events</a>
                     <a class="option" href="../subpage/authenticatedContacts.jsp">Contact</a>
-                    <form style="color:#B92432;" action="../MyAccountServlet">
-			<input type="hidden" name="verify" value="${verify}" />
-                        <input type="submit" value="My Account"  class="button"/>
+                    <form class="button-nav-form" style="color:#B92432;" action="../MyAccountServlet">
+                        <input type="hidden" name="verify" value="${verify}" />
+                        <button type="submit" value="My Account"  class="button"/>My Account</button>
                     </form>
 
 
@@ -78,8 +79,8 @@
             <div class="profile-container">
 
                 <button type="button" onclick="location.href = '../PersonalRecordServlet';" class="button" >
-		    <span class="material-icons-outlined">badge</span> 
-		    View Personal Record
+                    <span class="material-icons-outlined">badge</span> 
+                    View Personal Record
                 </button>
 
                 <button type="button" onclick="location.href = '../LogoutServlet';" class="button">

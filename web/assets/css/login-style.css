@@ -9,14 +9,13 @@ and open the template in the editor.
 */
 
 .login-section{
-    -ms-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, 0);
     background: white;
     border-radius: 40px;
-    margin: 0;
+    margin-top: 8rem;
     position: absolute;
     left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, 0);
     width: 40rem; 
     box-shadow: 20px 20px var(--brown1);
 
@@ -49,9 +48,8 @@ and open the template in the editor.
 }
 
 .login-section .login-container a{
-   color: var(--brown4);
-   font-family: var(--font2);
-   font-size: 1.6rem;
+    color: var(--brown4);
+    font-family: var(--font2);
 }
 
 .login-section .login-container .input-container{
@@ -71,7 +69,7 @@ and open the template in the editor.
     font-size: 1.6rem;
     font-weight: 600;
     margin-bottom: 20px;
-    
+
 }
 
 
@@ -84,14 +82,14 @@ and open the template in the editor.
     border-radius: 10px;
     height: 5rem;
     margin-bottom: 2rem;
-    
+
 }
 
 .login-section .login-container .input-container .input .input-icon{
     position: absolute;
     margin-left: 20px;
     font-size: 36px;
-       
+
 }
 
 
@@ -103,10 +101,9 @@ and open the template in the editor.
     border-radius: 10px;
     font-size: 24px;
     font-family: var(--font1);
-    height: 5rem;
     width: 100%;
     padding: 20px 70px;
-   
+
 }
 
 .login-section .login-container .input-container .input .psw-show{
@@ -117,13 +114,85 @@ and open the template in the editor.
 }
 
 .login-section .login-container  button{
-   background: #AE9279;
-   border: none;
-   border-radius: 10px;   
-   color: #ffffff;
-   font-family: var(--font2);
-   font-size: 3rem;
-   height: 5rem;
-   margin-bottom: 20px;
-   width: 80%;
+    background: #AE9279;
+    border: none;
+    border-radius: 10px;   
+    color: #ffffff;
+    font-family: var(--font2);
+    font-size: 3rem;
+    height: 5rem;
+    margin-bottom: 20px;
+    width: 80%;
+}
+
+
+@media(max-width: 800px){
+    .login-section{
+        width: 80%;
+    }
+
+    .login-section .login-container h2{
+        font-size: 1.8rem;
+    }
+
+    .login-section .login-container h3{
+        font-size: 1.5rem;
+    }
+
+    .login-section .login-container  button{
+        font-size: 2rem;
+    }
+}
+
+@media(max-width: 500px){
+    .login-section{
+        width: 95%;
+        border-radius: 20px;
+    }
+
+    .login-section .login-container h2{
+        font-size: 1.5rem;
+    }
+
+    .login-section .login-container h3{
+        font-size: 1.3rem;
+    }
+
+    .login-section .login-container  button{
+        font-size: 2rem;
+    }
+
+    .login-section .login-container .input-container{
+        width: 85%;
+    }
+
+    .login-section .login-container .input-container .input {
+        height: 4rem;
+    }
+
+    .login-section .login-container .input-container .input input{
+        font-size: 1.2rem;
+    }
+
+    .login-section .login-container .input-container .input .psw-show{
+        font-size: 24px;
+    }
+
+    .login-section .login-container .input-container .input .input-icon{
+        font-size: 24px;
+
+    }
+
+    .login-section .login-container  button{
+        height: 4rem;
+        width: 85%;
+    }
+
+}
+
+@media(max-width: 375px){
+    .login-section .login-container h2{
+        font-size: 1.4rem;
+    }
+
 }

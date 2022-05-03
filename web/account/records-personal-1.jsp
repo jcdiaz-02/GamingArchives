@@ -33,22 +33,25 @@
         <title>UST-TGS</title>
     </head>
     <body>
-	<%
-	    response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
-	    String uname = (String) session.getAttribute("username");
-	    String role = (String) session.getAttribute("role");
-	    if (uname == null) {
-		response.sendRedirect("home.jsp");
-	    }
-	%>
-        <!--TODO: CONNECT TO DATABASE TO ACCESS PERSONAL RECORD -->
-        <!--TODO: FUNCTIONALITY OF SORT BUTTONS-->
+        <%
+            response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
+            String uname = (String) session.getAttribute("username");
+            String role = (String) session.getAttribute("role");
+            if (uname == null) {
+                response.sendRedirect("home.jsp");
+            }
+        %>
         <!-- navbar -->
         <div class="bar"> 
             <input type="checkbox" id="check">
             <label for="check" class="checkbtn">
                 <i class="fas fa-bars"></i>
             </label>
+
+            <div class="logo-container" >
+                <a href="../home.jsp"><img class="nav-logo nav-logo2" src="../assets/logo.svg" ></a>
+            </div>
+
             <div class="nav-content">
                 <div class="nav-title">
                     <img class="nav-logo" src="../assets/logo.svg" alt="UST-TGS logo">
@@ -61,19 +64,19 @@
                     <a class="option" href="../subpage/authenticatedAbout.jsp">About</a>
                     <a class="option" href="../EventOverview">Events</a>
                     <a class="option" href="../subpage/authenticatedContacts.jsp">Contact</a>
-		    <%
-			if (role.equalsIgnoreCase("member")) {
-		    %>
-		    <form action="../MyAccountServlet">
-			<input type="hidden" name="verify" value="${verify}" />
-			<input type="submit" value="My Account"  class="button"/>
-		    </form>
-		    <%    } else if (role.equalsIgnoreCase("admin")) { %>
-		    <form action="../MyAccountServlet">
-			<input type="hidden" name="verify" value="${verify}" />
-			<input type="submit" value="ADMIN"  class="button"/>
-		    </form>
-		    <% }%>  
+                    <%
+                        if (role.equalsIgnoreCase("member")) {
+                    %>
+                    <form class="button-nav-form" action="../MyAccountServlet">
+                        <input type="hidden" name="verify" value="${verify}" />
+                        <button type="submit" value="My Account"  class="button"/>My Account</button>
+                    </form>
+                    <%    } else if (role.equalsIgnoreCase("admin")) { %>
+                    <form class="button-nav-form"  action="../MyAccountServlet">
+                        <input type="hidden" name="verify" value="${verify}" />
+                        <button type="submit" value="ADMIN"  class="button"/>ADMIN</button>
+                    </form>
+                    <% }%>  
 
                 </div>
             </div>
@@ -82,7 +85,7 @@
         <section class="personal-records-section-1">
             <div class="personal-records-container">
                 <h3> View Personal Record </h3>
-		<form class="personal-records-info-container0" action="/">
+                <form class="personal-records-info-container0" action="/">
 
                     <div class='personal-records-profile-container'>
                         <span class="material-icons personal-records-photo">
@@ -105,22 +108,24 @@
                     <div class='personal-records-info-container1'> 
                         <label for=''>Username:</label>
 
-                        <input type='text' id='uname' name='uname' value='${username}' readonly> 
-                        <span class="material-icons edit-icon">
-                            edit
-                        </span>
+                        <div class='personal-records-edit'>
+                            <input type='text' id='uname' name='uname' value='${username}' readonly> 
+                            <span class="material-icons edit-icon">
+                                edit
+                            </span>
+                        </div>
 
                     </div>
 
 
                     <div class='personal-records-info-container1'> 
                         <label for=''>Password:</label>
-
-                        <input type='password' id='password' name='password' value='${password}' readonly> 
-                        <span class="material-icons edit-icon">
-                            edit
-                        </span>
-
+                        <div class='personal-records-edit'>
+                            <input type='password' id='password' name='password' value='${password}' readonly> 
+                            <span class="material-icons edit-icon">
+                                edit
+                            </span>
+                        </div>
                     </div>
 
                     <div class='personal-records-info-container1'>
@@ -174,33 +179,33 @@
                     </span>
 
                     <div class="personal-records-buttons"> 
-			<%
-			    if (role.equalsIgnoreCase("member")) {
-			%>
-			<input type="button" onclick="location.href = 'profile-page.jsp';" value="GO BACK" class="button" />
-			<%
-			} else if (role.equalsIgnoreCase("admin")) {
-			%>
-			<input type="button" onclick="location.href = 'profile-page-admin.jsp';" value="GO BACK" class="button" />
-			<%}%>
-			<input type="button" id="modalBtn" value="GENERATE PDF" class="button" />
-			<input type="button" onclick="location.href = '../LogoutServlet';" value="LOGOUT" class="button" />
-		    </div>   
+                        <%
+                            if (role.equalsIgnoreCase("member")) {
+                        %>
+                        <button type="button" onclick="location.href = 'profile-page.jsp';" value="GO BACK" class="button" >GO BACK</button>
+                        <%
+                        } else if (role.equalsIgnoreCase("admin")) {
+                        %>
+                        <button type="button" onclick="location.href = 'profile-page-admin.jsp';" value="GO BACK" class="button" />GO BACK</button>
+                        <%}%>
+                        <button type="button" id="modalBtn" value="GENERATE PDF" class="button" />GENERATE PDF</button>
+                        <button type="button" onclick="location.href = '../LogoutServlet';" value="LOGOUT" class="button" />LOGOUT</button>
+                    </div>   
                 </form> 
             </div>
         </section>
 
-	<section id="modalSection" class="modal-section">
-	    <div class="modal-content">
-		<h3 class="modal-header">SUCCESS!</h3>
-		<p class="modal-msg">Your PDF has been generated.</p>   
-		<span class="modal-buttoncon">
-		    <!--                        <span onclick="Home()" class="close modal-button">Home</span>-->
-		    <form method="POST" action ="../PDFServlet">
-			<button class="modal-button"  name="pdfbutton" value="ownpdf">Download PDF</button>
-		    </form>
-		</span>
-	    </div>
-	</section>
+        <section id="modalSection" class="modal-section">
+            <div class="modal-content">
+                <h3 class="modal-header">SUCCESS!</h3>
+                <p class="modal-msg">Your PDF has been generated.</p>   
+                <span class="modal-buttoncon">
+                    <!--                        <span onclick="Home()" class="close modal-button">Home</span>-->
+                    <form method="POST" action ="../PDFServlet">
+                        <button class="modal-button"  name="pdfbutton" value="ownpdf">Download PDF</button>
+                    </form>
+                </span>
+            </div>
+        </section>
     </body>
 </html>

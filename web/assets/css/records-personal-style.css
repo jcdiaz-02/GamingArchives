@@ -9,15 +9,14 @@ and open the template in the editor.
 */
 
 .personal-records-section-0{
-    -ms-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, 0);
     background: white;
     border-radius: 40px;
     font-family: var(--font5);
-    margin: 0;
+    margin-top: 8rem;
     position: absolute;
     left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, 0);
     width: 60rem; 
     padding: 2rem 4rem;
 }
@@ -30,15 +29,14 @@ and open the template in the editor.
 }
 
 .personal-records-section-1{
-    -ms-transform: translate(-50%, -40%);
+    -ms-transform: translate(-50%, 0);
     background: white;
     border-radius: 40px;
     font-family: var(--font5);
-    margin: 0;
+    margin-top: 8rem;
     position: absolute;
     left: 50%;
-    top: 50%;
-    transform: translate(-50%, -40%);
+    transform: translate(-50%, 0);
     width: 60rem; 
     padding: 1rem 4rem;
 }
@@ -50,7 +48,7 @@ and open the template in the editor.
     font-family: var(--font5);
     position: absolute;
     left: 50%;
-    margin-top: 7rem;
+    margin-top: 8rem;
     transform: translate(-50%, 0%);
     width: 60rem; 
     padding: 1rem 4rem;
@@ -62,6 +60,7 @@ and open the template in the editor.
 }
 
 .personal-records-container .personal-records-profile-container{
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -69,6 +68,7 @@ and open the template in the editor.
 
 .personal-records-container .personal-records-profile-container .personal-records-photo{
     font-size: 150px;
+    width: 150px;
 }
 
 .personal-records-container .personal-records-profile-container .name-container{
@@ -97,7 +97,8 @@ and open the template in the editor.
 
 .personal-records-info-container0{
     width: 100%;
-    display: grid;
+    display: flex;
+    flex-direction: column;
     margin: auto;
     row-gap: 20px;
 }
@@ -107,7 +108,7 @@ and open the template in the editor.
     display: grid;    
     align-content: center;
     justify-content: center;
-    grid-template-columns: 20% 70% 20px;
+    grid-template-columns: 20% 70% 20px;    
 }
 
 .personal-records-info-container1 label{
@@ -127,10 +128,23 @@ and open the template in the editor.
     font-family: var(--font5);
     font-size: 1.2rem;
     padding: 5px 20px;
+    overflow: auto;
+}
+
+.personal-records-info-container1 select{
+    background-color:  var(--grey2);
+    font-family: var(--font5);
+    font-size: 1rem;
+    border: none;
+    padding: 5px 10px;
 }
 
 .personal-records-info-container1 input:focus{
     outline: none;
+}
+
+.personal-records-info-container1 .personal-records-edit{
+    display: flex;
 }
 
 .personal-records-info-container1 .edit-icon{
@@ -154,13 +168,13 @@ and open the template in the editor.
 .personal-records-info-container0 .personal-records-buttons{
     display: flex;
     width: 100%;
-    justify-content: center;
+    justify-content: space-around;
 }
 
 .personal-records-info-container0 .personal-records-buttons .button{
     align-items: center;
     background: var(--brown2);
-    border: 1px solid var(--brown1);
+    border: none;
     border-radius: 50px;
     color: white;
     cursor: pointer;
@@ -168,7 +182,110 @@ and open the template in the editor.
     font-size: 2.2rem;
     height: 3rem;
     padding: 0px 50px;
-    margin-right: 3rem;
-    margin-bottom: 2rem;
+}
+
+
+@media(max-width: 1024px){
+    .personal-records-section-1, .personal-records-section-2{
+        width: 90%;
+        padding: 2rem;
+    }
+}
+
+@media(max-width: 800px){
+    .personal-records-info-container0 .personal-records-buttons .button{
+        border-radius: 30px;
+        font-size: 1.8rem;
+        height: 3rem;
+        padding: 0px 30px;
+    }
+
+}
+
+@media(max-width: 600px){
+    .personal-records-info-container0 .personal-records-buttons{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .personal-records-info-container0 .personal-records-buttons .button{
+        margin-bottom: 1rem;
+        width: 80%;
+    }
+}
+
+@media(max-width: 500px){
+    .personal-records-section-1{
+        width: 95%;
+        padding: 1.2rem;
+    }
+
+    .personal-records-container h3{
+        font-size: 1.8rem;
+    }
+
+    .personal-records-container .personal-records-profile-container{
+        flex-direction: column;
+        align-items: center;
+
+    }
+
+    .personal-records-container .personal-records-profile-container .personal-records-photo{
+        font-size: 130px;
+        /*        width: 130px;*/
+    }
+
+    .personal-records-container .personal-records-profile-container .name-container{
+        align-items: center;
+    }
+
+    .personal-records-container .personal-records-profile-container .name-container .name{
+        font-size: 1.5rem;
+        padding-bottom: 1rem;
+    }
+
+    .personal-records-container .personal-records-profile-container .name-container .dpt{
+        font-size: 1rem;
+        padding-bottom: 1.5rem;
+    }
+
+
+    .personal-records-info-container1{
+        width: 100%;
+        display: flex;    
+        align-content: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .personal-records-info-container1 label{
+        display: flex;
+        align-items: center;
+        font-family: var(--font2);
+        font-size: 1.2rem;
+        font-weight: 600;
+        text-align: left;
+        text-transform: uppercase;
+    }
+
+    .personal-records-info-container1 input{
+        font-size: 1rem;
+        padding: 10px;
+    }
+
+    .personal-records-info-container0 .personal-records-buttons .button{
+        width: 70%;
+        font-size: 1.5rem;
+        height: 2.5rem;
+    }
+
+    .personal-records-info-container0 .verification-container{
+        font-size: 1rem;
+    }
+
+    .personal-records-info-container0 .verification-container .verification-icon{
+        font-size: 24px;
+    }
 }
 

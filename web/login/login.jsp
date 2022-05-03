@@ -24,19 +24,24 @@
 
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+        <script src="https://kit.fontawesome.com/db09b338f9.js" crossorigin="anonymous"></script>
         <title>UST-TGS</title>
-
-
     </head>
     <body>
 
 
-	<!-- navbar -->
+        <!-- navbar -->
         <div class="bar"> 
             <input type="checkbox" id="check">
             <label for="check" class="checkbtn">
-		<i class="fas fa-bars"></i>
+                <i class="fas fa-bars"></i>
             </label>
+
+            <div class="logo-container" >
+                <a href="home.jsp"><img class="nav-logo nav-logo2" src="../assets/logo.svg" ></a>
+            </div>
+
             <div class="nav-content">
                 <div class="nav-title">
                     <img class="nav-logo" src="../assets/logo.svg" alt="UST-TGS logo">
@@ -49,17 +54,17 @@
                     <a class="option" href="../subpage/about.jsp">About</a>
                     <a class="option" href="../subpage/events.jsp">Events</a>
                     <a class="option" href="../subpage/contact.jsp">Contact</a>
-                    <form  action="../login/login.jsp">
-                        <input type="submit" value="Login"  class="button"/>
+                    <form class="button-nav-form" action="../login/login.jsp">
+                        <button type="submit" value="Login"  class="button"/>Login</button>
                     </form>
 
                 </div>
             </div>
         </div>
 
-	<%
-	    session.setAttribute("identifier", "login");
-	%>
+        <%
+            session.setAttribute("identifier", "login");
+        %>
         <section class="login-section">
             <form class="login-container" method="post" action="../LoginVerification">
                 <h2>Welcome Back</h2>
@@ -76,8 +81,8 @@
                     <label for="psw"><b>Password</b></label>
                     <div class="input">
                         <span class="material-icons input-icon" style="color:#23B461;">&#xe32a;</span>
-                        <input type="password" placeholder="Enter Password" name="psw" required>
-                        <span class="material-icons-outlined psw-show">visibility_off</span>
+                        <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
+                        <span onclick="toggleVisibility()" class="material-icons-outlined psw-show">visibility_off</span>
                     </div> 
                 </div>
 
@@ -85,8 +90,19 @@
                 <button type="submit" name="button" value="login">LOGIN</button>
                 <a href="../login/password-forgot.jsp">Forgot Password?</a>
             </form>
-        </section>       
+        </section> 
     </body>
+
+    <script>
+                            function toggleVisibility() {
+                                var psw = document.getElementById("psw");
+                                if (psw.type === "password") {
+                                    psw.type = "text";
+                                } else {
+                                    psw.type = "password";
+                                }
+                            }
+    </script>
 </html>
 
 

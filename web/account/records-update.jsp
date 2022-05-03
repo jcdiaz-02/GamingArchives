@@ -20,10 +20,10 @@
 
     Connection conn;
     try {
-	Class.forName(driver);
+        Class.forName(driver);
 
     } catch (ClassNotFoundException e) {
-	e.printStackTrace();
+        e.printStackTrace();
     }
     Connection connection = null;
     Statement statement = null;
@@ -57,17 +57,20 @@
     </head>
     <body>
 
-	<%
-	    response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
-	%>  
-        <!--TODO: CONNECT TO DATABASE TO ACCESS PERSONAL RECORD -->
-        <!--TODO: FUNCTIONALITY OF SORT BUTTONS-->
+        <%
+            response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
+        %>  
         <!-- navbar -->
         <div class="bar"> 
             <input type="checkbox" id="check">
             <label for="check" class="checkbtn">
                 <i class="fas fa-bars"></i>
             </label>
+
+            <div class="logo-container" >
+                <a href="../home.jsp"><img class="nav-logo nav-logo2" src="../assets/logo.svg" ></a>
+            </div>
+
             <div class="nav-content">
                 <div class="nav-title">
                     <img class="nav-logo" src="../assets/logo.svg" alt="UST-TGS logo">
@@ -76,123 +79,133 @@
                     </a>
                 </div>
                 <div class="nav-options" >
-		    <a class="option" href="../subpage/authenticatedHome.jsp">Home</a>
+                    <a class="option" href="../subpage/authenticatedHome.jsp">Home</a>
                     <a class="option" href="../subpage/authenticatedAbout.jsp">About</a>
                     <a class="option" href="../EventOverview">Events</a>
                     <a class="option" href="../subpage/authenticatedContacts.jsp">Contact</a>
-                    <form style="color:#B92432;" action="../MyAccountServlet">
-			<input type="hidden" name="verify" value="${verify}" />
-                        <input type="submit" value="ADMIN"  class="button"/>
+                    <form class="button-nav-form" style="color:#B92432;" action="../MyAccountServlet">
+                        <input type="hidden" name="verify" value="${verify}" />
+                        <button type="submit" value="ADMIN"  class="button"/>ADMIN</button>
                     </form>
 
                 </div>
             </div>
         </div>
-	<%
-	    response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
-	    String sessionuname = (String) session.getAttribute("username");
+        <%
+            response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
+            String sessionuname = (String) session.getAttribute("username");
 
-	    String role = (String) session.getAttribute("role");
-	    if (sessionuname == null) {
-		response.sendRedirect("home.jsp");
-	    }
-	%>
+            String role = (String) session.getAttribute("role");
+            if (sessionuname == null) {
+                response.sendRedirect("home.jsp");
+            }
+        %>
         <section class="personal-records-section-2">
             <div class="personal-records-container">
-		<%
-		    try {
-			conn = DriverManager.getConnection(url, username, password);
+                <%
+                    try {
+                        conn = DriverManager.getConnection(url, username, password);
 
-			String uname = request.getParameter("uname");
-			session.setAttribute("primaryusername", uname);
-			String query = "SELECT * FROM APP.VERIFIEDDB where USERNAME=?";
-			PreparedStatement pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, uname);
-			ResultSet records = pstmt.executeQuery();
-			if (records.next() == false) {
-			    response.sendRedirect("records-all.jsp");
-			} else {
-			    do {
-				System.out.println("");
+                        String uname = request.getParameter("uname");
+                        session.setAttribute("primaryusername", uname);
+                        String query = "SELECT * FROM APP.VERIFIEDDB where USERNAME=?";
+                        PreparedStatement pstmt = conn.prepareStatement(query);
+                        pstmt.setString(1, uname);
+                        ResultSet records = pstmt.executeQuery();
+                        if (records.next() == false) {
+                            response.sendRedirect("records-all.jsp");
+                        } else {
+                            do {
+                                System.out.println("");
 
-		%>
+                %>
                 <h3> Update Record</h3>
                 <form class="personal-records-info-container0" method="POST" action="../UpdateRecordServlet">
-		    <div class="personal-records-info-container1">
-			<h1>Email: </h1><input type="email" placeholder="<%=records.getString("EMAIL")%>" name="email">
-		    </div>
+                    <div class="personal-records-info-container1">
+                        <label for=''>Email:</label>
+                        <input type="email" placeholder="<%=records.getString("EMAIL")%>" name="email">
+                    </div>
 
-		    <div class="personal-records-info-container1">
-			<h1>Username: </h1><input type="text" placeholder="<%=records.getString("USERNAME")%>" name="uname">
-		    </div>
+                    <div class="personal-records-info-container1">
+                        <label for=''>Username:</label>
+                        <input type="text" placeholder="<%=records.getString("USERNAME")%>" name="uname">
+                    </div>
 
-		    <div class="personal-records-info-container1">
-			<h1>Password: </h1><input type="text" placeholder="Password" name="pass">
-		    </div>
-		    <div class="personal-records-info-container1">
+                    <div class="personal-records-info-container1">
+                        <label for=''>Password:</label>
+                        <input type="text" placeholder="Password" name="pass">
+                    </div>
 
-			<h1>Name: </h1><input type="text" placeholder="<%=records.getString("NAME")%>" name="myname">
-		    </div>
-		    <div class="personal-records-info-container1">
+                    <div class="personal-records-info-container1">
+                        <label for=''>Name:</label>
+                        <input type="text" placeholder="<%=records.getString("NAME")%>" name="myname">
+                    </div>
+                    <div class="personal-records-info-container1">
+                        <label for=''>Course:</label>
+                        <input type="text" placeholder="<%=records.getString("COURSE")%>" name="course">
+                    </div>
 
-			<h1>Course: </h1><input type="text" placeholder="<%=records.getString("COURSE")%>" name="course">
-		    </div>
-		    <div class="personal-records-info-container1">
+                    <div class="personal-records-info-container1">
+                        <label for=''>Age:</label>
+                        <input type="number" placeholder="<%=records.getString("AGE")%>" name="age">
+                    </div>
 
-			<h1>Age: </h1><input type="number" placeholder="<%=records.getString("AGE")%>" name="age">
-		    </div>
+                    <div class="personal-records-info-container1">
 
-		    <div class="personal-records-info-container1">
+                        <label for=''>Birthday</label><input type="date" placeholder="<%=records.getString("BIRTHDAY")%>" name="birthday">
+                    </div>
 
-			<h1>Birthday: </h1><input type="date" placeholder="<%=records.getString("BIRTHDAY")%>" name="birthday">
-		    </div>
+                    <div class='personal-records-info-container1'>
+                        <label for=''>Gender:</label>
+                        <select id="gender" name="gender">
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select><br>
+                    </div>
 
-		    <div class="personal-records-info-container1">
+                    <div class="personal-records-info-container1">
+                        <label for=''>Student Number:</label>
+                        <input type="number" placeholder="<%=records.getString("STUDENTNUMBER")%>" name="snumber">
+                    </div>
 
-			<h1>Gender: </h1><input type="text" placeholder="<%=records.getString("GENDER")%>" name="gender">
-		    </div>
+                    <div class="personal-records-info-container1">
+                        <label for=''>Favorite Game:</label>
+                        <input type="text" placeholder="<%=records.getString("FAVORITEGAME")%>" name="favgame">
+                    </div>
 
-		    <div class="personal-records-info-container1">
+                    <div class="personal-records-info-container1">
+                        <label for=''>Contact Number:</label>
+                        <input type="number" placeholder="<%=records.getString("CONTACTNUMBER")%>" name="cnumber">
+                    </div>
 
-			<h1>Student Number: </h1><input type="number" placeholder="<%=records.getString("STUDENTNUMBER")%>" name="snumber">
-		    </div>
+                    <div class="personal-records-info-container1">
+                        <label for=''>Address:</label>
+                        <input type="text" placeholder="<%=records.getString("ADDRESS")%>" name="homeaddress">
+                    </div>
+                    <div class="personal-records-info-container1">
+                        <label for=''>Role:</label>
+                        <select id="userrole" name="userrole">
+                            <option value="member">Member</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                        <!--<h1>Role: </h1><input type="text" placeholder="<%//=records.getString("ROLE")%>" name="userrole">-->
+                    </div>
 
-		    <div class="personal-records-info-container1">
+                    <div class="personal-records-buttons"> 
+                        <button type="button" onclick="location.href = 'records-all.jsp';" value="GO BACK" class="button" />GO BACK</button>
 
-			<h1>Favorite Game: </h1><input type="text" placeholder="<%=records.getString("FAVORITEGAME")%>" name="favgame">
-		    </div>
-
-		    <div class="personal-records-info-container1">
-
-			<h1>Contact Number: </h1><input type="number" placeholder="<%=records.getString("CONTACTNUMBER")%>" name="cnumber">
-		    </div>
-
-		    <div class="personal-records-info-container1">
-
-			<h1>Address: </h1><input type="text" placeholder="<%=records.getString("ADDRESS")%>" name="homeaddress">
-		    </div>
-		    <div class="personal-records-info-container1">
-
-			<h1>Role: </h1><input type="text" placeholder="<%=records.getString("ROLE")%>" name="userrole">
-		    </div>
-
-		    <div class="personal-records-buttons"> 
-                        <input type="button" onclick="location.href = 'records-all.jsp';" value="GO BACK" class="button" />
-                        
                         <button type="submit" id="modalBtn" name="recbutton" value="update" class="button" />UPDATE</button>
-                    
-                        <button type="button" onclick="location.href = '../LogoutServlet';" class="button">
-			    <span class="material-icons-outlined">power_settings_new</span>
-			    Logout</button>
-		    </div>   
-		    <%
-				} while (records.next());
 
-			    }
-			    records.close();
-			} catch (Exception e) {
-			    e.printStackTrace();
-			}%>
+                        <button type="button" onclick="location.href = '../LogoutServlet';" class="button"> LOGOUT</button>
+                    </div>   
+                    <%
+                                } while (records.next());
+
+                            }
+                            records.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }%>
 
                 </form> 
             </div>

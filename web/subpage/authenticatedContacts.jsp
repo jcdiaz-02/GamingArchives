@@ -31,21 +31,25 @@
         <title>UST-TGS</title>
     </head>
     <body>
-	<%
-	    response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
-	    String uname = (String) session.getAttribute("username");
-	    String role = (String) session.getAttribute("role");
-            if(role == null){
+        <%
+            response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
+            String uname = (String) session.getAttribute("username");
+            String role = (String) session.getAttribute("role");
+            if (role == null) {
                 role = "guest";
             }
-	%>
-        <!--TODO: CONNECT A CONTACT SERVLET-->
+        %>
         <!-- navbar -->
         <div class="bar"> 
             <input type="checkbox" id="check">
             <label for="check" class="checkbtn">
                 <i class="fas fa-bars"></i>
             </label>
+
+            <div class="logo-container" >
+                <a href="../home.jsp"><img class="nav-logo nav-logo2" src="../assets/logo.svg" ></a>
+            </div>
+
             <div class="nav-content">
                 <div class="nav-title">
                     <img class="nav-logo" src="../assets/logo.svg" alt="UST-TGS logo">
@@ -54,23 +58,23 @@
                     </a>
                 </div>
                 <div class="nav-options" >
-		    <a class="option" href="authenticatedHome.jsp">Home</a>
+                    <a class="option" href="authenticatedHome.jsp">Home</a>
                     <a class="option" href="authenticatedAbout.jsp">About</a>
                     <a class="option" href="../EventOverview">Events</a>
                     <a class="option" style="color:#B92432;" href="authenticatedContacts.jsp">Contact</a>
-		    <%
-			if (role.equalsIgnoreCase("member")) {
-		    %>
-		    <form action="../MyAccountServlet">
-			<input type="hidden" name="verify" value="${verify}" />
-			<input type="submit" value="My Account"  class="button"/>
-		    </form>
-		    <%    } else if (role.equalsIgnoreCase("admin")) { %>
-		    <form action="../MyAccountServlet">
-			<input type="hidden" name="verify" value="${verify}" />
-			<input type="submit" value="ADMIN"  class="button"/>
-		    </form>
-		    <% }%>  
+                    <%
+                        if (role.equalsIgnoreCase("member")) {
+                    %>
+                    <form class="button-nav-form" action="../MyAccountServlet">
+                        <input type="hidden" name="verify" value="${verify}" />
+                        <button type="submit" value="My Account"  class="button"/>My Account</button>
+                    </form>
+                    <%    } else if (role.equalsIgnoreCase("admin")) { %>
+                    <form class="button-nav-form" action="../MyAccountServlet">
+                        <input type="hidden" name="verify" value="${verify}" />
+                        <button type="submit" value="ADMIN"  class="button"/>ADMIN</button>
+                    </form>
+                    <% }%>  
 
                 </div>
             </div>
@@ -81,33 +85,33 @@
             <div class="contact-panel1">
                 <h2>Stay Connected with us.</h2>
 
-                <table class="contact-list">
-                    <tr>
-                        <td><i class="fa-solid fa-envelope"></i></td>    
-                        <td><span> thomasiangamingsociety@gmail.com</span></td>
+                <div class="contact-list">
+                    <div class="contact-link">
+                        <i class="fa-solid fa-envelope"></i>
+                        <span>thomasiangamingsociety@gmail.com </span>
 
-                    </tr>                              
+                    </div>                              
 
-                    <tr>
-                        <td><i class="fa-brands fa-facebook"></i></td>
-                        <td><span> @ThomasianGamingSociety</span></td>
-                    </tr>
+                    <div class="contact-link">
+                        <i class="fa-brands fa-facebook"></i>
+                        <span> @ThomasianGamingSociety</span>
+                    </div>
 
-                    <tr>
-                        <td><i class="fa-brands fa-twitter"></i></td>
-                        <td><span>@UST_TGS</span></td>
-                    </tr>
+                    <div class="contact-link">
+                        <i class="fa-brands fa-twitter"></i>
+                        <span>@UST_TGS</span>
+                    </div>
 
-                    <tr>
-                        <td><i class="fa-brands fa-instagram"></i> </td>
-                        <td><span>@UST_TGS</span></td>
-                    </tr>
+                    <div class="contact-link">
+                        <i class="fa-brands fa-instagram"></i>
+                        <span>@UST_TGS</span>
+                    </div>
 
-                    <tr>
-                        <td><i class="fa-solid fa-location-dot"></i> </td>
-                        <td><span>España Blvd, Sampaloc, Manila, 1008 Metro Manila</span></td>
-                    </tr>
-                </table>                           
+                    <div class="contact-link">
+                        <i class="fa-solid fa-location-dot"></i> 
+                        <span>España Blvd, Sampaloc, Manila, 1008 Metro Manila</span>
+                    </div>
+                </div>                           
             </div>
 
             <div class="contact-panel2">
@@ -138,9 +142,9 @@
                     </div>
 
                     <div class="panel2">
-                        <input type="submit" value="SUBMIT"  class="button"/>
-                        <a href="../ViewCommentBox">Comments/Suggestions Box</a>
-                        <span class="material-icons-outlined"> &#xe8af;</span>
+                        <button type="submit" value="SUBMIT"  class="button">SUBMIT</button>
+                        <a href="../ViewCommentBox">Comments/Suggestions Box <span class="material-icons-outlined"> &#xe8af;</span></a>
+
                     </div>
                 </form>
 

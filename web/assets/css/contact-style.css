@@ -14,7 +14,7 @@ and open the template in the editor.
     display: flex;
     height: 70%;
     justify-content: space-between;
-    margin-top: 10rem;
+    margin-top: 8rem;
     position: absolute;
     left: 50%;
     transform: translate(-50%, 0);
@@ -28,7 +28,7 @@ and open the template in the editor.
     border-radius: 40px;
     font-family: var(--font5);
     padding: 4rem 2.5rem;
-    width: 35%;   
+    width: 37%;   
 }
 
 .contact-section .contact-panel1 h2{
@@ -40,32 +40,26 @@ and open the template in the editor.
 }
 
 .contact-section .contact-panel1 .contact-list{
-    border-spacing: 0 1.2rem;
+    width: 100%;
+    word-wrap: break-word;
 }
 
-.contact-section .contact-panel1 .contact-list td:nth-child(1){
-    text-align: center;
-    width: 60px;
-    padding-right: 1.2rem;
-}
-
-.contact-section .contact-panel1 .contact-list td:nth-child(2){
-    width: 80%;
-}
-
-.contact-section .contact-panel1 .contact-list tr{
-    width: 50%;
+.contact-section .contact-panel1 .contact-list .contact-link{
+    width: 100%;
+    display: flex;
+    margin-bottom: 20px;
 }
 
 .contact-section .contact-panel1 .contact-list i{
     color: var(--brown0);
     font-size: 2rem;
-
+    padding-right: 20px;
 }
 
 .contact-section .contact-panel1 .contact-list span{
     color: var(--brown0);
     font-size: 1.2rem;
+    width: 80%;
 }
 
 
@@ -108,13 +102,13 @@ and open the template in the editor.
 }
 
 
- label{
+label{
     font-size: 1.2rem;
     font-weight: bold;
 }
 
 
- input{
+input{
     border: none;
     border-bottom: solid 2px grey;
     height: 3rem;
@@ -129,8 +123,6 @@ input:focus{
     background: var(--grey2);
 }
 
-
-
 .contact-section .contact-panel2 .panel2{
     width: 100%;
     display:flex;
@@ -143,29 +135,133 @@ input:focus{
     align-items: center;
     background: var(--brown4);
     border: 1px solid var(--brown1);
-    border-radius: 50px;
+    border-radius: 30px;
     color: white;
     cursor: pointer;
     font-family: var(--font2);
-    font-size: 2.2rem;
-    height: 3rem;
-    padding: 0px 50px;
-    margin-right: 3rem;
-    width: 30%;
+    font-size: 2rem;
+    padding: 0 40px;
 }
-
 
 .contact-section .contact-panel2 .panel2 span{
     font-size: 3rem;
     color: var(--brown2);
+    word-wrap: break-word;
 }
 
 .contact-section .contact-panel2 .panel2 a{
+    display: flex;
     font-size: 1.5rem;
     margin-left: 10%;
     color: var(--brown1);
+    word-wrap: break-word;
 }
 
+@media(max-width: 800px){
+    .contact-section{
+        flex-direction: column;
+        height: auto;
+    }
+
+    .contact-section .contact-panel1{
+        width: 100%;
+        margin-bottom: 50px;
+    }
+
+
+    .contact-section .contact-panel1 h2{
+        font-size: 2rem;
+    }
+
+    .contact-section .contact-panel2{
+        width: 100%;
+    }
+
+
+    .contact-section .contact-panel2 .panel1{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 20%;
+    }
+
+    .contact-section .contact-panel2 .panel2{
+        width: 100%;
+        display:flex;
+        justify-content: space-between;
+        justify-content: center;
+    }
+
+    .contact-section .contact-panel2 .panel2 .button{
+        font-size: 2rem;
+        margin: 2rem;
+        width: 70%;
+    }
+
+    .contact-section .contact-panel2 .panel2 span{
+        font-size: 2rem;
+        color: var(--brown2);
+    }
+
+    .contact-section .contact-panel2 .panel2 a{
+        font-size: 1.2rem;
+        margin-left: 10%;
+        color: var(--brown1);
+    }
+
+
+}
+
+@media(max-width: 500px){
+    .contact-section{
+        width: 95%;
+    }
+
+    .contact-section .contact-panel1{
+        border-radius: 20px;
+        padding: 2rem;
+        margin-bottom: 30px;
+    }
+    .c
+    ontact-section .contact-panel1 .contact-list i{
+        font-size: 1.5rem;
+    }
+
+    .contact-section .contact-panel1 .contact-list span{
+        font-size: 1rem;
+    }
+
+
+    .contact-section .contact-panel2{
+        border-radius: 20px;
+        padding: 2rem;
+    }
+
+    .contact-section .contact-panel2 .panel-container{
+        flex-direction: column;
+        width: 100%;
+
+    }
+
+    .contact-section .contact-panel2 .panel{
+        width: 100%;
+    }
+
+    input{
+        margin: 1rem 0;
+    }
+
+    .contact-section .contact-panel2 .panel2{
+        flex-direction: column;
+    }
+
+
+    .contact-section .contact-panel2 .panel2 .button{
+        width: 80%;
+    }
+
+
+}
 
 
 

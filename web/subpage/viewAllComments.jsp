@@ -75,7 +75,8 @@
                     <a class="option" style="color:#B92432;" href="../subpage/events.jsp">Events</a>
                     <a class="option" href="../subpage/contact.jsp">Contact</a>
                     <form action="../login/login.jsp">
-                        <input type="submit" value="Login" class="button" />
+                        <input type="hidden" name="verify" value="${verify}" />
+                        <button type="submit" value="ADMIN"  class="button"/>ADMIN</button>
                     </form>
 
                 </div>
@@ -132,9 +133,9 @@
 
                 <div class="all-event-buttons">
                     <form action="../subpage/authenticatedContacts.jsp">
-                        <input type="submit" value="GO BACK" class="button" />
+                        <button type="submit" value="GO BACK" class="button" />GO BACK</button>
                     </form>
-                    <input form="myform" type="submit" value="DELETE SELECTED"  class="button"/>
+                    <button form="myform" type="submit" value="DELETE SELECTED"  class="button"/>DELETE SELECTED</button>
                 </div>
             </div>
         </section>

@@ -10,13 +10,13 @@ and open the template in the editor.
 
 
 .verify-section{
-    -ms-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, 0);
     background: white;
     border-radius: 40px;
     position: absolute;
     left: 50%;
-    top: 50%;
-    transform: translate(-50%, -45%);
+    margin-top: 8rem;
+    transform: translate(-50%, 0);
     width: 45rem; 
     box-shadow: 20px 20px var(--brown1);
 }
@@ -62,6 +62,7 @@ and open the template in the editor.
     color: var(--aqua1);
     font-size: 1.5rem;
     font-style: italic;
+    word-wrap: break-word;
 }
 /*end of signup verify*/
 
@@ -98,7 +99,7 @@ and open the template in the editor.
     font-size: 1.5rem;
     font-style: italic;
     font-weight: bold;
-
+    word-wrap: break-word;
 }
 /*end of login verify*/
 
@@ -110,15 +111,13 @@ and open the template in the editor.
     margin-bottom: 3rem;
 }
 
-
-
 .verify-section .verify-container .input-container label{
     color: var(--brown2);
     font-family: var(--font2);
     font-size: 2rem;
     font-weight: 600;
     margin-bottom: 20px;
-    
+
 }
 
 .verify-section .verify-container .input-container input{
@@ -132,7 +131,7 @@ and open the template in the editor.
     height: 5rem;
     width: 100%; 
     padding: 20px 30px;
-   
+
 }
 .verify-section .verify-container .submit-container{
     display: flex;
@@ -143,21 +142,119 @@ and open the template in the editor.
 }
 
 .verify-section .verify-container .input-container .button{
-   background: var(--brown1);
-   border: none;
-   border-radius: 10px;
-   color: #ffffff;
-   font-family: var(--font2);
-   font-size: 3rem;
-   height: 5rem;
-   width: 100%;
-   margin-top: 2rem;
+    background: var(--brown1);
+    border: none;
+    border-radius: 10px;
+    color: #ffffff;
+    font-family: var(--font2);
+    font-size: 3rem;
+    height: 5rem;
+    width: 100%;
+    margin-top: 2rem;
 }
 
 .verify-section .verify-container .submit-container a{
-   text-decoration: none;
-   font-family: var(--font5);
-   font-size: 1.2rem;
-   color: var(--brown1);
-   margin-top: 10px;
+    text-decoration: none;
+    font-family: var(--font5);
+    font-size: 1.2rem;
+    color: var(--brown1);
+    margin-top: 10px;
+}
+
+@media(max-width: 800px){
+    .verify-section{
+        width: 90%;
+    }
+
+
+}
+
+@media(max-width: 500px){
+    .verify-section{
+        width: 95%;
+        border-radius: 20px;
+    }
+
+    .verify-section .verify-container h2{
+        font-size: 2.5rem;
+    }
+
+    /*signup verify*/
+    .verify-section .verify-container .verify-signup-code{
+        width: 90%;
+    }
+
+    .verify-section .verify-container .verify-signup-code p{
+        font-size: 1rem;
+        padding: 10px;
+    }
+
+
+    .verify-section .verify-container .verify-signup-code .verify-email{
+        font-size: 1.2rem;
+    }
+    /*end of signup verify*/
+
+    /*login-verify*/
+    .verify-section .verify-container .verify-login-code{
+        margin-bottom: 1rem;
+    }
+
+    .verify-section .verify-container .verify-login-code p{
+        color: var(--brown2);
+        font-family: var(--font5);
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+    }
+
+    .verify-section .verify-container .verify-login-code p a{
+        color: var(--brown1);
+        cursor: pointer;
+        font-family: var(--font5);
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+    }
+
+    .verify-section .verify-container .verify-login-code .verify-email{
+        color: var(--aqua1);
+        font-size: 1.2rem;
+        font-style: italic;
+        font-weight: bold;
+        word-wrap: break-word;
+    }
+    /*login-verify*/
+
+
+    .verify-section .verify-container .input-container{
+        margin-bottom: 1rem;
+    }
+
+    .verify-section .verify-container .input-container label{
+        color: var(--brown2);
+        font-family: var(--font2);
+        font-size: 1.7rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+
+    }
+
+    .verify-section .verify-container .input-container input{
+        font-size: 18px;
+        height: 4rem;
+    }
+
+
+    .verify-section .verify-container .input-container .button{
+        font-size: 2rem;
+        height: 3rem;
+        margin-top: 1.5rem;
+    }
+
+    .verify-section .verify-container .submit-container a{
+        text-decoration: none;
+        font-family: var(--font5);
+        font-size: 1.2rem;
+        color: var(--brown1);
+        margin-top: 10px;
+    }
 }

@@ -3,7 +3,6 @@
     Created on : 03 19, 22, 3:47:47 AM
     Author     : Admin
 --%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -31,23 +30,30 @@
 
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+        <script src="https://kit.fontawesome.com/db09b338f9.js" crossorigin="anonymous"></script>
+        <title>UST-TGS</title>
     </head>
     <body>
-	<%
-	    response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
-	    String uname = (String) session.getAttribute("username");
+        <%
+            response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
+            String uname = (String) session.getAttribute("username");
 
-	    if (uname == null) {
-		response.sendRedirect("home.jsp");
-	    }
-	%>
-        <!--TODO: CONNECT ACCOUNT AND CHECK IF VERIFIED OR NOT--> 
+            if (uname == null) {
+                response.sendRedirect("home.jsp");
+            }
+        %>
         <!-- navbar -->
         <div class="bar"> 
             <input type="checkbox" id="check">
             <label for="check" class="checkbtn">
                 <i class="fas fa-bars"></i>
             </label>
+
+            <div class="logo-container" >
+                <a href="home.jsp"><img class="nav-logo nav-logo2" src="../assets/logo.svg" ></a>
+            </div>
+
             <div class="nav-content">
                 <div class="nav-title">
                     <img class="nav-logo" src="../assets/logo.svg" alt="UST-TGS logo">
@@ -60,9 +66,9 @@
                     <a class="option" href="../subpage/authenticatedAbout.jsp">About</a>
                     <a class="option" href="../EventOverview">Events</a>
                     <a class="option" href="../subpage/authenticatedContacts.jsp">Contact</a>
-                    <form style="color:#B92432;" action="../MyAccountServlet">
-			<input type="hidden" name="verify" value="${verify}" />
-                        <input type="submit" value="ADMIN"  class="button"/>
+                    <form class="button-nav-form" style="color:#B92432;" action="../MyAccountServlet">
+                        <input type="hidden" name="verify" value="${verify}" />
+                        <button type="submit" value="ADMIN"  class="button"/>ADMIN</button>
                     </form>
 
 
@@ -73,30 +79,26 @@
 
         <section class="profile-section">
             <div class="profile-container">
-                <button type="button" onclick="location.href = '../PersonalRecordServlet';" name="uname" value ="<c:out value="${username}"/>"  class="button">
-		    <span class="material-icons-outlined">badge</span> 
-		    View Personal Record
+                <button type="button" onclick="location.href = '../PersonalRecordServlet';" name="uname" value ="${username}" class="button">
+                    <span class="material-icons-outlined">badge</span> 
+                    View Personal Record
                 </button>
 
-		<button type="button" onclick="location.href = 'records-all.jsp';" class="button" name="uname" value="<c:out value="${username}"/>">
-		    <span class="material-icons">done_all</span>
-		    View All Records</button>
+                <button type="button" onclick="location.href = 'records-all.jsp';" class="button" name="uname" value="${username}">
+                    <span class="material-icons">done_all</span>
+                    View All Records</button>
 
-		<button type="button" onclick="location.href = 'records-today.jsp';" class="button">
-		    <span class="material-icons">event_available</span>
-		    View Today's Record</button>
+                <button type="button" onclick="location.href = 'records-today.jsp';" class="button">
+                    <span class="material-icons">event_available</span>
+                    View Today's Record</button>
 
-		<button type="button" onclick="location.href = 'addRecordAdmin.jsp';" class="button">
-		    <span class="material-icons-outlined">person_add_alt</span>
-		    Add Record</button>
+                <button type="button" onclick="location.href = 'addRecordAdmin.jsp';" class="button">
+                    <span class="material-icons-outlined">person_add_alt</span>
+                    Add Record</button>
 
-		<button type="button" onclick="location.href = '../LogoutServlet';" class="button">
-		    <span class="material-icons-outlined">power_settings_new</span>
-		    Logout</button>
-
-
-
-
+                <button type="button" onclick="location.href = '../LogoutServlet';" class="button">
+                    <span class="material-icons-outlined">power_settings_new</span>
+                    Logout</button>
             </div>
         </section>       
     </body>

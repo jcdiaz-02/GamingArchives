@@ -31,11 +31,11 @@
     <body>
 
 
-	<!-- navbar -->
+        <!-- navbar -->
         <div class="bar"> 
             <input type="checkbox" id="check">
             <label for="check" class="checkbtn">
-		<i class="fas fa-bars"></i>
+                <i class="fas fa-bars"></i>
             </label>
             <div class="nav-content">
                 <div class="nav-title">
@@ -50,30 +50,30 @@
                     <a class="option" href="../subpage/events.jsp">Events</a>
                     <a class="option" href="../subpage/contact.jsp">Contact</a>
                     <form  action="../login/login.jsp">
-                        <input type="submit" value="Login"  class="button"/>
+                        <button type="submit" value="Login"  class="button"/>Login</button>
                     </form>
 
                 </div>
             </div>
         </div>
 
-	<%
-	    response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
-	    String uname = (String) session.getAttribute("username");
-	    if (uname != null) {
-		response.sendRedirect("subpage/authenticatedHome.jsp");
-	    }
+        <%
+            response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
+            String uname = (String) session.getAttribute("username");
+            if (uname != null) {
+                response.sendRedirect("subpage/authenticatedHome.jsp");
+            }
         %>
         <section class="login-section">
             <form class="login-container" method="post" action="../ForgotPass">
                 <h2>Forgot Password</h2>
-		<!--                <h3>Don't have an account yet? <a href="../signup/signup.jsp">Sign up</a></h3>-->
+                <!--                <h3>Don't have an account yet? <a href="../signup/signup.jsp">Sign up</a></h3>-->
 
 
                 <div class="input-container">
                     <label for="uname"><b>Email</b></label>    
                     <div class="input">
-			<!--                        <span class="material-icons input-icon" style="color:#FF5757;">&#xe887;</span>-->
+                        <!--                        <span class="material-icons input-icon" style="color:#FF5757;">&#xe887;</span>-->
                         <input type="email" pattern="[a-z0-9._%+-]+@ust.edu.ph$" placeholder="Enter Email (ust.edu.ph)" name="email" required>
                     </div>
 

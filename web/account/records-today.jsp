@@ -8,7 +8,6 @@
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.ResultSet"%>
 
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%@page import="java.sql.DriverManager"%>
@@ -16,11 +15,10 @@
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
 <%
-    String driver = "org.apache.derby.jdbc.ClientDriver";
-    String url = "jdbc:derby://localhost:1527/userDB";
-    String username = "app";
-    String password = "app";
-
+    String driver = "com.mysql.cj.jdbc.Driver";
+    String url = "jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/gamingarchives?useSSL=false&serverTimezone=UTC";
+    String username = "gamingarchivesAdmin";
+    String password = "zt.sw9\"D6`VjBnhh";
     Connection conn;
     try {
         Class.forName(driver);
@@ -77,14 +75,18 @@
             }
 
         %>
-        <!--TODO: CONNECT TO DATABASE AND ACCESS ALL RECORDS DATA -->
-        <!--TODO: FUNCTIONALITY OF SORT BUTTONS-->
+
         <!-- navbar -->
         <div class="bar"> 
             <input type="checkbox" id="check">
             <label for="check" class="checkbtn">
                 <i class="fas fa-bars"></i>
             </label>
+
+            <div class="logo-container" >
+                <a href="home.jsp"><img class="nav-logo nav-logo2" src="../assets/logo.svg" ></a>
+            </div>
+
             <div class="nav-content">
                 <div class="nav-title">
                     <img class="nav-logo" src="../assets/logo.svg" alt="UST-TGS logo">
@@ -97,9 +99,9 @@
                     <a class="option" href="../subpage/about.jsp">About</a>
                     <a class="option" href="../EventOverview">Events</a>
                     <a class="option" href="../subpage/contact.jsp">Contact</a>
-                    <form action="../MyAccountServlet">
+                    <form class="button-nav-form" action="../MyAccountServlet">
                         <input type="hidden" name="verify" value="${verify}" />
-                        <input type="submit" value="ADMIN"  class="button"/>
+                        <button type="submit" value="ADMIN"  class="button"/>ADMIN</button>
                     </form>
 
                 </div>
@@ -114,97 +116,101 @@
 
                 <div class="table-container">
                     <table class="records-table">
-			<tr>
-			    <td>Name</td>
-			    <td>Course</td>
-			    <td>Email</td>
-			    <td>Username</td>
-			    <td>Age</td>
-			    <td>Birthday</td>
-			    <td>Gender</td>
-			    <td>Student Number</td>
-			    <td>Favorite Game</td>
-			    <td>Contact Number</td>
-			    <td>Address</td>
-			    <td>Verification</td>
-			</tr>
-			<% try {
+                        <tr>
+                            <th>Name</th>
+                            <th>Course</th>
+                            <th>Email</th>
+                            <th>Username</th>
+                            <th>Age</th>
+                            <th>Birthday</th>
+                            <th>Gender</th>
+                            <th>Student Number</th>
+                            <th>Favorite Game</th>
+                            <th>Contact Number</th>
+                            <th>Address</th>
+                            <th>Verification</th>
+                        </tr>
+                        <% try {
 
-				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu-MM-dd");
-				LocalDate today = LocalDate.now();
-				String todaydate = dtf.format(today);
-				conn = DriverManager.getConnection(url, username, password);
-				String query = "SELECT * FROM APP.USERDB where DATE=?";
-				PreparedStatement pstmt = conn.prepareStatement(query);
-				pstmt.setString(1, todaydate);
-				ResultSet records = pstmt.executeQuery();
-				while (records.next()) {
+                                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu-MM-dd");
+                                LocalDate today = LocalDate.now();
+                                String todaydate = dtf.format(today);
+                                conn = DriverManager.getConnection(url, username, password);
+                                String query = "SELECT * FROM APP.USERDB where DATE=?";
+                                PreparedStatement pstmt = conn.prepareStatement(query);
+                                pstmt.setString(1, todaydate);
+                                ResultSet records = pstmt.executeQuery();
+                                while (records.next()) {
 
-			%>
-			<tr>
-			    <td>null</td>
-			    <td>null</td>
-			    <td><%=records.getString("EMAIL")%></td>
-			    <td><%=records.getString("USERNAME")%></td>
-			    <td>null</td>
-			    <td>null</td>
-			    <td>null</td>
-			    <td>null</td>
-			    <td>null</td>
-			    <td>null</td>
-			    <td>null</td>
-			    <td>UNVERIFIED</td>	 
-			</tr>
-			<%
-			    }
-			    String query1 = "SELECT * FROM APP.VERIFIEDDB where DATE=?";
-			    pstmt = conn.prepareStatement(query1);
-			    pstmt.setString(1, todaydate);
-			    records = pstmt.executeQuery();
-			    while (records.next()) {
+                        %>
+                        <tr>
+                            <td>null</td>
+                            <td>null</td>
+                            <td><%=records.getString("EMAIL")%></td>
+                            <td><%=records.getString("USERNAME")%></td>
+                            <td>null</td>
+                            <td>null</td>
+                            <td>null</td>
+                            <td>null</td>
+                            <td>null</td>
+                            <td>null</td>
+                            <td>null</td>
+                            <td>UNVERIFIED</td>	 
+                        </tr>
+                        <%
+                            }
+                            String query1 = "SELECT * FROM APP.VERIFIEDDB where DATE=?";
+                            pstmt = conn.prepareStatement(query1);
+                            pstmt.setString(1, todaydate);
+                            records = pstmt.executeQuery();
+                            while (records.next()) {
 
-			%>
-			<tr>
-			    <td><%=records.getString("NAME")%></td>
-			    <td><%=records.getString("COURSE")%></td>
-			    <td><%=records.getString("EMAIL")%></td>
-			    <td><%=records.getString("USERNAME")%></td>
-			    <td><%=records.getString("AGE")%></td>
-			    <td><%=records.getString("BIRTHDAY")%></td>
-			    <td><%=records.getString("GENDER")%></td>
-			    <td><%=records.getString("STUDENTNUMBER")%></td>
-			    <td><%=records.getString("FAVORITEGAME")%></td>
-			    <td><%=records.getString("CONTACTNUMBER")%></td>
-			    <td><%=records.getString("ADDRESS")%></td>
-			    <td>VERIFIED</td>	 
-			</tr>
-			<%
-				}
-			    } catch (Exception e) {
-				e.printStackTrace();
-			    }%>
+                        %>
+                        <tr>
+                            <td><%=records.getString("NAME")%></td>
+                            <td><%=records.getString("COURSE")%></td>
+                            <td><%=records.getString("EMAIL")%></td>
+                            <td><%=records.getString("USERNAME")%></td>
+                            <td><%=records.getString("AGE")%></td>
+                            <td><%=records.getString("BIRTHDAY")%></td>
+                            <td><%=records.getString("GENDER")%></td>
+                            <td><%=records.getString("STUDENTNUMBER")%></td>
+                            <td><%=records.getString("FAVORITEGAME")%></td>
+                            <td><%=records.getString("CONTACTNUMBER")%></td>
+                            <td><%=records.getString("ADDRESS")%></td>
+                            <td>VERIFIED</td>	 
+                        </tr>
+                        <%
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }%>
 
-		    </table>
+                    </table>
                 </div>       
 
                 <div class="all-records-buttons"> 
-                    <form  action="profile-page-admin.jsp">
-                        <input type="submit" value="GO BACK"  class="button"/>
-                    </form>
-                    <form onclick ="deleteOpenForm()">
-                        <button class="button" onclick="">DELETE</button>
-                    </form>
-                    <form onclick="verifyOpenForm()" >
-                        <button class="button"  onclick="verifyOpenForm()">VERIFY </button>
-                    </form>
-                    <form onclick="openForm()" >
-                        <button class="button"  onclick="openForm()">UPDATE</button>
-                    </form>
-                    <button id="modalBtn"  class="button"/>GENERATE PDF</button>
+                    <span class='all-records-buttons1'>
+                        <form  action="profile-page-admin.jsp">
+                            <button type="submit" value="GO BACK"  class="button"/>GO BACK</button>
+                        </form>
+                        <form onclick ="deleteOpenForm()">
+                            <button class="button" onclick="">DELETE</button>
+                        </form>
+                        <form onclick="verifyOpenForm()" >
+                            <button class="button"  onclick="verifyOpenForm()">VERIFY </button>
+                        </form>
+                    </span>
+                    <span class='all-records-buttons2'>
+                        <form onclick="openForm()" >
+                            <button class="button"  onclick="openForm()">UPDATE</button>
+                        </form>
+                        <button id="modalBtn"  class="button"/>GENERATE PDF</button>
 
-                    <form  action="../LogoutServlet">
-                        <input type="submit" value="LOGOUT"  class="button"/>
-                    </form>
+                        <form  action="../LogoutServlet">
+                            <button type="submit" value="LOGOUT"  class="button"/>LOGOUT</button>
+                        </form>
+                    </span>
 
                 </div>      
             </div>
@@ -277,28 +283,34 @@
             function openForm() {
                 event.preventDefault();
                 document.getElementById("myForm").style.display = "block";
-            };
+            }
+            ;
             function closeForm() {
                 event.preventDefault();
                 document.getElementById("myForm").style.display = "none";
 
-            };
+            }
+            ;
             function verifyOpenForm() {
                 event.preventDefault();
                 document.getElementById("verifyForm").style.display = "block";
-            };
+            }
+            ;
             function verifyCloseForm() {
                 event.preventDefault();
                 document.getElementById("verifyForm").style.display = "none";
-            };
+            }
+            ;
             function deleteOpenForm() {
                 event.preventDefault();
                 document.getElementById("deleteForm").style.display = "block";
-            };
+            }
+            ;
             function deleteCloseForm() {
                 event.preventDefault();
                 document.getElementById("deleteForm").style.display = "none";
-            };
+            }
+            ;
 
             window.onclick = function (event) {
                 if (event.target === document.getElementById("myForm")) {

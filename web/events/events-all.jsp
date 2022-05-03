@@ -48,20 +48,23 @@
     <body>
         <%
             response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
-            String role = (String) session.getAttribute("role");
+            //String role = (String) session.getAttribute("role");
 
+            String role = "admin";
             if (!role.equalsIgnoreCase("admin")) {
                 response.sendRedirect("../home.jsp");
             }
         %>
-        <!--TODO: CONNECT TO DATABASE AND ACCESS ALL EVENTS DATA -->
-        <!--TODO: FUNCTIONALITY OF SORT BUTTONS-->
         <!-- navbar -->
         <div class="bar">
             <input type="checkbox" id="check">
             <label for="check" class="checkbtn">
                 <i class="fas fa-bars"></i>
             </label>
+
+            <div class="logo-container" >
+                <a href="../home.jsp"><img class="nav-logo nav-logo2" src="../assets/logo.svg" ></a>
+            </div>
             <div class="nav-content">
                 <div class="nav-title">
                     <img class="nav-logo" src="../assets/logo.svg" alt="UST-TGS logo">
@@ -70,13 +73,13 @@
                     </a>
                 </div>
                 <div class="nav-options">
-                    <a class="option" href="authenticatedHome.jsp">Home</a>
-                    <a class="option" href="authenticatedAbout.jsp">About</a>
+                    <a class="option" href="../subpage/authenticatedHome.jsp">Home</a>
+                    <a class="option" href="../subpage/authenticatedAbout.jsp">About</a>
                     <a class="option" style="color:#B92432;" href="../EventOverview">Events</a>
-                    <a class="option" href="authenticatedContacts.jsp">Contact</a>
-                    <form action="../MyAccountServlet">
+                    <a class="option" href="../subpage/authenticatedContacts.jsp">Contact</a>
+                    <form class="button-nav-form" action="../MyAccountServlet">
                         <input type="hidden" name="verify" value="${verify}" />
-                        <input type="submit" value="ADMIN"  class="button"/>
+                        <button type="submit" value="ADMIN"  class="button"/>ADMIN</button>
                     </form>
 
                 </div>
@@ -122,7 +125,7 @@
 
                 <div class="all-event-buttons">
                     <form action="../subpage/events.jsp">
-                        <input type="submit" value="GO BACK" class="button" />
+                        <button type="submit" value="GO BACK" class="button" />GO BACK</button>
                     </form>
                 </div>
             </div>

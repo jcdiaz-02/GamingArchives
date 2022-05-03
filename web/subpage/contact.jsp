@@ -26,19 +26,18 @@
 
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-        
+
         <script src="https://kit.fontawesome.com/db09b338f9.js" crossorigin="anonymous"></script>
         <title>UST-TGS</title>
     </head>
     <body>
-	<%
-	    response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
-	    String uname = (String) session.getAttribute("username");
-	    if (uname != null) {
-		response.sendRedirect("authenticatedContacts.jsp");
-	    }
-	%>
-        <!--TODO: CONNECT A CONTACT SERVLET-->
+        <%
+            response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
+            String uname = (String) session.getAttribute("username");
+            if (uname != null) {
+                response.sendRedirect("authenticatedContacts.jsp");
+            }
+        %>
         <!-- navbar -->
         <div class="bar"> 
             <input type="checkbox" id="check">
@@ -49,7 +48,7 @@
             <div class="logo-container" >
                 <a href="../home.jsp"><img class="nav-logo nav-logo2" src="../assets/logo.svg" ></a>
             </div>
-            
+
             <div class="nav-content">
                 <div class="nav-title">
                     <img class="nav-logo" src="../assets/logo.svg" alt="UST-TGS logo">
@@ -63,7 +62,7 @@
                     <a class="option" href="../EventOverview">Events</a>
                     <a class="option" style="color:#B92432;" href="../subpage/contact.jsp">Contact</a>
                     <form class="button-nav-form" action="../login/login.jsp">
-                        <input type="submit" value="Login"  class="button"/>
+                        <button type="submit" value="Login"  class="button"/>Login</button>
                     </form>
 
                 </div>
@@ -75,33 +74,33 @@
             <div class="contact-panel1">
                 <h2>Stay Connected with us.</h2>
 
-                <table class="contact-list">
-                    <tr>
-                        <td><i class="fa-solid fa-envelope"></i></td>    
-                        <td><span> thomasiangamingsociety@gmail.com</span></td>
+                <div class="contact-list">
+                    <div class="contact-link">
+                        <i class="fa-solid fa-envelope"></i>
+                        <span>thomasiangamingsociety@gmail.com </span>
 
-                    </tr>                              
+                    </div>                              
 
-                    <tr>
-                        <td><i class="fa-brands fa-facebook"></i></td>
-                        <td><span> @ThomasianGamingSociety</span></td>
-                    </tr>
+                    <div class="contact-link">
+                        <i class="fa-brands fa-facebook"></i>
+                        <span> @ThomasianGamingSociety</span>
+                    </div>
 
-                    <tr>
-                        <td><i class="fa-brands fa-twitter"></i></td>
-                        <td><span>@UST_TGS</span></td>
-                    </tr>
+                    <div class="contact-link">
+                        <i class="fa-brands fa-twitter"></i>
+                        <span>@UST_TGS</span>
+                    </div>
 
-                    <tr>
-                        <td><i class="fa-brands fa-instagram"></i> </td>
-                        <td><span>@UST_TGS</span></td>
-                    </tr>
+                    <div class="contact-link">
+                        <i class="fa-brands fa-instagram"></i>
+                        <span>@UST_TGS</span>
+                    </div>
 
-                    <tr>
-                        <td><i class="fa-solid fa-location-dot"></i> </td>
-                        <td><span>España Blvd, Sampaloc, Manila, 1008 Metro Manila</span></td>
-                    </tr>
-                </table>                           
+                    <div class="contact-link">
+                        <i class="fa-solid fa-location-dot"></i> 
+                        <span>España Blvd, Sampaloc, Manila, 1008 Metro Manila</span>
+                    </div>
+                </div>                           
             </div>
 
             <div class="contact-panel2">
@@ -113,29 +112,29 @@
 
                             <label for="lname">Last Name <span style="color:red;">*</span></label>
                             <input type="text" name="lname" autocomplete="chrome-off" required>
-                           
+
                         </div>
-                    
+
                         <div class="panel">
                             <label for="email">Email <span style="color:red;">*</span></label>
                             <input type="email" name="email" required>
-                            
+
                             <label for="course">Course <span style="color:red;">*</span></label>
                             <input type="text" name="course" autocomplete="chrome-off" required>
-                    
+
                         </div>
                     </div>
-                    
+
                     <div class="panel1">
                         <label for="comments">Comments/Suggestions <span style="color:red;">*</span></label>
                         <input type="text" name="comments" placeholder="Write your message here" required>
                     </div>
-                    
+
                     <div class="panel2">
                         <input type="submit" value="SUBMIT"  class="button"/>
                     </div>
                 </form>
-                
+
             </div>
         </section>
     </body>

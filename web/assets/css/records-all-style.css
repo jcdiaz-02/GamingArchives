@@ -104,6 +104,12 @@ and open the template in the editor.
     justify-content: space-around;
 }
 
+.all-records-section .all-records-container .all-records-buttons span{
+    display: flex; 
+    width: 50%;
+    justify-content: space-between;
+}
+
 .all-records-section .all-records-container .all-records-buttons .button{
     align-items: center;
     background: var(--brown2);
@@ -112,7 +118,7 @@ and open the template in the editor.
     color: white;
     cursor: pointer;
     font-family: var(--font2);
-    font-size: 2.2rem;
+    font-size: 2rem;
     height: 3rem;
     padding: 0px 40px;
 }
@@ -257,4 +263,62 @@ and open the template in the editor.
 /* Add some hover effects to buttons */
 .form-container .btn:hover, .open-button:hover {
     opacity: 1;
+}
+
+@media(max-width: 1300px){
+    .all-records-section .all-records-container .all-records-buttons {
+        flex-direction: column;
+        margin-top: 1.2rem;
+    }
+    .all-records-section .all-records-container .all-records-buttons span{
+        margin-top: 1.2rem;
+        width: 100%;
+    }
+}
+
+
+@media(max-width: 800px){
+    .all-records-section .all-records-container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        height: 90%;
+        margin: 2rem auto;
+
+    }
+    .all-records-section .all-records-container .all-records-buttons {
+        flex-direction: row;
+    }
+
+    .all-records-section .all-records-container .all-records-buttons span{
+        align-items: center;
+        width: 50%;
+        flex-direction: column;
+        margin-top: 0;
+    }
+
+    .all-records-section .all-records-container .all-records-buttons .all-records-buttons1{
+        flex-direction: column-reverse;
+    }
+
+    .all-records-section .all-records-container .all-records-buttons .button{
+        margin-top: 1rem;
+        font-size: 1.5rem;
+        height: 3rem;
+    }
+}
+
+@media(max-width: 500px){
+    .all-records-section{
+        width: 100%;
+        border-radius: 20px;
+    }
+
+    .all-records-section .all-records-container .all-records-buttons .button{
+        margin-top: 1rem;
+        font-size: 1.2rem;
+        height: 2.5rem;
+        padding: 0 30px;
+    }
 }
