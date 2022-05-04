@@ -54,45 +54,60 @@ public class DeleteRecordServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
 
-        try {
-            HttpSession session = request.getSession();
-            String uname = request.getParameter("uname");
-            String ident = (String) session.getAttribute("ident");
+	try {
+	    HttpSession session = request.getSession();
+	    String uname = request.getParameter("uname");
+	    String ident = (String) session.getAttribute("ident");
+	    String primaryuname = (String) session.getAttribute("uname");
 
-            if (uname.isEmpty()) {
-                if (ident.equals("all")) {
-                    response.sendRedirect("account/records-all.jsp");
-                } else if (ident.equals("today")) {
-                    response.sendRedirect("account/records-today.jsp");
-                }
-            }
-            String primaryuname = (String) session.getAttribute("uname");
+	    if (uname.isEmpty()) {
+		if (ident.equals("all")) {
+		    response.sendRedirect("account/records-all.jsp");
+		} else if (ident.equals("today")) {
+		    response.sendRedirect("account/records-today.jsp");
+		} else if (ident.equals("arch")) {
+		    response.sendRedirect("account/records-archive.jsp");
+		}
+	    }
 
-            if (uname.equals(primaryuname)) {
-                if (ident.equals("all")) {
-                    response.sendRedirect("account/records-all.jsp");
-                } else if (ident.equals("today")) {
-                    response.sendRedirect("account/records-today.jsp");
-                }
-            } else {
-                String query = "DELETE FROM APP.USERDB where USERNAME = ?";
+
+	    if (ident.equals("arch")) {
+		String query = "DELETE FROM APP.ARCHIVEDB where USERNAME = ?";
 		PreparedStatement pst = conn.prepareStatement(query);
                 pst.setString(1, uname);
                 pst.executeUpdate();
 
-                String query1 = "DELETE FROM APP.VERIFIEDDB where USERNAME = ?";
-		pst = conn.prepareStatement(query1);
-                pst.setString(1, uname);
-                pst.executeUpdate();
-                if (ident.equals("all")) {
-                    response.sendRedirect("account/records-all.jsp");
-                } else if (ident.equals("today")) {
-                    response.sendRedirect("account/records-today.jsp");
-                }
-            }
-        } catch (SQLException sqle) {
-            response.sendRedirect("errPages/Error404.jsp");
-        }
+	    } else {
+		if (uname.equals(primaryuname)) {
+		    if (ident.equals("all")) {
+			response.sendRedirect("account/records-all.jsp");
+		    } else if (ident.equals("today")) {
+			response.sendRedirect("account/records-today.jsp");
+		    }
+		} else {
+		    String query = "DELETE FROM APP.USERDB where USERNAME = ?";
+		    PreparedStatement pst = conn.prepareStatement(query);
+		    pst.setString(1, uname);
+		    pst.executeUpdate();
+
+		    query = "DELETE FROM APP.VERIFIEDDB where USERNAME = ?";
+		    pst = conn.prepareStatement(query);
+		    pst.setString(1, uname);
+		    pst.executeUpdate();
+
+		}
+	    }
+
+	    if (ident.equals("all")) {
+		response.sendRedirect("account/records-all.jsp");
+	    } else if (ident.equals("today")) {
+		response.sendRedirect("account/records-today.jsp");
+	    } else if (ident.equals("arch")) {
+		response.sendRedirect("account/records-archive.jsp");
+	    }
+	} catch (SQLException sqle) {
+	    response.sendRedirect("errPages/Error404.jsp");
+	}
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -43,6 +43,15 @@
         %>         
         <!-- navbar -->
         <div class="bar"> 
+            <input type="checkbox" id="check">
+            <label for="check" class="checkbtn">
+                <i class="fas fa-bars"></i>
+            </label>
+
+            <div class="logo-container" >
+                <a href="../home.jsp"><img class="nav-logo nav-logo2" src="../assets/logo.svg" ></a>
+            </div>
+            
             <div class="nav-content">
                 <div class="nav-title">
                     <img class="nav-logo" src="../assets/logo.svg" alt="UST-TGS logo">
@@ -55,7 +64,7 @@
                     <a class="option" href="../subpage/authenticatedAbout.jsp">About</a>
                     <a class="option" href="../EventOverview">Events</a>
                     <a class="option" href="../subpage/authenticatedContacts.jsp">Contact</a>
-                    <form style="color:#B92432;" action="../MyAccountServlet">
+                    <form class="button-nav-form" style="color:#B92432;" action="../MyAccountServlet">
                         <input type="hidden" name="verify" value="${verify}" />
                         <button type="submit" value="My Account"  class="button"/>My Account</button>
                     </form>
@@ -75,22 +84,21 @@
                     </div>
 
                     <div class='personal-records-info-container1'>
-                        <label for=''>Course:</label>
-                        <input required type="text" placeholder="Enter Course" name="course"><br>
+                        <h1>Course: </h1>
+                        <select id="course" name="course">
+                            <option value="Computer Science">Computer Science</option>
+                            <option value="Information Technology">Information Technology</option>
+                            <option value="Data Science">Data Science</option>
+                        </select><br>
                     </div>
 
                     <div class='personal-records-info-container1'>
-                        <label for=''>Age:</label>
-                        <input required type="number" placeholder="Enter Age" name="age"><br>
-                    </div>
-
-                     <div class='personal-records-info-container1'>
-                        <label for=''>Birthday</label>
+                        <label>Birthday(Age reflects given birth date): </label>
                         <input required type="date" placeholder="Enter Birthday" name="birthday"><br>
                     </div>
 
-                     <div class='personal-records-info-container1'>
-                        <label for=''>Gender:</label>
+                    <div class='personal-records-info-container1'>
+                        <label for ="">Gender: </label>
                         <select id="gender" name="gender">
                             <option value="male">Male</option>
                             <option value="female">Female</option>
@@ -98,14 +106,13 @@
                     </div>
 
                     <div class='personal-records-info-container1'>
-                        <label for=''>Student Number:</label>
-                        <input required type="number" placeholder="Enter Student Number" name="snumber"><br>
+                        <label for=''>Student Number</label>
+                        <input required type="number" placeholder="Enter Student Number" name="snumber" minlength="10" maxlength="10"><br>
                     </div>
 
-
                     <div class='personal-records-info-container1'>
-                        <label for=''>Contact Number:</label>
-                        <input required type="number" placeholder="Enter Contact Number" name="cnumber"><br>
+                        <label>Contact Number: </label>
+                        <input required type="number" placeholder="Enter Conatct Number(+63)" name="cnumber" minlength="10" maxlength="10"><br>
                     </div>
 
                     <div class='personal-records-info-container1'>

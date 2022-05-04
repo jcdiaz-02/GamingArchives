@@ -153,12 +153,6 @@
                     </div>
 
                     <div class='personal-records-info-container1'>
-                        <label for=''>Favorite Game:</label>
-                        <input type='text' id='favgame' name='favgame' value='${favgame}' readonly> 
-
-                    </div>
-
-                    <div class='personal-records-info-container1'>
                         <label for=''>Contact Number:</label>
                         <input type='text' id='contactnum' name='contactnum' value='${cnumber}' readonly> 
 
@@ -168,6 +162,17 @@
                         <label for=''>Address:</label>
                         <input type='text' id='address' name='address' value='${address}' readonly> 
 
+                    </div>
+
+                    <div class='personal-records-info-container1'>
+                        <label for=''>Favorite Game:</label>
+                        <input type='text' id='favgame' name='favgame' value='${favgame}' readonly> 
+                    </div>
+
+                    <div class='personal-records-info-container1'> 
+                        <label for=''>Status:</label>
+
+                        <input type='text' id='status' name='status' value="${status}" readonly> 
                     </div>
 
 

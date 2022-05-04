@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
 import java.io.IOException;
@@ -9,27 +8,26 @@ import java.io.PrintWriter;
 import static java.lang.System.out;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.PreparedStatement;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author HP
+ * @author merki
  */
-public class SignUpServlet extends HttpServlet {
+public class ArchiveMembersServlet extends HttpServlet {
 
     String username;
     String password;
-    String stringKey;
 
     Connection conn;
 
@@ -37,11 +35,10 @@ public class SignUpServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
 	username = config.getInitParameter("DBusername");
 	password = config.getInitParameter("DBpassword");
-	stringKey = config.getInitParameter("publicKey");//retrieves the public key (hutaocomehomepls) from web xml
 
 	super.init(config);
 	try {
-	    Class.forName(config.getInitParameter("DBdriver"));
+	    Class.forName(config.getServletContext().getInitParameter("DBdriver"));
 	    String url = config.getInitParameter("DBurl");
 	    conn = DriverManager.getConnection(url, username, password);
 	} catch (SQLException sqle) {
@@ -56,64 +53,68 @@ public class SignUpServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
-	byte[] key = new byte[16];
-	for (int i = 0; i < key.length; i++) {
-	    key[i] = (byte) stringKey.charAt(i);
-	}
-	HttpSession httpsession = request.getSession();
-	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu-MM-dd");
-	LocalDate now = LocalDate.now();
-	String date = dtf.format(now);
-
-	String uname = (String) httpsession.getAttribute("uname");
-	String psw = (String) httpsession.getAttribute("psw");
-	String email = (String) httpsession.getAttribute("email");
-	String code = (String) httpsession.getAttribute("code");
-	String ePass = Security.encrypt(psw, key);//encrypts the password the user has inputted and compares it to the encrypted password in DB
-
-	String verify = request.getParameter("verify");
 	try {
+	    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu-MM-dd");
+	    LocalDate today = LocalDate.now();
+	    String date = dtf.format(today);
 
-	    if (code.equals(verify)) {
-		String query = "SELECT * FROM APP.USERDB where EMAIL =?";
+	    HttpSession session = request.getSession();
+
+	    String[] selectedrows = request.getParameterValues("selectedRows");
+	   // out.print("number: " + selectedrows.length);
+
+	    for (int x = 0; x < selectedrows.length; x++) {
+		String query = "SELECT * FROM APP.VERIFIEDDB where EMAIL = ?";
 		PreparedStatement pst = conn.prepareStatement(query);
-		pst.setString(1, email);
+		pst.setString(1, selectedrows[x]);
 		ResultSet records = pst.executeQuery();
-		if (records.next() == false) {
-		    query = "SELECT * FROM APP.VERIFIEDDB where EMAIL =?";
-		    pst = conn.prepareStatement(query);
-		    pst.setString(1, email);
-		    records = pst.executeQuery();
-		    if (records.next() == false) {
-			query = "INSERT INTO APP.USERDB(username,password,email,role,date)VALUES(?,?,?,?,?)";
-			pst = conn.prepareStatement(query);
-			pst.setString(1, uname);
-			pst.setString(2, ePass);
-			pst.setString(3, email);
-			pst.setString(4, "member");
-			pst.setString(5, date);
-			pst.executeUpdate();
-			response.sendRedirect("home.jsp");
-		    } else {
-			httpsession.setAttribute("notif", "Email Already Exists");
-			response.sendRedirect("signup/signup.jsp");
-			out.print("verified failed");
-		    }
-		} else {
-		    httpsession.setAttribute("notif", "Email Already Exists");
-		    response.sendRedirect("signup/signup.jsp");
-			out.print("userdb failed");
+		records.next();
 
-		}
-	    } else {
-		httpsession.setAttribute("Incorrect", "Incorrect code");
-		request.getRequestDispatcher("verificationPage.jsp").forward(request, response);
+		String uname1 = records.getString("USERNAME");
+		String name = records.getString("NAME");
+		String pass = records.getString("PASSWORD");
+		String email = records.getString("EMAIL");
+		String age = records.getString("AGE");
+		String birthday = records.getString("BIRTHDAY");
+		String course = records.getString("COURSE");
+		String address = records.getString("ADDRESS");
+		String snumber = records.getString("STUDENTNUMBER");
+		String cnumber = records.getString("CONTACTNUMBER");
+		String favgame = records.getString("FAVORITEGAME");
+		String gender = records.getString("GENDER");
+		String role = records.getString("ROLE");
+		String status = records.getString("STATUS");
+
+		query = "INSERT INTO APP.ARCHIVEDB(NAME, COURSE, AGE, BIRTHDAY, GENDER, STUDENTNUMBER, "
+			+ "FAVORITEGAME, CONTACTNUMBER, ADDRESS, ROLE, EMAIL, USERNAME, PASSWORD, DATE, STATUS)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		pst = conn.prepareStatement(query);
+		pst.setString(1, name);
+		pst.setString(2, course);
+		pst.setString(3, age);
+		pst.setString(4, birthday);
+		pst.setString(5, gender);
+		pst.setString(6, snumber);
+		pst.setString(7, favgame);
+		pst.setString(8, cnumber);
+		pst.setString(9, address);
+		pst.setString(10, role);
+		pst.setString(11, email);
+		pst.setString(12, uname1);
+		pst.setString(13, pass);
+		pst.setString(14, date);
+		pst.setString(15, status);
+		pst.executeUpdate();
+
+		String query1 = "DELETE FROM APP.VERIFIEDDB where EMAIL = ?";
+		pst = conn.prepareStatement(query1);
+		pst.setString(1, selectedrows[x]);
+		pst.executeUpdate();
 	    }
+	    response.sendRedirect("account/records-all.jsp");
 
-	} catch (Exception e) {
+	} catch (SQLException sqle) {
 	    response.sendRedirect("errPages/Error404.jsp");
 	}
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

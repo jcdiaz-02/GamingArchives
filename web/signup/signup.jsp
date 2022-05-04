@@ -6,6 +6,8 @@
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page session="true" %>
+
 
 <!DOCTYPE html>
 <html>
@@ -62,15 +64,20 @@
                 </div>
             </div>
         </div>
-        <%
-            session.setAttribute("identifier", "signup");
-        %>
+	<%
+	    response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
+	    session.setAttribute("identifier", "signup");
+	%>
         <section class="signup-section">
             <form class="signup-container" method="post" action="../UserVerification">
                 <h2>Sign Up</h2>
                 <h3>Already registered? <a href="../login/login.jsp">Login</a></h3>
 
                 <div class="input-container">
+
+
+		    <h3>${sessionScope.notif}</h3>
+
 
                     <label for="email"><b>Email</b></label>    
                     <div class="input">
@@ -79,20 +86,19 @@
 
                     <label for="uname"><b>Username</b></label>
                     <div class="input">
-                        <input type="text" placeholder="Enter Username" name="uname" required>
+                        <input type="text" placeholder="Enter Username (minimum of 5 characters)" name="uname" minlength="5" required >
 
                     </div>
 
                     <label for="psw"><b>Password</b></label>
                     <div class="input">
-
-                        <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
-                        <span onclick="toggleVisibility()" class="material-icons-outlined psw-show">visibility_off</span>
+                        <input type="password" placeholder="Enter Password (minimum of 8 characters)" name="psw" minlength="8" required>
+                        <span onclick="toggleVisibility()"  class="material-icons-outlined psw-show">visibility_off</span>
                     </div>
 
                     <div class="input">
-                        <input type="password" placeholder="Confirm Password" name="cpsw" id="cpsw" required>
-                        <span onclick="toggleVisibility1()" class="material-icons-outlined psw-show">&#xe8f5;</span>
+                        <input type="password" placeholder="Confirm Password (minimum of 8 characters)" name="cpsw" minlength="8" required>
+                        <span onclick="toggleVisibility()1" class="material-icons-outlined psw-show">&#xe8f5;</span>
                     </div>
 
                 </div>
@@ -105,7 +111,9 @@
                     </label>
                 </div>
                 <button type="submit" name="button" value="signup">SIGN UP</button>
-
+		<%
+		    session.removeAttribute("notif");
+		%>
             </form>
         </section>       
     </body>

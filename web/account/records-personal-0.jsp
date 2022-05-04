@@ -98,10 +98,14 @@
                         <label for=''>Password:</label>
 
                         <input type='text' id='password' name='password' value="${password}" readonly> 
-
-
                     </div>
 
+		    <div class='personal-records-info-container1'> 
+                        <label for=''>Status:</label>
+
+                        <input type='text' id='status' name='status' value="${status}" readonly> 
+                    </div>
+		    
                     <span class='verification-container'>
                         <span class="material-icons verification-icon" style="color:red;">
                             cancel

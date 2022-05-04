@@ -331,6 +331,26 @@
     <servlet>
         <servlet-name>ForgotPass</servlet-name>
         <servlet-class>ForgotPass</servlet-class>
+               <init-param>
+            <param-name>DBurl</param-name>
+            <param-value>jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/gamingarchives?useSSL=false&amp;serverTimezone=UTC</param-value>
+        </init-param>
+        <init-param>
+            <param-name>DBusername</param-name>
+            <param-value>gamingarchivesAdmin</param-value>
+        </init-param>
+        <init-param>
+            <param-name>DBpassword</param-name>
+            <param-value>zt.sw9"D6`VjBnhh</param-value>
+        </init-param>
+    </servlet>
+    <servlet>
+        <servlet-name>ForgotPassVerification</servlet-name>
+        <servlet-class>ForgotPassVerification</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ArchiveMembersServlet</servlet-name>
+        <servlet-class>ArchiveMembersServlet</servlet-class>
         <init-param>
             <param-name>DBdriver</param-name>
             <param-value>org.apache.derby.jdbc.ClientDriver</param-value>
@@ -349,8 +369,24 @@
         </init-param>
     </servlet>
     <servlet>
-        <servlet-name>ForgotPassVerification</servlet-name>
-        <servlet-class>ForgotPassVerification</servlet-class>
+        <servlet-name>ArchiveTransferServlet</servlet-name>
+        <servlet-class>ArchiveTransferServlet</servlet-class>
+        <init-param>
+            <param-name>DBdriver</param-name>
+            <param-value>org.apache.derby.jdbc.ClientDriver</param-value>
+        </init-param>
+        <init-param>
+            <param-name>DBurl</param-name>
+            <param-value>jdbc:derby://localhost:1527/userDB</param-value>
+        </init-param>
+        <init-param>
+            <param-name>DBusername</param-name>
+            <param-value>app</param-value>
+        </init-param>
+        <init-param>
+            <param-name>DBpassword</param-name>
+            <param-value>app</param-value>
+        </init-param>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginVerification</servlet-name>
@@ -439,6 +475,14 @@
     <servlet-mapping>
         <servlet-name>ForgotPassVerification</servlet-name>
         <url-pattern>/ForgotPassVerification</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ArchiveMembersServlet</servlet-name>
+        <url-pattern>/ArchiveMembersServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ArchiveTransferServlet</servlet-name>
+        <url-pattern>/ArchiveTransferServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

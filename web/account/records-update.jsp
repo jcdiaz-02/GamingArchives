@@ -7,6 +7,8 @@
 
 <%@page import="java.sql.PreparedStatement"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page session="true" %>
+
 <!DOCTYPE html>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.ResultSet"%>
@@ -122,45 +124,60 @@
                 <h3> Update Record</h3>
                 <form class="personal-records-info-container0" method="POST" action="../UpdateRecordServlet">
                     <div class="personal-records-info-container1">
-                        <label for=''>Email:</label>
-                        <input type="email" placeholder="<%=records.getString("EMAIL")%>" name="email">
+                        ${sessionScope.notif}
+                        <label>Email: </label>
+                        <input required type="email" placeholder="<%=records.getString("EMAIL")%>" name="email">
+                        <%session.setAttribute("iemail", records.getString("EMAIL"));%>
                     </div>
 
                     <div class="personal-records-info-container1">
-                        <label for=''>Username:</label>
-                        <input type="text" placeholder="<%=records.getString("USERNAME")%>" name="uname">
+                        <label>Name: </label>
+                        <input required type="text" placeholder="<%=records.getString("NAME")%>" name="myname">
                     </div>
 
                     <div class="personal-records-info-container1">
-                        <label for=''>Password:</label>
-                        <input type="text" placeholder="Password" name="pass">
+                        <label>Username: </label>
+                        <input required type="text" placeholder="<%=records.getString("USERNAME")%> (minimum of 5 characters)" name="uname" minlength="5">
                     </div>
 
                     <div class="personal-records-info-container1">
-                        <label for=''>Name:</label>
-                        <input type="text" placeholder="<%=records.getString("NAME")%>" name="myname">
-                    </div>
-                    <div class="personal-records-info-container1">
-                        <label for=''>Course:</label>
-                        <input type="text" placeholder="<%=records.getString("COURSE")%>" name="course">
-                    </div>
-
-                    <div class="personal-records-info-container1">
-                        <label for=''>Age:</label>
-                        <input type="number" placeholder="<%=records.getString("AGE")%>" name="age">
-                    </div>
-
-                    <div class="personal-records-info-container1">
-
-                        <label for=''>Birthday</label><input type="date" placeholder="<%=records.getString("BIRTHDAY")%>" name="birthday">
+                        <label>Password: </label>
+                        <input required  type="text" placeholder="Password (minimum of 8 characters)" name="pass" minlength="8">
                     </div>
 
                     <div class='personal-records-info-container1'>
-                        <label for=''>Gender:</label>
+                        <label>Course: </label>
+                        <select id="gender" name="course">
+                            <option value="Computer Science">Computer Science</option>
+                            <option value="Information Technology">Information Technology</option>
+                            <option value="Data Science">Data Science</option>
+                        </select><br>
+                    </div>
+
+                    <div class="personal-records-info-container1">
+                        <label>Birthday(Age reflects given birth date): </label>
+                        <input required type="date" placeholder="<%=records.getString("BIRTHDAY")%>" name="birthday">
+                    </div>
+
+                    <div class='personal-records-info-container1'>
+                        <label>Gender: </label>
                         <select id="gender" name="gender">
                             <option value="male">Male</option>
                             <option value="female">Female</option>
                         </select><br>
+                    </div>
+
+                    <div class="personal-records-info-container1">
+                        <label>Student Number: </label>
+                        <input required type="number" placeholder="<%=records.getString("STUDENTNUMBER")%>" name="snumber" minlength="10" maxlength="10">
+                    </div>
+
+                    <div class="personal-records-info-container1">
+                        <label for=''>Birthday</label><input type="date" placeholder="<%=records.getString("BIRTHDAY")%>" name="birthday">
+                    </div>
+
+                    <div class="personal-records-info-container1">
+                        <h1>Favorite Game: </h1><input required type="text" placeholder="<%=records.getString("FAVORITEGAME")%>" name="favgame">
                     </div>
 
                     <div class="personal-records-info-container1">
@@ -169,34 +186,38 @@
                     </div>
 
                     <div class="personal-records-info-container1">
-                        <label for=''>Favorite Game:</label>
-                        <input type="text" placeholder="<%=records.getString("FAVORITEGAME")%>" name="favgame">
+                        <label>Contact Number: </label><input required type="number" placeholder="<%=records.getString("CONTACTNUMBER")%>(+63)" name="cnumber" minlength="10" maxlength="10">
                     </div>
 
                     <div class="personal-records-info-container1">
-                        <label for=''>Contact Number:</label>
-                        <input type="number" placeholder="<%=records.getString("CONTACTNUMBER")%>" name="cnumber">
+                        <label>Address: </label>
+                        <input required type="text" placeholder="<%=records.getString("ADDRESS")%>" name="homeaddress">
                     </div>
 
-                    <div class="personal-records-info-container1">
-                        <label for=''>Address:</label>
-                        <input type="text" placeholder="<%=records.getString("ADDRESS")%>" name="homeaddress">
-                    </div>
-                    <div class="personal-records-info-container1">
-                        <label for=''>Role:</label>
+                    <div class='personal-records-info-container1'>
+                        <label>Role: </label>
                         <select id="userrole" name="userrole">
                             <option value="member">Member</option>
                             <option value="admin">Admin</option>
                         </select>
-                        <!--<h1>Role: </h1><input type="text" placeholder="<%//=records.getString("ROLE")%>" name="userrole">-->
+
                     </div>
+
+                    <div class='personal-records-info-container1'>
+                        <label>Status: </label>
+                        <select id="userrole" name="status">
+                            <option value="student">Student</option>
+                            <option value="alumni">Alumni</option>
+                        </select>
+                    </div>
+
 
                     <div class="personal-records-buttons"> 
                         <button type="button" onclick="location.href = 'records-all.jsp';" value="GO BACK" class="button" />GO BACK</button>
-
-                        <button type="submit" id="modalBtn" name="recbutton" value="update" class="button" />UPDATE</button>
-
-                        <button type="button" onclick="location.href = '../LogoutServlet';" class="button"> LOGOUT</button>
+                        <button type="submit" id="modalBtn" value="update" class="button" name="recbutton">Update</button>
+                        <button type="button" onclick="location.href = '../LogoutServlet';" class="button">
+                            <span class="material-icons-outlined">power_settings_new</span>
+                            Logout</button>
                     </div>   
                     <%
                                 } while (records.next());
@@ -205,7 +226,10 @@
                             records.close();
                         } catch (Exception e) {
                             e.printStackTrace();
-                        }%>
+                        }
+                        session.removeAttribute("notif");
+
+                    %>
 
                 </form> 
             </div>

@@ -6,6 +6,8 @@
 
 <%@page import="java.sql.PreparedStatement"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page session="true" %>
+
 <!DOCTYPE html>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.ResultSet"%>
@@ -83,6 +85,8 @@
             <div class="personal-records-container">
                 <h3> Add Record</h3>
                 <form class="personal-records-info-container0" method="POST" action="../UpdateRecordServlet">
+                    ${sessionScope.notif}
+
                     <div class='personal-records-info-container1'>
                         <label for=''>Email:</label>
                         <input required  pattern="[a-z0-9._%+-]+@ust.edu.ph$" type="text" placeholder="Enter Email (@ust.edu.ph)" name="email"><br>
@@ -95,64 +99,72 @@
 
                     <div class='personal-records-info-container1'>
                         <label for=''>Username:</label>
-                        <input required type="text" placeholder= "Enter Username"name="uname"><br>
+                        <input required type="text" placeholder= "Enter Username (minimum of 5 characters)" name="uname" minlength="5"><br>
                     </div>
 
                     <div class='personal-records-info-container1'>
                         <label for=''>Password:</label>
-                        <input required type="password" placeholder="Enter Password" name="pass"><br>
+                        <input required type="text" placeholder="Enter Password (minimum of 8 characters)" name="pass" minlength="8"><br>
                     </div>
 
                     <div class='personal-records-info-container1'>
                         <label for=''>Course:</label>
-                        <input required type="text" placeholder="Enter Course" name="course"><br>
+                        <select id="course" name="course">
+                            <option value="Computer Science">Computer Science</option>
+                            <option value="Information Technology">Information Technology</option>
+                            <option value="Data Science">Data Science</option>
+                        </select><br>
                     </div>
 
-                    <div class='personal-records-info-container1'>
-                        <label for=''>Age:</label>
-                        <input required type="number" placeholder="Enter Age" name="age"><br>
-                    </div>
 
                     <div class='personal-records-info-container1'>
-                        <label for=''>Birthday</label>
+                        <label for=''>Birthday(Age reflects given birth date):</label>
                         <input required type="date" placeholder="Enter Birthday" name="birthday"><br>
                     </div>
 
                     <div class='personal-records-info-container1'>
-                        <label for=''>Gender:</label>
+                        <label>Gender: </label>
                         <select id="gender" name="gender">
                             <option value="male">Male</option>
                             <option value="female">Female</option>
                         </select><br>
                     </div>
 
+
                     <div class='personal-records-info-container1'>
                         <label for=''>Student Number:</label>
-                        <input required type="number" placeholder="Enter Student Number" name="snumber"><br>
+                        <input required type="number" placeholder="Enter Student Number" name="snumber" minlength="10" maxlength="10"><br>
                     </div>
 
                     <div class='personal-records-info-container1'>
-                        <label for=''>Contact Number:</label>
-                        <input required type="number" placeholder="Enter Contact Number" name="cnumber"><br>
+                        <label>Contact Number: </label>
+                        <input required type="number" placeholder="Enter Contact Number(+63)" name="cnumber" minlength="10" maxlength="10"><br>
                     </div>
 
                     <div class='personal-records-info-container1'>
-                        <label for=''>Favorite Game:</label>
+                        <label>Favorite Game: </label>
                         <input required type="text" placeholder="Enter Favorite Game" name="favgame"><br>
                     </div>
 
                     <div class='personal-records-info-container1'>
-                        <label for=''>Address:</label>
-                        <input required type="text" placeholder="Enter Address" name="address"><br>
+                       <label>Address: </label>
+                       <input required type="text" placeholder="Enter Address" name="address"><br>
                     </div>
 
                     <div class='personal-records-info-container1'>
-                        <label for=''>Role:</label>
+                        <label>Role: </label>
                         <select id="userrole" name="userrole">
                             <option value="member">Member</option>
                             <option value="admin">Admin</option>
                         </select>
+                    </div>
 
+                    <div class='personal-records-info-container1'>
+                        <label>Status: </label>
+                        <select id="userrole" name="status">
+                            <option value="student">Student</option>
+                            <option value="alumni">Alumni</option>
+                        </select>
                     </div>
 
 
@@ -165,6 +177,10 @@
                     </div>   
 
                 </form>
+
+                <%
+                    session.removeAttribute("notif");
+                %>
 
             </div>
         </section>       

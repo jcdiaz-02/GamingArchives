@@ -5,6 +5,7 @@
 --%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.ResultSet"%>
+<%@page session="true" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
@@ -104,7 +105,9 @@
         <section class="all-records-section">
             <div class="all-records-container">
                 <div class="all-records-head">
-                    <h2>All Records</h2>          
+                    <h2>All Records</h2>        
+                    ${sessionScope.notif}
+
                 </div>
                 <div class="table-container">
                     <table class="records-table">
@@ -113,7 +116,6 @@
                             <th>Course</th>
                             <th>Email</th>
                             <th>Username</th>
-
                             <th>Age</th>
                             <th>Birthday</th>
                             <th>Gender</th>
@@ -122,6 +124,9 @@
                             <th>Contact Number</th>
                             <th>Address</th>
                             <th>Verification</th>
+                            <th>Status</th>
+                            <th>Select</th>
+
                         </tr>
                         <%
                             try {
@@ -143,7 +148,10 @@
                             <td>null</td>
                             <td>null</td>
                             <td>null</td>
-                            <td>UNVERIFIED</td>	 
+                            <td>UNVERIFIED</td>	
+                            <td>student</td>
+                            <td> </td>
+
                         </tr>
                         <%
                             }
@@ -166,6 +174,16 @@
                             <td><%=records.getString("CONTACTNUMBER")%></td>
                             <td><%=records.getString("ADDRESS")%></td>
                             <td>VERIFIED</td>	 
+                            <td><%=records.getString("STATUS")%></td>
+                            <td>
+                                <form id="myform" action="../ArchiveMembersServlet"  method="get">
+                                    <label class="checkbox-container">
+                                        <input form="myform" type="checkbox" id="rows" name="selectedRows" value="<%=records.getString("EMAIL")%>">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </form>
+                            </td>
+
                         </tr>
                         <%
                                 }
@@ -179,7 +197,7 @@
                 <div class="all-records-buttons"> 
                     <span class='all-records-buttons1'>
                         <form  action="profile-page-admin.jsp">
-                            <button type="submit" value="GO BACK"  class="button">GO BACK</button>
+                            <button type="submit" value="GO BACK"  class="button"/>GO BACK</button
                         </form>
                         <form onclick ="deleteOpenForm()">
                             <button class="button" onclick="">DELETE</button>
@@ -192,17 +210,25 @@
                         <form onclick="openForm()" >
                             <button class="button"  onclick="openForm()">UPDATE</button>
                         </form>
+                        
                         <button id="modalBtn"  class="button"/>GENERATE PDF</button>
-
+                    
                         <form  action="../LogoutServlet">
-                            <button type="submit" value="LOGOUT"  class="button"/>LOGOUT</button>
+                            <button type="submit" value="LOGOUT"  class="button"/>LOGOUT</button
+                        </form>
+
+                        <button onclick="document.getElementById('myform').submit()"  class="button"/>ARCHIVE</button>
+
+                        <form  action="records-archive.jsp">
+                            <button type="submit" value="ARCHIVED RECORDS"  class="button"/>ARCHIVED RECORDS</button>
                         </form>
                     </span>
-
                 </div>      
             </div>
         </section>
-
+        <%
+            session.removeAttribute("notif");
+        %>
 
         <div id="deleteForm" class="modal-section">
             <form action="../DeleteRecordServlet" class="modal-content">
@@ -251,13 +277,17 @@
 
         <section id="modalSection" class="modal-section">
             <div class="modal-content">
+                <%
+                    session.setAttribute("ident", "all");
+                %>
                 <h3 class="modal-header">SUCCESS!</h3>
                 <p class="modal-msg">Your PDF has been generated.</p>   
                 <form class="modal-buttoncon" method="POST" action ="../PDFServlet">
                     <button class="modal-button"  name="pdfbutton" value="alluserpdf">Download PDF</button>
                 </form>
-            </div>"
+            </div>
         </section> 
+
 
         <!--        <section id="modalSection" class="modal-section">
                     <div class="modal-content">
@@ -301,6 +331,7 @@
                 document.getElementById("deleteForm").style.display = "none";
             }
             ;
+
 
             window.onclick = function (event) {
                 if (event.target === document.getElementById("myForm")) {

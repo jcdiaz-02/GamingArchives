@@ -16,9 +16,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Exceptions.*;
+import static java.lang.System.out;
 import java.sql.PreparedStatement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -66,33 +68,57 @@ public class AddRecordServlet extends HttpServlet {
             HttpSession session = request.getSession();
             String u = (String) session.getAttribute("username");
 
-            String name = request.getParameter("myname");
-            String course = request.getParameter("course");
-            String age = request.getParameter("age");
-            String birthday = request.getParameter("birthday");
-            String gender = request.getParameter("gender");
-            String snumber = request.getParameter("snumber");
-            String favgame = request.getParameter("favgame");
-            String cnumber = request.getParameter("cnumber");
-            String address = request.getParameter("address");
+	    String name = request.getParameter("myname");
+	    String course = request.getParameter("course");
 
-            String query = "UPDATE APP.VERIFIEDDB set NAME=?, COURSE=?, AGE=?, BIRTHDAY=?, GENDER=?,"
-                    + "STUDENTNUMBER=?, FAVORITEGAME=?, CONTACTNUMBER=?, ADDRESS=?, ROLE=?, DATE=? where USERNAME=?";
+	    String birthday = request.getParameter("birthday");
+	    String gender = request.getParameter("gender");
+	    String snumber = request.getParameter("snumber");
+	    String favgame = request.getParameter("favgame");
+	    String cnumber = request.getParameter("cnumber");
+	    String address = request.getParameter("address");
+
+	    out.print(birthday);
+	    int yr = Integer.parseInt(birthday.substring(0, 4));
+	    int mm = Integer.parseInt(birthday.substring(5, 7));
+	    int dd = Integer.parseInt(birthday.substring(8));
+	    out.print("date" + yr);
+	    out.print(mm);
+	    out.print(dd);
+
+	    long currentTime = System.currentTimeMillis();
+	    Calendar today = Calendar.getInstance();
+	    today.setTimeInMillis(currentTime);
+	    int age = today.get(Calendar.YEAR) - yr;
+	    if (today.get(Calendar.MONTH) < mm) {
+		age -= 1;
+	    }
+	    if (today.get(Calendar.MONTH) <= mm) {
+		if (today.get(Calendar.DATE) < dd) {
+		    age -= 1;
+
+		}
+	    }
+	    String a = String.valueOf(age);
+
+	    String query = "UPDATE APP.VERIFIEDDB set NAME=?, COURSE=?, AGE=?, BIRTHDAY=?, GENDER=?,"
+		    + "STUDENTNUMBER=?, FAVORITEGAME=?, CONTACTNUMBER=?, ADDRESS=?, ROLE=?, DATE=?, STATUS=? where USERNAME=?";
 
             PreparedStatement pst = conn.prepareStatement(query);
 
-            pst.setString(1, name);
-            pst.setString(2, course);
-            pst.setString(3, age);
-            pst.setString(4, birthday);
-            pst.setString(5, gender);
-            pst.setString(6, snumber);
-            pst.setString(7, favgame);
-            pst.setString(8, cnumber);
-            pst.setString(9, address);
-            pst.setString(10, "member");
-            pst.setString(11, date);
-            pst.setString(12, u);
+	    pst.setString(1, name);
+	    pst.setString(2, course);
+	    pst.setString(3, a);
+	    pst.setString(4, birthday);
+	    pst.setString(5, gender);
+	    pst.setString(6, snumber);
+	    pst.setString(7, favgame);
+	    pst.setString(8, cnumber);
+	    pst.setString(9, address);
+	    pst.setString(10, "member");
+	    pst.setString(11, date);
+	    pst.setString(12, "student");
+	    pst.setString(13, u);
 
             pst.executeUpdate();
             response.sendRedirect("account/profile-page.jsp");
