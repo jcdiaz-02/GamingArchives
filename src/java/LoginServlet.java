@@ -106,7 +106,7 @@ public class LoginServlet extends HttpServlet {
 
 //                    System.out.println("password is:" + dPass);
 			if (!ePass.equals(pass)) {
-			    //password is incorrect
+			    response.sendRedirect("login/login.jsp");
 			    throw new AuthenticationExceptionPassword();
 			} else if (ePass.equals(pass)) {
 
