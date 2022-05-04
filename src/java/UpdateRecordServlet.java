@@ -41,7 +41,7 @@ public class UpdateRecordServlet extends HttpServlet {
 
 	super.init(config);
 	try {
-	    Class.forName(config.getInitParameter("DBdriver"));
+	    Class.forName(config.getServletContext().getInitParameter("DBdriver"));
 	    String url = config.getInitParameter("DBurl");
 	    conn = DriverManager.getConnection(url, username, password);
 	} catch (SQLException sqle) {

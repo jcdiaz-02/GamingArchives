@@ -19,8 +19,9 @@ import EventsRecordKeeper.EventRecord;
 import java.util.Arrays;
 import javax.servlet.RequestDispatcher;
 
-@WebServlet(name = "DeleteEvent", urlPatterns = { "/DeleteEvent" })
+@WebServlet(name = "DeleteEvent", urlPatterns = {"/DeleteEvent"})
 public class DeleteEvent extends HttpServlet {
+
     Connection conn;
     EventRecord eventRecord;
     ConnectToDB db;
@@ -56,9 +57,9 @@ public class DeleteEvent extends HttpServlet {
                 }
             }
             // redirect back to view all event
-       response.sendRedirect("EventOverview");
+            response.sendRedirect("EventOverview");
         } catch (Exception e) {
-response.sendRedirect("errorPages/Error404.jsp");
+            response.sendRedirect("errorPages/Error404.jsp");
         }
     }
 
@@ -68,10 +69,10 @@ response.sendRedirect("errorPages/Error404.jsp");
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request  servlet request
+     * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -82,10 +83,10 @@ response.sendRedirect("errorPages/Error404.jsp");
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request  servlet request
+     * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -102,5 +103,5 @@ response.sendRedirect("errorPages/Error404.jsp");
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-     // #endregion
+    // #endregion
 }

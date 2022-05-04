@@ -37,69 +37,69 @@ public class AddRecordServlet extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-	username = config.getInitParameter("DBusername");
-	password = config.getInitParameter("DBpassword");
-	super.init(config);
-	try {
-	    Class.forName(config.getInitParameter("DBdriver"));
-	    String url = config.getInitParameter("DBurl");
-	    conn = DriverManager.getConnection(url, username, password);
-	} catch (SQLException sqle) {
-	    System.out.println("SQLException error occured - "
-		    + sqle.getMessage());
-	} catch (ClassNotFoundException nfe) {
-	    System.out.println("ClassNotFoundException error occured - "
-		    + nfe.getMessage());
-	}
+        username = config.getInitParameter("DBusername");
+        password = config.getInitParameter("DBpassword");
+        super.init(config);
+        try {
+            Class.forName(config.getServletContext().getInitParameter("DBdriver"));
+            String url = config.getInitParameter("DBurl");
+            conn = DriverManager.getConnection(url, username, password);
+        } catch (SQLException sqle) {
+            System.out.println("SQLException error occured - "
+                    + sqle.getMessage());
+        } catch (ClassNotFoundException nfe) {
+            System.out.println("ClassNotFoundException error occured - "
+                    + nfe.getMessage());
+        }
 
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-	    throws ServletException, IOException {
+            throws ServletException, IOException {
 
-	try {
+        try {
 
-	    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu-MM-dd");
-	    LocalDate now = LocalDate.now();
-	    String date = dtf.format(now);
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu-MM-dd");
+            LocalDate now = LocalDate.now();
+            String date = dtf.format(now);
 
-	    HttpSession session = request.getSession();
-	    String u = (String) session.getAttribute("username");
+            HttpSession session = request.getSession();
+            String u = (String) session.getAttribute("username");
 
-	    String name = request.getParameter("myname");
-	    String course = request.getParameter("course");
-	    String age = request.getParameter("age");
-	    String birthday = request.getParameter("birthday");
-	    String gender = request.getParameter("gender");
-	    String snumber = request.getParameter("snumber");
-	    String favgame = request.getParameter("favgame");
-	    String cnumber = request.getParameter("cnumber");
-	    String address = request.getParameter("address");
+            String name = request.getParameter("myname");
+            String course = request.getParameter("course");
+            String age = request.getParameter("age");
+            String birthday = request.getParameter("birthday");
+            String gender = request.getParameter("gender");
+            String snumber = request.getParameter("snumber");
+            String favgame = request.getParameter("favgame");
+            String cnumber = request.getParameter("cnumber");
+            String address = request.getParameter("address");
 
-	    String query = "UPDATE APP.VERIFIEDDB set NAME=?, COURSE=?, AGE=?, BIRTHDAY=?, GENDER=?,"
-		    + "STUDENTNUMBER=?, FAVORITEGAME=?, CONTACTNUMBER=?, ADDRESS=?, ROLE=?, DATE=? where USERNAME=?";
+            String query = "UPDATE APP.VERIFIEDDB set NAME=?, COURSE=?, AGE=?, BIRTHDAY=?, GENDER=?,"
+                    + "STUDENTNUMBER=?, FAVORITEGAME=?, CONTACTNUMBER=?, ADDRESS=?, ROLE=?, DATE=? where USERNAME=?";
 
-	    PreparedStatement pst = conn.prepareStatement(query);
+            PreparedStatement pst = conn.prepareStatement(query);
 
-	    pst.setString(1, name);
-	    pst.setString(2, course);
-	    pst.setString(3, age);
-	    pst.setString(4, birthday);
-	    pst.setString(5, gender);
-	    pst.setString(6, snumber);
-	    pst.setString(7, favgame);
-	    pst.setString(8, cnumber);
-	    pst.setString(9, address);
-	    pst.setString(10, "member");
-	    pst.setString(11, date);
-	    pst.setString(12, u);
+            pst.setString(1, name);
+            pst.setString(2, course);
+            pst.setString(3, age);
+            pst.setString(4, birthday);
+            pst.setString(5, gender);
+            pst.setString(6, snumber);
+            pst.setString(7, favgame);
+            pst.setString(8, cnumber);
+            pst.setString(9, address);
+            pst.setString(10, "member");
+            pst.setString(11, date);
+            pst.setString(12, u);
 
-	    pst.executeUpdate();
-	    response.sendRedirect("account/profile-page.jsp");
+            pst.executeUpdate();
+            response.sendRedirect("account/profile-page.jsp");
 
-	} catch (SQLException sqle) {
-	    response.sendRedirect("errPages/Error404.jsp");
-	}
+        } catch (SQLException sqle) {
+            response.sendRedirect("errPages/Error404.jsp");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -113,8 +113,8 @@ public class AddRecordServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-	    throws ServletException, IOException {
-	processRequest(request, response);
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**
@@ -127,8 +127,8 @@ public class AddRecordServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-	    throws ServletException, IOException {
-	processRequest(request, response);
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**
@@ -138,7 +138,7 @@ public class AddRecordServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-	return "Short description";
+        return "Short description";
     }// </editor-fold>
 
 }

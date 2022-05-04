@@ -25,15 +25,16 @@ public class ViewAllEvent extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
+        try {
         String username = config.getInitParameter("DBusername");
         String password = config.getInitParameter("DBpassword");
         String url = config.getInitParameter("DBurl");
         super.init(config);
         db = new ConnectToDB();
-        try {
             conn = db.getConnection(url, username, password);
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new ServletException(e);
         }
     }
 
@@ -62,7 +63,9 @@ public class ViewAllEvent extends HttpServlet {
             }
 
         } catch (Exception e) {
-            response.sendRedirect("errorPages/Error404.jsp");
+//            response.sendRedirect("errorPages/Error404.jsp");
+            e.printStackTrace();
+            throw new ServletException(e);
         }
     }
 

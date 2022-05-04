@@ -3,11 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-import Exceptions.AuthenticationExceptionPassword;
 import Exceptions.AuthenticationExceptionUsername;
-import Exceptions.NullValueException;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -20,21 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author merki
- */
 public class ChangePassServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     String username;
     String password;
     String stringKey;
@@ -47,78 +31,78 @@ public class ChangePassServlet extends HttpServlet {
 	password = config.getInitParameter("DBpassword");
         stringKey = config.getInitParameter("publicKey");//retrieves the public key (hutaocomehomepls) from web xml
 
-	super.init(config);
-	try {
-	    Class.forName(config.getInitParameter("DBdriver"));
-	    String url = config.getInitParameter("DBurl");
+        super.init(config);
+        try {
+            Class.forName(config.getServletContext().getInitParameter("DBdriver"));
+            String url = config.getInitParameter("DBurl");
 	    conn = DriverManager.getConnection(url, username, password);
-	} catch (SQLException sqle) {
+        } catch (SQLException sqle) {
 	    System.out.println("SQLException error occured - "
 		    + sqle.getMessage());
-	} catch (ClassNotFoundException nfe) {
+        } catch (ClassNotFoundException nfe) {
 	    System.out.println("ClassNotFoundException error occured - "
 		    + nfe.getMessage());
-	}
+        }
 
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
-	response.setContentType("text/html;charset=UTF-8");
-	byte[] key = new byte[16];
+        response.setContentType("text/html;charset=UTF-8");
+        byte[] key = new byte[16];
 	//converts each character of the public key into a byte and inserts it into a array.
-	for (int i = 0; i < key.length; i++) {
+        for (int i = 0; i < key.length; i++) {
 	    key[i] = (byte) stringKey.charAt(i);
-	}
-	try {
-	    HttpSession httpsession = request.getSession();
-	    String email = (String) httpsession.getAttribute("email");
-	    String psw = request.getParameter("psw");
-	    String cpsw = request.getParameter("cpsw");
+        }
+        try {
+            HttpSession httpsession = request.getSession();
+            String email = (String) httpsession.getAttribute("email");
+            String psw = request.getParameter("psw");
+            String cpsw = request.getParameter("cpsw");
 
 	    if (psw != null & cpsw != null) {
-		if (!cpsw.equals(psw)) {
-		    httpsession.setAttribute("error", "1");
-		    response.sendRedirect("login/password-change.jsp");
-		} else {
+                if (!cpsw.equals(psw)) {
+                    httpsession.setAttribute("error", "1");
+                    response.sendRedirect("login/password-change.jsp");
+                } else {
 		   String ePass = Security.encrypt(psw, key);//encrypts the password that the new user has inputted
 
-		    String query = "SELECT PASSWORD FROM APP.USERDB where EMAIL=?";
+                    String query = "SELECT PASSWORD FROM APP.USERDB where EMAIL=?";
 		    PreparedStatement pstmt = conn.prepareStatement(query);
-		    pstmt.setString(1, email);
-		    ResultSet records = pstmt.executeQuery();
+                    pstmt.setString(1, email);
+                    ResultSet records = pstmt.executeQuery();
 		    if (records.next() == false) {
 
-			query = "SELECT PASSWORD FROM APP.VERIFIEDDB where EMAIL=?";
+                        query = "SELECT PASSWORD FROM APP.VERIFIEDDB where EMAIL=?";
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, email);
-			records = pstmt.executeQuery();
+                        pstmt.setString(1, email);
+                        records = pstmt.executeQuery();
 			if (records.next() == false) {
-			    throw new AuthenticationExceptionUsername();
+                            throw new AuthenticationExceptionUsername();
 			} else {
-			    query = "UPDATE APP.VERIFIEDDB set PASSWORD=? where EMAIL=?";
+                        query = "UPDATE APP.VERIFIEDDB set PASSWORD=? where EMAIL=?";
 			    pstmt = conn.prepareStatement(query);
-			    pstmt.setString(1, ePass);
-			    pstmt.setString(2, email);
-			    pstmt.executeUpdate();
-			    response.sendRedirect("home.jsp");
+                        pstmt.setString(1, ePass);
+                        pstmt.setString(2, email);
+                        pstmt.executeUpdate();
+                        response.sendRedirect("home.jsp");
 
 			}
-		    } else {
-			query = "UPDATE APP.USERDB set PASSWORD=? where EMAIL=?";
+                    } else {
+                        query = "UPDATE APP.USERDB set PASSWORD=? where EMAIL=?";
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, psw);
-			pstmt.setString(2, email);
-			pstmt.executeUpdate();
-			response.sendRedirect("home.jsp");
-		    }
-		}
-	    }
-	} catch (SQLException sqle) {
-	    response.sendRedirect("error404.jsp");
-	} catch (Exception ex) {
-	    ex.printStackTrace();
-	}
+                        pstmt.setString(1, psw);
+                        pstmt.setString(2, email);
+                        pstmt.executeUpdate();
+                        response.sendRedirect("home.jsp");
+                    }
+                }
+            }
+        } catch (SQLException sqle) {
+            response.sendRedirect("error404.jsp");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -132,8 +116,8 @@ public class ChangePassServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-	    throws ServletException, IOException {
-	processRequest(request, response);
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**
@@ -146,8 +130,8 @@ public class ChangePassServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-	    throws ServletException, IOException {
-	processRequest(request, response);
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**
@@ -157,7 +141,7 @@ public class ChangePassServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-	return "Short description";
+        return "Short description";
     }// </editor-fold>
 
 }

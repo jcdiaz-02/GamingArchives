@@ -45,7 +45,7 @@ public class ForgotPass extends HttpServlet {
 	password = config.getInitParameter("DBpassword");
 	super.init(config);
 	try {
-	    Class.forName(config.getInitParameter("DBdriver"));
+	    Class.forName(config.getServletContext().getInitParameter("DBdriver"));
 	    String url = config.getInitParameter("DBurl");
 	    conn = DriverManager.getConnection(url, username, password);
 	} catch (SQLException sqle) {

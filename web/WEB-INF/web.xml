@@ -1,208 +1,191 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="4.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
+    <context-param>
+        <param-name>DBdriver</param-name>
+        <param-value>com.mysql.cj.jdbc.Driver</param-value>
+    </context-param>
     <servlet>
-	        <servlet-name>LoginServlet</servlet-name>
+        <servlet-name>LoginServlet</servlet-name>
         <servlet-class>LoginServlet</servlet-class>
-	
-        <init-param>
-            <param-name>DBdriver</param-name>
-            <param-value>org.apache.derby.jdbc.ClientDriver</param-value>
-        </init-param>
-        <init-param>
-            <param-name>DBurl</param-name>
-            <param-value>jdbc:derby://localhost:1527/userDB</param-value>
-        </init-param>
         <init-param>
             <param-name>publicKey</param-name>
             <param-value>zkay9vTfUHrx2fFZ</param-value>
         </init-param>
         <init-param>
+            <param-name>DBurl</param-name>
+            <param-value>jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/gamingarchives?useSSL=false&amp;serverTimezone=UTC</param-value>
+        </init-param>
+        <init-param>
             <param-name>DBusername</param-name>
-            <param-value>app</param-value>
+            <param-value>gamingarchivesAdmin</param-value>
         </init-param>
         <init-param>
             <param-name>DBpassword</param-name>
-            <param-value>app</param-value>
+            <param-value>zt.sw9"D6`VjBnhh</param-value>
         </init-param>
     </servlet>
     <servlet>
         <servlet-name>AddRecordServlet</servlet-name>
         <servlet-class>AddRecordServlet</servlet-class>
         <init-param>
-            <param-name>DBdriver</param-name>
-            <param-value>org.apache.derby.jdbc.ClientDriver</param-value>
+            <param-name>publicKey</param-name>
+            <param-value>zkay9vTfUHrx2fFZ</param-value>
         </init-param>
         <init-param>
             <param-name>DBurl</param-name>
-            <param-value>jdbc:derby://localhost:1527/userDB</param-value>
+            <param-value>jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/gamingarchives?useSSL=false&amp;serverTimezone=UTC</param-value>
         </init-param>
         <init-param>
             <param-name>DBusername</param-name>
-            <param-value>app</param-value>
+            <param-value>gamingarchivesAdmin</param-value>
         </init-param>
         <init-param>
             <param-name>DBpassword</param-name>
-            <param-value>app</param-value>
+            <param-value>zt.sw9"D6`VjBnhh</param-value>
         </init-param>
     </servlet>
     <servlet>
         <servlet-name>PDFServlet</servlet-name>
         <servlet-class>PDFServlet</servlet-class>
         <init-param>
-            <param-name>DBdriver</param-name>
-            <param-value>org.apache.derby.jdbc.ClientDriver</param-value>
-        </init-param>
-        <init-param>
             <param-name>DBurl</param-name>
-            <param-value>jdbc:derby://localhost:1527/userDB</param-value>
+            <param-value>jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/gamingarchives?useSSL=false&amp;serverTimezone=UTC</param-value>
         </init-param>
         <init-param>
             <param-name>DBusername</param-name>
-            <param-value>app</param-value>
+            <param-value>gamingarchivesAdmin</param-value>
         </init-param>
         <init-param>
             <param-name>DBpassword</param-name>
-            <param-value>app</param-value>
+            <param-value>zt.sw9"D6`VjBnhh</param-value>
         </init-param>
     </servlet>
     <servlet>
         <servlet-name>SignUpServlet</servlet-name>
         <servlet-class>SignUpServlet</servlet-class>
         <init-param>
-            <param-name>DBdriver</param-name>
-            <param-value>org.apache.derby.jdbc.ClientDriver</param-value>
-        </init-param>
-        <init-param>
-            <param-name>DBurl</param-name>
-            <param-value>jdbc:derby://localhost:1527/userDB</param-value>
-        </init-param>
-        <init-param>
             <param-name>publicKey</param-name>
             <param-value>zkay9vTfUHrx2fFZ</param-value>
         </init-param>
         <init-param>
+            <param-name>DBurl</param-name>
+            <param-value>jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/gamingarchives?useSSL=false&amp;serverTimezone=UTC</param-value>
+        </init-param>
+        <init-param>
             <param-name>DBusername</param-name>
-            <param-value>app</param-value>
+            <param-value>gamingarchivesAdmin</param-value>
         </init-param>
         <init-param>
             <param-name>DBpassword</param-name>
-            <param-value>app</param-value>
+            <param-value>zt.sw9"D6`VjBnhh</param-value>
         </init-param>
     </servlet>
     <servlet>
         <servlet-name>LoginVerification</servlet-name>
         <servlet-class>LoginVerification</servlet-class>
         <init-param>
-            <param-name>DBdriver</param-name>
-            <param-value>org.apache.derby.jdbc.ClientDriver</param-value>
+            <param-name>publicKey</param-name>
+            <param-value>zkay9vTfUHrx2fFZ</param-value>
         </init-param>
         <init-param>
             <param-name>DBurl</param-name>
-            <param-value>jdbc:derby://localhost:1527/userDB</param-value>
+            <param-value>jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/gamingarchives?useSSL=false&amp;serverTimezone=UTC</param-value>
         </init-param>
         <init-param>
             <param-name>DBusername</param-name>
-            <param-value>app</param-value>
+            <param-value>gamingarchivesAdmin</param-value>
         </init-param>
         <init-param>
             <param-name>DBpassword</param-name>
-            <param-value>app</param-value>
+            <param-value>zt.sw9"D6`VjBnhh</param-value>
         </init-param>
     </servlet>
     <servlet>
         <servlet-name>PersonalRecordServlet</servlet-name>
         <servlet-class>PersonalRecordServlet</servlet-class>
         <init-param>
-            <param-name>DBdriver</param-name>
-            <param-value>org.apache.derby.jdbc.ClientDriver</param-value>
-        </init-param>
-        <init-param>
-            <param-name>DBurl</param-name>
-            <param-value>jdbc:derby://localhost:1527/userDB</param-value>
-        </init-param>
-        <init-param>
             <param-name>publicKey</param-name>
             <param-value>zkay9vTfUHrx2fFZ</param-value>
         </init-param>
         <init-param>
+            <param-name>DBurl</param-name>
+            <param-value>jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/gamingarchives?useSSL=false&amp;serverTimezone=UTC</param-value>
+        </init-param>
+        <init-param>
             <param-name>DBusername</param-name>
-            <param-value>app</param-value>
+            <param-value>gamingarchivesAdmin</param-value>
         </init-param>
         <init-param>
             <param-name>DBpassword</param-name>
-            <param-value>app</param-value>
+            <param-value>zt.sw9"D6`VjBnhh</param-value>
         </init-param>
     </servlet>
     <servlet>
         <servlet-name>UpdateRecordServlet</servlet-name>
         <servlet-class>UpdateRecordServlet</servlet-class>
         <init-param>
-            <param-name>DBdriver</param-name>
-            <param-value>org.apache.derby.jdbc.ClientDriver</param-value>
-        </init-param>
-        <init-param>
-            <param-name>DBurl</param-name>
-            <param-value>jdbc:derby://localhost:1527/userDB</param-value>
-        </init-param> 
-        <init-param>
             <param-name>publicKey</param-name>
             <param-value>zkay9vTfUHrx2fFZ</param-value>
         </init-param>
         <init-param>
+            <param-name>DBurl</param-name>
+            <param-value>jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/gamingarchives?useSSL=false&amp;serverTimezone=UTC</param-value>
+        </init-param>
+        <init-param>
             <param-name>DBusername</param-name>
-            <param-value>app</param-value>
+            <param-value>gamingarchivesAdmin</param-value>
         </init-param>
         <init-param>
             <param-name>DBpassword</param-name>
-            <param-value>app</param-value>
+            <param-value>zt.sw9"D6`VjBnhh</param-value>
         </init-param>
     </servlet>
     <servlet>
         <servlet-name>TransferRecordServlet</servlet-name>
         <servlet-class>TransferRecordServlet</servlet-class>
         <init-param>
-            <param-name>DBdriver</param-name>
-            <param-value>org.apache.derby.jdbc.ClientDriver</param-value>
+            <param-name>publicKey</param-name>
+            <param-value>zkay9vTfUHrx2fFZ</param-value>
         </init-param>
         <init-param>
             <param-name>DBurl</param-name>
-            <param-value>jdbc:derby://localhost:1527/userDB</param-value>
+            <param-value>jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/gamingarchives?useSSL=false&amp;serverTimezone=UTC</param-value>
         </init-param>
         <init-param>
             <param-name>DBusername</param-name>
-            <param-value>app</param-value>
+            <param-value>gamingarchivesAdmin</param-value>
         </init-param>
         <init-param>
             <param-name>DBpassword</param-name>
-            <param-value>app</param-value>
+            <param-value>zt.sw9"D6`VjBnhh</param-value>
         </init-param>
     </servlet>
     <servlet>
         <servlet-name>DeleteRecordServlet</servlet-name>
         <servlet-class>DeleteRecordServlet</servlet-class>
         <init-param>
-            <param-name>DBdriver</param-name>
-            <param-value>org.apache.derby.jdbc.ClientDriver</param-value>
+            <param-name>publicKey</param-name>
+            <param-value>zkay9vTfUHrx2fFZ</param-value>
         </init-param>
         <init-param>
             <param-name>DBurl</param-name>
-            <param-value>jdbc:derby://localhost:1527/userDB</param-value>
+            <param-value>jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/gamingarchives?useSSL=false&amp;serverTimezone=UTC</param-value>
         </init-param>
         <init-param>
             <param-name>DBusername</param-name>
-            <param-value>app</param-value>
+            <param-value>gamingarchivesAdmin</param-value>
         </init-param>
         <init-param>
             <param-name>DBpassword</param-name>
-            <param-value>app</param-value>
+            <param-value>zt.sw9"D6`VjBnhh</param-value>
         </init-param>
     </servlet>
     <servlet>
         <servlet-name>AddComment</servlet-name>
-        <servlet-class>EventsRecordServlet.AddComment</servlet-class>
+        <servlet-class>EventsRecordKeeper.AddComment</servlet-class>
         <init-param>
             <param-name>DBurl</param-name>
-            <param-value>jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/gamingarchives</param-value>
+            <param-value>jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/gamingarchives?useSSL=false&amp;serverTimezone=UTC</param-value>
         </init-param>
         <init-param>
             <param-name>DBusername</param-name>
@@ -218,7 +201,7 @@
         <servlet-class>EventsRecordServlet.AddEvent</servlet-class>
         <init-param>
             <param-name>DBurl</param-name>
-            <param-value>jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/gamingarchives</param-value>
+            <param-value>jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/gamingarchives?useSSL=false&amp;serverTimezone=UTC</param-value>
         </init-param>
         <init-param>
             <param-name>DBusername</param-name>
@@ -234,7 +217,7 @@
         <servlet-class>EventsRecordServlet.DeleteEvent</servlet-class>
         <init-param>
             <param-name>DBurl</param-name>
-            <param-value>jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/gamingarchives</param-value>
+            <param-value>jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/gamingarchives?useSSL=false&amp;serverTimezone=UTC</param-value>
         </init-param>
         <init-param>
             <param-name>DBusername</param-name>
@@ -250,7 +233,7 @@
         <servlet-class>EventsRecordServlet.ViewAllEvent</servlet-class>
         <init-param>
             <param-name>DBurl</param-name>
-            <param-value>jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/gamingarchives</param-value>
+            <param-value>jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/gamingarchives?useSSL=false&amp;serverTimezone=UTC</param-value>
         </init-param>
         <init-param>
             <param-name>DBusername</param-name>
@@ -266,7 +249,7 @@
         <servlet-class>EventsRecordServlet.ViewCommentBox</servlet-class>
         <init-param>
             <param-name>DBurl</param-name>
-            <param-value>jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/gamingarchives</param-value>
+            <param-value>jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/gamingarchives?useSSL=false&amp;serverTimezone=UTC</param-value>
         </init-param>
         <init-param>
             <param-name>DBusername</param-name>
@@ -294,7 +277,7 @@
         <servlet-class>EventsRecordServlet.EventOverview</servlet-class>
         <init-param>
             <param-name>DBurl</param-name>
-            <param-value>jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/gamingarchives</param-value>
+            <param-value>jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/gamingarchives?useSSL=false&amp;serverTimezone=UTC</param-value>
         </init-param>
         <init-param>
             <param-name>DBusername</param-name>
@@ -308,6 +291,10 @@
     <servlet>
         <servlet-name>DeleteComment</servlet-name>
         <servlet-class>EventsRecordServlet.DeleteComment</servlet-class>
+        <init-param>
+            <param-name>DBurl</param-name>
+            <param-value>jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/gamingarchives?useSSL=false&amp;serverTimezone=UTC</param-value>
+        </init-param>
         <init-param>
             <param-name>DBusername</param-name>
             <param-value>gamingarchivesAdmin</param-value>
@@ -365,8 +352,6 @@
         <servlet-name>ForgotPassVerification</servlet-name>
         <servlet-class>ForgotPassVerification</servlet-class>
     </servlet>
-    
-    
     <servlet-mapping>
         <servlet-name>LoginVerification</servlet-name>
         <url-pattern>/LoginVerification</url-pattern>

@@ -60,7 +60,7 @@ public class PDFServlet extends HttpServlet {
 	password = config.getInitParameter("DBpassword");//retrieves password from web xml
 	super.init(config);
 	try {
-	    Class.forName(config.getInitParameter("DBdriver"));//load driver for DB
+	    Class.forName(config.getServletContext().getInitParameter("DBdriver"));//load driver for DB
 	    String url = config.getInitParameter("DBurl");// retrieves the url to be used for establishing a connection to the DB
 	    conn = DriverManager.getConnection(url, username, password);//Establishes a connection
 	} catch (SQLException sqle) {

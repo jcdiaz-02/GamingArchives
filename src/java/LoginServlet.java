@@ -38,7 +38,7 @@ public class LoginServlet extends HttpServlet {
 
 	super.init(config);
 	try {
-	    Class.forName(config.getInitParameter("DBdriver"));
+	    Class.forName(config.getServletContext().getInitParameter("DBdriver"));
 	    String url = config.getInitParameter("DBurl");
 	    conn = DriverManager.getConnection(url, username, password);
 	} catch (SQLException sqle) {
@@ -126,8 +126,10 @@ public class LoginServlet extends HttpServlet {
 
 	} catch (SQLException sqle) {
 	    response.sendRedirect("error404.jsp");
+            throw new ServletException(sqle);
 	} catch (Exception ex) {
 	    ex.printStackTrace();
+            throw new ServletException(ex);
 	}
 
     }

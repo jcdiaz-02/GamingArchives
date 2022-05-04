@@ -28,82 +28,82 @@ import javax.servlet.http.HttpSession;
 public class UserVerification extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-	    throws ServletException, IOException {
-	HttpSession httpsession = request.getSession();
+            throws ServletException, IOException {
+        HttpSession httpsession = request.getSession();
 
-	String uname = "";
-	String psw = "";
-	String button = "";
-	String email = "";
-	String identifier = (String) httpsession.getAttribute("identifier");
-	System.out.println(identifier);
-	if (identifier.equals("login")) {
-	    uname = (String) httpsession.getAttribute("uname");
-	    psw = (String) httpsession.getAttribute("psw");
-	    button = (String) httpsession.getAttribute("button");
-	    email = (String) httpsession.getAttribute("email");
-	} else if (identifier.equals("signup")) {
-	    uname = request.getParameter("uname");
-	    psw = request.getParameter("psw");
-	    String cpsw = request.getParameter("cpsw");
-	    button = request.getParameter("button");
-	    email = request.getParameter("email");
-	    if (psw != null & cpsw != null) {
-		if (!cpsw.equals(psw)) {
-		    httpsession.setAttribute("error", "1");
-		    response.sendRedirect("signup/signup.jsp");
-		}
-	    }
-	}
+        String uname = "";
+        String psw = "";
+        String button = "";
+        String email = "";
+        String identifier = (String) httpsession.getAttribute("identifier");
+        System.out.println(identifier);
+        if (identifier.equals("login")) {
+            uname = (String) httpsession.getAttribute("uname");
+            psw = (String) httpsession.getAttribute("psw");
+            button = (String) httpsession.getAttribute("button");
+            email = (String) httpsession.getAttribute("email");
+        } else if (identifier.equals("signup")) {
+            uname = request.getParameter("uname");
+            psw = request.getParameter("psw");
+            String cpsw = request.getParameter("cpsw");
+            button = request.getParameter("button");
+            email = request.getParameter("email");
+            if (psw != null & cpsw != null) {
+                if (!cpsw.equals(psw)) {
+                    httpsession.setAttribute("error", "1");
+                    response.sendRedirect("signup/signup.jsp");
+                }
+            }
+        }
 
-	Random r = new Random();
-	String randomNumber = String.format("%04d", r.nextInt(1001));
+        Random r = new Random();
+        String randomNumber = String.format("%04d", r.nextInt(1001));
 
-	String subject = "verification";
-	String messageText = "Verification code is: " + randomNumber;//messageString;
-	String fromemail = "noreplytgs.cics@gmail.com";//sender email & pas
-	String frompassword = "6&&kPGUhp/RwQvjn";
-	try {
+        String subject = "verification";
+        String messageText = "Verification code is: " + randomNumber;//messageString;
+        String fromemail = "noreplytgs.cics@gmail.com";//sender email & pas
+        String frompassword = "6&&kPGUhp/RwQvjn";
+        try {
 
-	    Properties properties = new Properties();
-	    properties.setProperty("mail.transport.protocol", "smtp");
-	    properties.setProperty("mail.smtp.host", "smtp.gmail.com");
-	    properties.put("mail.debug", "true");
-	    properties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-	    properties.put("mail.smtp.auth", "true");
-	    properties.put("mail.smtp.starttls.enable", "true");
-	    properties.put("mail.smtp.port", "587");
+            Properties properties = new Properties();
+            properties.setProperty("mail.transport.protocol", "smtp");
+            properties.setProperty("mail.smtp.host", "smtp.gmail.com");
+            properties.put("mail.debug", "true");
+            properties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+            properties.put("mail.smtp.auth", "true");
+            properties.put("mail.smtp.starttls.enable", "true");
+            properties.put("mail.smtp.port", "587");
 
-	    Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
-		@Override
-		protected PasswordAuthentication getPasswordAuthentication() {
-		    return new PasswordAuthentication(fromemail, frompassword);
-		}
-	    });
-	    session.setDebug(true);
+            Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(fromemail, frompassword);
+                }
+            });
+            session.setDebug(true);
 
-	    Transport transport = session.getTransport();
-	    InternetAddress addressFrom = new InternetAddress(fromemail);
-	    MimeMessage message = new MimeMessage(session);
-	    message.setSender(addressFrom);
-	    message.setSubject(subject);
-	    message.setContent(messageText, "text/plain");
-	    message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+            Transport transport = session.getTransport();
+            InternetAddress addressFrom = new InternetAddress(fromemail);
+            MimeMessage message = new MimeMessage(session);
+            message.setSender(addressFrom);
+            message.setSubject(subject);
+            message.setContent(messageText, "text/plain");
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
 
-	    transport.connect();
-	    transport.sendMessage(message, message.getAllRecipients());
-	    transport.close();
+            transport.connect();
+            transport.sendMessage(message, message.getAllRecipients());
+            transport.close();
 
-	    httpsession.setAttribute("code", randomNumber);
-	    httpsession.setAttribute("uname", uname);
-	    httpsession.setAttribute("pass", psw);
-	    httpsession.setAttribute("email", email);
-	    httpsession.setAttribute("button", button);
-	    response.sendRedirect(
-		    "verificationPage.jsp");
-	} catch (MessagingException mex) {
-	    System.out.println("send failed, exception: " + mex);
-	}
+            httpsession.setAttribute("code", randomNumber);
+            httpsession.setAttribute("uname", uname);
+            httpsession.setAttribute("pass", psw);
+            httpsession.setAttribute("email", email);
+            httpsession.setAttribute("button", button);
+            response.sendRedirect(
+                    "verificationPage.jsp");
+        } catch (MessagingException mex) {
+            System.out.println("send failed, exception: " + mex);
+        }
     }
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 
@@ -117,8 +117,8 @@ public class UserVerification extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-	    throws ServletException, IOException {
-	processRequest(request, response);
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**
@@ -131,8 +131,8 @@ public class UserVerification extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-	    throws ServletException, IOException {
-	processRequest(request, response);
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**
@@ -142,7 +142,7 @@ public class UserVerification extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-	return "Short description";
+        return "Short description";
     }// </editor-fold>
 
 }

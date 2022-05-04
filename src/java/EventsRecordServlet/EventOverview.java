@@ -20,6 +20,8 @@ import javax.servlet.http.HttpSession;
 
 import Database.ConnectToDB;
 import EventsRecordKeeper.EventRecord;
+import Exceptions.NullValueException;
+import java.io.PrintWriter;
 import java.util.Arrays;
 
 /**
@@ -34,43 +36,47 @@ public class EventOverview extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        String username = config.getInitParameter("DBusername");
-        String password = config.getInitParameter("DBpassword");
-        String url = config.getInitParameter("DBurl");
-        super.init(config);
-        db = new ConnectToDB();
         try {
+            String DBdriver = "com.mysql.cj.jdbc.Driver";
+            Class.forName(DBdriver);
+            String username = config.getInitParameter("DBusername");
+            String password = config.getInitParameter("DBpassword");
+            String url = config.getInitParameter("DBurl");
+            super.init(config);
+            db = new ConnectToDB();
             conn = db.getConnection(url, username, password);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            throw new ServletException(e);
         }
     }
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-     try {
+
+        try {
             HttpSession session = request.getSession();
             String username = (String) session.getAttribute("username");
             String role = (String) session.getAttribute("role");
-            List<EventRecord> recordList = new ArrayList<EventRecord>();
+            List<EventRecord> recordList = new ArrayList<>();
             String datenow;
-                String tablename = "event_record";
-                ResultSet rs = db.getSortedTableRS(tablename, conn);
+            String tablename = "event_record";
+            ResultSet rs = db.getSortedTableRS(tablename, conn);
 
-                while (rs.next()) {
-                    EventRecord record = new EventRecord(rs.getInt(1), rs.getString(2), rs.getString(3),
-                            rs.getString(4),
-                            rs.getString(5));
-                    recordList.add(record);
-                }
-                // recordList.get(1).getEventName(); sample
-            datenow=  java.time.LocalDate.now().toString();
-                    session.setAttribute("date", datenow);
+            while (rs.next()) {
+                EventRecord record = new EventRecord(rs.getInt(1), rs.getString(2), rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5));
+                recordList.add(record);
+            }
+            // recordList.get(1).getEventName(); sample
+            datenow = java.time.LocalDate.now().toString();
+            session.setAttribute("date", datenow);
             session.setAttribute("eventList", recordList);
             // give list of event to jsp
             response.sendRedirect("subpage/events.jsp");
-        } catch (Exception e) {
-            System.out.println("went to cath");
-            System.out.println(e);
+        } catch (SQLException e) {
+            throw new ServletException(e);
         }
     }
 
@@ -114,3 +120,45 @@ public class EventOverview extends HttpServlet {
     }// </editor-fold>
 
 }
+
+// trace code
+// PrintWriter out = response.getWriter();
+//        try {
+//            /* TODO output your page here. You may use following sample code. */
+//            out.println("<!DOCTYPE html>");
+//            out.println("<html>");
+//            out.println("<head>");
+//            out.println("<title>Servlet ListenerTester</title>");
+//            out.println("</head>");
+//            out.println("<body>");
+//            out.println("<center>");
+//            out.println("<h1> DOG SERVLET </h1>");
+//            out.println("<h2> test context attributes set by listener<br> </h2>");
+//            out.println("<br>");
+//
+////            db = new ConnectToDB();
+////            conn = db.getConnection(url, username, password);
+//            out.println("<h3> create statement </h3>");
+//            Statement stmt = conn.createStatement();
+//            out.println("<h3> statement created </h3>");
+//            List<EventRecord> recordList = new ArrayList<>();
+//            String tablename = "event_record";
+//            ResultSet rs = db.getSortedTableRS(tablename, conn);
+//
+//            while (rs.next()) {
+////                EventRecord record = new EventRecord(rs.getInt(1), rs.getString(2), rs.getString(3),
+////                        rs.getString(4),
+////                        rs.getString(5));
+//                out.println("<h3> " + rs.getInt(1) + "</h3>");
+//            }
+//            out.println("<h3> " + username + "</h3>");
+////            out.println("<h3> "+ password + "</h3>");
+//            out.println("<h3> " + url + "</h3>");
+//
+//            out.println("</body>");
+//            out.println("</html>");
+//        } catch (SQLException e) {
+//            out.println("<h3> error occured</h3>");
+//            out.println("<h3> " + e.getMessage() + "</h3>");
+//            throw new ServletException(e);
+//        }

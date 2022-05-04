@@ -12,24 +12,25 @@ import java.util.List;
 public class ConnectToDB {
 
     public Connection getConnection(String dbUrl, String dbUser, String dbPassword) throws SQLException {
-        Connection conn;
-        try {
+
 //            "jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/{your_database}?useSSL=true";
 //            DriverManager.getConnection(url, "gamingarchivesAdmin", "{your_password}");
-            final String url = "jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/gamingarchives?useSSL=false&serverTimezone=UTC";
-            final String user = "gamingarchivesAdmin";
-            final String password = "zt.sw9\"D6`VjBnhh";
-            conn = DriverManager.getConnection(url, user, password);
+//            final String url = "jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/gamingarchives?useSSL=false&serverTimezone=UTC";
+//            final String user = "gamingarchivesAdmin";
+//            final String password = "zt.sw9\"D6`VjBnhh";
+        try {
+            String DBdriver = "com.mysql.cj.jdbc.Driver";
+            Class.forName(DBdriver);
+            Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
             System.out.println("Connected to Azure Database");
             return conn;
-        } catch (SQLException e) {
-            System.out.println("Not Connected");
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-            return null;
+            throw new SQLException(e);
         }
     }
 
-    public ResultSet getTableResultSet(String tablename, Connection conn) {
+    public ResultSet getTableResultSet(String tablename, Connection conn) throws SQLException {
         try {
             String query = "SELECT * FROM " + tablename;
             Statement pstmt = conn.createStatement();
@@ -37,11 +38,11 @@ public class ConnectToDB {
             return rs;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return null;
+            throw e;
         }
     }
 
-    public ResultSet getSortedTableRS(String tablename, Connection conn) {
+    public ResultSet getSortedTableRS(String tablename, Connection conn) throws SQLException {
         try {
             String query = "SELECT * FROM " + tablename + " ORDER BY event_date DESC";
             Statement pstmt = conn.createStatement();
@@ -49,7 +50,7 @@ public class ConnectToDB {
             return rs;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return null;
+            throw e;
         }
     }
 
@@ -65,7 +66,7 @@ public class ConnectToDB {
             return rs;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return null;
+            throw e;
         }
     }
 
@@ -77,11 +78,11 @@ public class ConnectToDB {
             return rs;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return null;
+            throw e;
         }
     }
 
-    public int updateQuery(String query, String[] var, Connection conn) {
+    public int updateQuery(String query, String[] var, Connection conn) throws SQLException {
         try {
             PreparedStatement pstmt = conn.prepareStatement(query);
             int count = 1;
@@ -92,18 +93,18 @@ public class ConnectToDB {
             return pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return -1;
+            throw e;
         }
     }
 
-    public int updateQuery(String query, String var, Connection conn) {
+    public int updateQuery(String query, String var, Connection conn) throws SQLException {
         try {
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setString(1, var);
             return pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return -1;
+            throw e;
         }
     }
 
@@ -114,5 +115,4 @@ public class ConnectToDB {
         }
         return list;
     }
-
 }
