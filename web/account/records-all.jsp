@@ -84,7 +84,7 @@
                     <a class="option" href="../subpage/about.jsp">About</a>
                     <a class="option" href="../subpage/events.jsp">Events</a>
                     <a class="option" href="../subpage/contact.jsp">Contact</a>
-                    <form class="button-nav-form" action="../login/login.jsp">
+                    <form class="button-nav-form" action="../MyAccountServlet">
                         <input type="hidden" name="verify" value="${verify}" />
                         <button type="submit" value="ADMIN"  class="button"/>ADMIN</button>
                     </form>
@@ -112,6 +112,7 @@
                 <div class="table-container">
                     <table class="records-table">
                         <tr>
+                            <th>Select</th>
                             <th>Name</th>
                             <th>Course</th>
                             <th>Email</th>
@@ -125,8 +126,6 @@
                             <th>Address</th>
                             <th>Verification</th>
                             <th>Status</th>
-                            <th>Select</th>
-
                         </tr>
                         <%
                             try {
@@ -137,6 +136,7 @@
                                 while (records.next()) {
                         %>
                         <tr>
+                            <td> </td>
                             <td>null</td>
                             <td>null</td>
                             <td><%=records.getString("EMAIL")%></td>
@@ -150,8 +150,6 @@
                             <td>null</td>
                             <td>UNVERIFIED</td>	
                             <td>student</td>
-                            <td> </td>
-
                         </tr>
                         <%
                             }
@@ -162,6 +160,14 @@
 
                         %>
                         <tr>
+                            <td>
+                                <form id="myform" action="../ArchiveMembersServlet"  method="get">
+                                    <label class="checkbox-container">
+                                        <input form="myform" type="checkbox" id="rows" name="selectedRows" value="<%=records.getString("EMAIL")%>">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </form>
+                            </td>
                             <td><%=records.getString("NAME")%></td>
                             <td><%=records.getString("COURSE")%></td>
                             <td><%=records.getString("EMAIL")%></td>
@@ -175,14 +181,7 @@
                             <td><%=records.getString("ADDRESS")%></td>
                             <td>VERIFIED</td>	 
                             <td><%=records.getString("STATUS")%></td>
-                            <td>
-                                <form id="myform" action="../ArchiveMembersServlet"  method="get">
-                                    <label class="checkbox-container">
-                                        <input form="myform" type="checkbox" id="rows" name="selectedRows" value="<%=records.getString("EMAIL")%>">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </form>
-                            </td>
+
 
                         </tr>
                         <%
@@ -196,31 +195,37 @@
 
                 <div class="all-records-buttons"> 
                     <span class='all-records-buttons1'>
-                        <form  action="profile-page-admin.jsp">
-                            <button type="submit" value="GO BACK"  class="button"/>GO BACK</button
-                        </form>
-                        <form onclick ="deleteOpenForm()">
+                        <form action="" onclick ="deleteOpenForm()">
                             <button class="button" onclick="">DELETE</button>
                         </form>
-                        <form onclick="verifyOpenForm()" >
-                            <button class="button"  onclick="verifyOpenForm()">VERIFY </button>
-                        </form>
-                    </span>
-                    <span class='all-records-buttons2'>
                         <form onclick="openForm()" >
                             <button class="button"  onclick="openForm()">UPDATE</button>
                         </form>
-                        
-                        <button id="modalBtn"  class="button"/>GENERATE PDF</button>
-                    
-                        <form  action="../LogoutServlet">
-                            <button type="submit" value="LOGOUT"  class="button"/>LOGOUT</button
+
+                        <form> 
+                            <button onclick="document.getElementById('myform').submit()"  class="button"/>ARCHIVE</button>
                         </form>
 
-                        <button onclick="document.getElementById('myform').submit()"  class="button"/>ARCHIVE</button>
+                        <form onclick="verifyOpenForm()" >
+                            <button class="button"  onclick="verifyOpenForm()">VERIFY </button>
+                        </form>
+
+                    </span>
+                    <span class='all-records-buttons2'>
+                        <form  action="profile-page-admin.jsp">
+                            <button type="submit" value="GO BACK"  class="button"/>GO BACK</button>
+                        </form>
+
+                        <form onclick="pdfOpenForm()">
+                            <button onclick="pdfOpenForm()" class="button">GENERATE PDF</button>
+                        </form>
 
                         <form  action="records-archive.jsp">
                             <button type="submit" value="ARCHIVED RECORDS"  class="button"/>ARCHIVED RECORDS</button>
+                        </form>
+
+                        <form  action="../LogoutServlet">
+                            <button type="submit" value="LOGOUT"  class="button"/>LOGOUT</button>
                         </form>
                     </span>
                 </div>      
@@ -275,7 +280,7 @@
             </form>
         </div>
 
-        <section id="modalSection" class="modal-section">
+        <section id="pdfForm" class="modal-section">
             <div class="modal-content">
                 <%
                     session.setAttribute("ident", "all");
@@ -283,6 +288,7 @@
                 <h3 class="modal-header">SUCCESS!</h3>
                 <p class="modal-msg">Your PDF has been generated.</p>   
                 <form class="modal-buttoncon" method="POST" action ="../PDFServlet">
+                    <button class="close modal-button" type="button" class="cancel" onclick="pdfCloseForm()">Cancel</button>
                     <button class="modal-button"  name="pdfbutton" value="alluserpdf">Download PDF</button>
                 </form>
             </div>
@@ -331,13 +337,25 @@
                 document.getElementById("deleteForm").style.display = "none";
             }
             ;
+            function pdfOpenForm() {
+                event.preventDefault();
+                document.getElementById("pdfForm").style.display = "block";
+            }
+            ;
+            function pdfCloseForm() {
+                event.preventDefault();
+                document.getElementById("pdfForm").style.display = "none";
+
+            }
+            ;
 
 
-            window.onclick = function (event) {
-                if (event.target === document.getElementById("myForm")) {
-                    document.getElementById("myForm").style.display = "none";
-                }
-            };
+//
+//            window.onclick = function (event) {
+//                if (event.target === document.getElementById("myForm")) {
+//                    document.getElementById("myForm").style.display = "none";
+//                }
+//            };
 
         </script>
     </body>

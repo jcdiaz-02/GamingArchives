@@ -14,16 +14,16 @@
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
 <%
-    String driver = "org.apache.derby.jdbc.ClientDriver";
-    String url = "jdbc:derby://localhost:1527/userDB";
-    String username = "app";
-    String password = "app";
+    String driver = "com.mysql.cj.jdbc.Driver";
+    String url = "jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/gamingarchives?useSSL=false&serverTimezone=UTC";
+    String username = "gamingarchivesAdmin";
+    String password = "zt.sw9\"D6`VjBnhh";
     Connection conn;
     try {
-	Class.forName(driver);
-
+        Class.forName(driver);
+        System.out.println("connection made");
     } catch (ClassNotFoundException e) {
-	e.printStackTrace();
+        e.printStackTrace();
     }
     Connection connection = null;
     Statement statement = null;
@@ -61,14 +61,17 @@
         <title>UST-TGS</title>
     </head>
     <body>
-        <!--TODO: CONNECT TO DATABASE AND ACCESS ALL RECORDS DATA -->
-        <!--TODO: FUNCTIONALITY OF SORT BUTTONS-->
         <!-- navbar -->
         <div class="bar"> 
             <input type="checkbox" id="check">
             <label for="check" class="checkbtn">
                 <i class="fas fa-bars"></i>
             </label>
+
+            <div class="logo-container" >
+                <a href="home.jsp"><img class="nav-logo nav-logo2" src="../assets/logo.svg" ></a>
+            </div>
+
             <div class="nav-content">
                 <div class="nav-title">
                     <img class="nav-logo" src="../assets/logo.svg" alt="UST-TGS logo">
@@ -89,113 +92,126 @@
             </div>
         </div>
         <%
-	    response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
-	    String uname = (String) session.getAttribute("username");
-	    //session.setAttribute("verify", session.getAttribute("verify"));
+            response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
+            String uname = (String) session.getAttribute("username");
+            //session.setAttribute("verify", session.getAttribute("verify"));
 
-	    String role = (String) session.getAttribute("role");
-	    if (uname == null) {
-		response.sendRedirect("home.jsp");
-	    }
+            String role = (String) session.getAttribute("role");
+            if (uname == null) {
+                response.sendRedirect("home.jsp");
+                System.out.println("redirected home");
+            }
         %>
         <section class="all-records-section">
             <div class="all-records-container">
                 <div class="all-records-head">
                     <h2>Archived Records</h2>        
-		    ${sessionScope.notif}
+                    ${sessionScope.notif}
 
                 </div>
                 <div class="table-container">
                     <table class="records-table">
-			<tr>
-			    <td>Name</td>
-			    <td>Course</td>
-			    <td>Email</td>
-			    <td>Username</td>
-			    <td>Age</td>
-			    <td>Birthday</td>
-			    <td>Gender</td>
-			    <td>Student Number</td>
-			    <td>Favorite Game</td>
-			    <td>Contact Number</td>
-			    <td>Address</td>
-			    <td>Verification</td>
-			    <td>Status</td>
-			    <td>Select</td>
+                        <tr>
+                            <th>Select</th>
+                            <th>Name</th>
+                            <th>Course</th>
+                            <th>Email</th>
+                            <th>Username</th>
+                            <th>Age</th>
+                            <th>Birthday</th>
+                            <th>Gender</th>
+                            <th>Student Number</th>
+                            <th>Favorite Game</th>
+                            <th>Contact Number</th>
+                            <th>Address</th>
+                            <th>Verification</th>
+                            <th>Status</th>
 
-			</tr>
-			<%
-			    try {
-				conn = DriverManager.getConnection(url, username, password);
-				String query = "SELECT * FROM APP.ARCHIVEDB";
-				PreparedStatement pstmt = conn.prepareStatement(query);
-				ResultSet records = pstmt.executeQuery();
+                        </tr>
+                        <%
+                            try {
+                                conn = DriverManager.getConnection(url, username, password);
+                                String query = "SELECT * FROM APP.ARCHIVEDB";
+                                PreparedStatement pstmt = conn.prepareStatement(query);
+                                ResultSet records = pstmt.executeQuery();
 
-				while (records.next()) {
+                                while (records.next()) {
 
-			%>
-			<tr>
-			    <td><%=records.getString("NAME")%></td>
-			    <td><%=records.getString("COURSE")%></td>
-			    <td><%=records.getString("EMAIL")%></td>
-			    <td><%=records.getString("USERNAME")%></td>
-			    <td><%=records.getString("AGE")%></td>
-			    <td><%=records.getString("BIRTHDAY")%></td>
-			    <td><%=records.getString("GENDER")%></td>
-			    <td><%=records.getString("STUDENTNUMBER")%></td>
-			    <td><%=records.getString("FAVORITEGAME")%></td>
-			    <td><%=records.getString("CONTACTNUMBER")%></td>
-			    <td><%=records.getString("ADDRESS")%></td>
-			    <td>VERIFIED</td>	 
-			    <td><%=records.getString("STATUS")%></td>
-			    <td>
-				<form id="myform" action="../ArchiveTransferServlet"  method="get">
-				    <label class="checkbox-container">
-					<input form="myform" type="checkbox" id="rows" name="selectedRows" value="<%=records.getString("EMAIL")%>">
-					<span class="checkmark"></span>
-				    </label>
-				</form>
-			    </td>
-			</tr>
-			<%
-				}
-			    } catch (Exception e) {
-				e.printStackTrace();
-			    }%>
+                        %>
+                        <tr>
+                            <td>
+                                <form id="myform" action="../ArchiveTransferServlet"  method="get">
+                                    <label class="checkbox-container">
+                                        <input form="myform" type="checkbox" id="rows" name="selectedRows" value="<%=records.getString("EMAIL")%>">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </form>
+                            </td>
+                            <td><%=records.getString("NAME")%></td>
+                            <td><%=records.getString("COURSE")%></td>
+                            <td><%=records.getString("EMAIL")%></td>
+                            <td><%=records.getString("USERNAME")%></td>
+                            <td><%=records.getString("AGE")%></td>
+                            <td><%=records.getString("BIRTHDAY")%></td>
+                            <td><%=records.getString("GENDER")%></td>
+                            <td><%=records.getString("STUDENTNUMBER")%></td>
+                            <td><%=records.getString("FAVORITEGAME")%></td>
+                            <td><%=records.getString("CONTACTNUMBER")%></td>
+                            <td><%=records.getString("ADDRESS")%></td>
+                            <td>VERIFIED</td>	 
+                            <td><%=records.getString("STATUS")%></td>
+
+                        </tr>
+                        <%
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }%>
 
                     </table>
                 </div>       
 
                 <div class="all-records-buttons"> 
-                    <form  action="records-all.jsp">
-                        <input type="submit" value="GO BACK"  class="button"/>
-                    </form>
-                    <form onclick ="deleteOpenForm()">
-                        <button class="button" onclick="">DELETE</button>
-                    </form>    
-                    <button id="modalBtn"  class="button"/>GENERATE PDF</button>
+                    <span class='all-records-buttons1'>
+                        <form onclick ="deleteOpenForm()">
+                            <button class="button" onclick="">DELETE</button>
+                        </form>    
 
-                    <form  action="../LogoutServlet">
-                        <input type="submit" value="LOGOUT"  class="button"/>
-                    </form>
+                        <form onclick="pdfOpenForm()">
+                            <button onclick="pdfOpenForm()" class="button">GENERATE PDF</button>
+                        </form>
 
+                        <form>
+                            <button onclick="document.getElementById('myform').submit()"  class="button" >RESTORE</button>
+                        </form>
 
-		    <button onclick="document.getElementById('myform').submit()"  class="button" >RESTORE</button>
+                    </span>
+
+                    <span class='all-records-buttons2'>
+                        <form  action="records-all.jsp">
+                            <input type="submit" value="GO BACK"  class="button"/>
+                        </form>
+                        <form  action="../LogoutServlet">
+                            <input type="submit" value="LOGOUT"  class="button"/>
+                        </form>
+
+                    </span>
+
 
 
 
                 </div>      
             </div>
         </section>
-	<%
-	    session.removeAttribute("notif");
-	%>
+        <%
+            session.removeAttribute("notif");
+        %>
 
         <div id="deleteForm" class="modal-section">
             <form action="../DeleteRecordServlet" class="modal-content">
                 <h3 class="modal-header">Delete Record</h3>
                 <%
-		    session.setAttribute("ident", "arch");
+                    session.setAttribute("ident", "arch");
                 %>
                 <label class="modal-msg" for="uname"><b>Username of record being deleted</b></label>
                 <input class="modal-input" type="text" placeholder="Enter Username" name="uname" required>
@@ -208,67 +224,80 @@
         </div>
 
 
-        <section id="modalSection" class="modal-section">
+        <section id="pdfForm" class="modal-section">
             <div class="modal-content">
                 <h3 class="modal-header">SUCCESS!</h3>
                 <p class="modal-msg">Your PDF has been generated.</p>   
                 <form class="modal-buttoncon" method="POST" action ="../PDFServlet">
-                    <button class="modal-button"  name="pdfbutton" value="archpdf">Download PDF</button>
+                    <button class="close modal-button" type="button" class="cancel" onclick="pdfCloseForm()">Cancel</button>
+                    <button class="modal-button"  name="pdfbutton" value="alluserpdf">Download PDF</button>
                 </form>
             </div>
         </section> 
 
-        
 
-	<!--        <section id="modalSection" class="modal-section">
-		    <div class="modal-content">
-			<h3 class="modal-header">ARE YOU SURE?</h3>
-			<p class="modal-msg">Please confirm that you have selected the correct event/s. You cannot reverse this action after pressing the delete button.</p>
-			<span class="modal-buttoncon">
-			    <span onclick="Close()" class="close modal-button">Cancel</span>
-			    <span class="modal-button">Delete</span> 
-			</span>
-		    </div>
-		</section>-->
-	<script>
-	    function openForm() {
-		event.preventDefault();
-		document.getElementById("myForm").style.display = "block";
-	    }
-	    ;
-	    function closeForm() {
-		event.preventDefault();
-		document.getElementById("myForm").style.display = "none";
 
-	    }
-	    ;
-	    function verifyOpenForm() {
-		event.preventDefault();
-		document.getElementById("verifyForm").style.display = "block";
-	    }
-	    ;
-	    function verifyCloseForm() {
-		event.preventDefault();
-		document.getElementById("verifyForm").style.display = "none";
-	    }
-	    ;
-	    function deleteOpenForm() {
-		event.preventDefault();
-		document.getElementById("deleteForm").style.display = "block";
-	    }
-	    ;
-	    function deleteCloseForm() {
-		event.preventDefault();
-		document.getElementById("deleteForm").style.display = "none";
-	    }
-	    ;
+        <!--        <section id="modalSection" class="modal-section">
+                    <div class="modal-content">
+                        <h3 class="modal-header">ARE YOU SURE?</h3>
+                        <p class="modal-msg">Please confirm that you have selected the correct event/s. You cannot reverse this action after pressing the delete button.</p>
+                        <span class="modal-buttoncon">
+                            <span onclick="Close()" class="close modal-button">Cancel</span>
+                            <span class="modal-button">Delete</span> 
+                        </span>
+                    </div>
+                </section>-->
+        <script>
+            function openForm() {
+                event.preventDefault();
+                document.getElementById("myForm").style.display = "block";
+            }
+            ;
+            function closeForm() {
+                event.preventDefault();
+                document.getElementById("myForm").style.display = "none";
 
-	    window.onclick = function (event) {
-		if (event.target === document.getElementById("myForm")) {
-		    document.getElementById("myForm").style.display = "none";
-		}
-	    };
+            }
+            ;
+            function verifyOpenForm() {
+                event.preventDefault();
+                document.getElementById("verifyForm").style.display = "block";
+            }
+            ;
+            function verifyCloseForm() {
+                event.preventDefault();
+                document.getElementById("verifyForm").style.display = "none";
+            }
+            ;
+            function deleteOpenForm() {
+                event.preventDefault();
+                document.getElementById("deleteForm").style.display = "block";
+            }
+            ;
+            function deleteCloseForm() {
+                event.preventDefault();
+                document.getElementById("deleteForm").style.display = "none";
+            }
+            ;
+            function pdfOpenForm() {
+                event.preventDefault();
+                document.getElementById("pdfForm").style.display = "block";
+            }
+            ;
+            function pdfCloseForm() {
+                event.preventDefault();
+                document.getElementById("pdfForm").style.display = "none";
 
-	</script>
+            }
+            ;
+
+
+            window.onclick = function (event) {
+                if (event.target === document.getElementById("myForm")) {
+                    document.getElementById("myForm").style.display = "none";
+                }
+            };
+
+        </script>
     </body>
 </html>

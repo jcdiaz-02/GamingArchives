@@ -21,10 +21,10 @@
     String password = "zt.sw9\"D6`VjBnhh";
     Connection conn;
     try {
-	Class.forName(driver);
+        Class.forName(driver);
 
     } catch (ClassNotFoundException e) {
-	e.printStackTrace();
+        e.printStackTrace();
     }
     Connection connection = null;
     Statement statement = null;
@@ -63,16 +63,16 @@
     </head>
     <body>
         <%
-	    response.setHeader("Cache-Control", "no-cache");
-	    response.setHeader("Cache-Control", "no-store");
-	    response.setHeader("Pragma", "no-cache");
-	    response.setDateHeader("Expires", 0);
+            response.setHeader("Cache-Control", "no-cache");
+            response.setHeader("Cache-Control", "no-store");
+            response.setHeader("Pragma", "no-cache");
+            response.setDateHeader("Expires", 0);
 
-	    session.setAttribute("verify", session.getAttribute("verify"));
+            session.setAttribute("verify", session.getAttribute("verify"));
 
-	    if (session.getAttribute("username") == null) {
-		response.sendRedirect("login.jsp");
-	    }
+            if (session.getAttribute("username") == null) {
+                response.sendRedirect("login.jsp");
+            }
 
         %>
 
@@ -116,8 +116,8 @@
 
                 <div class="table-container">
                     <table class="records-table">
-			<tr>
-			    <th>Name</th>
+                        <tr>
+                            <th>Name</th>
                             <th>Course</th>
                             <th>Email</th>
                             <th>Username</th>
@@ -129,10 +129,10 @@
                             <th>Contact Number</th>
                             <th>Address</th>
                             <th>Verification</th>
-			    <th>Status</th>
+                            <th>Status</th>
 
-			</tr>
-			<% try {
+                        </tr>
+                        <% try {
 
                                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu-MM-dd");
                                 LocalDate today = LocalDate.now();
@@ -144,61 +144,61 @@
                                 ResultSet records = pstmt.executeQuery();
                                 while (records.next()) {
 
-			%>
-			<tr>
-			    <td>null</td>
-			    <td>null</td>
-			    <td><%=records.getString("EMAIL")%></td>
-			    <td><%=records.getString("USERNAME")%></td>
-			    <td>null</td>
-			    <td>null</td>
-			    <td>null</td>
-			    <td>null</td>
-			    <td>null</td>
-			    <td>null</td>
-			    <td>null</td>
-			    <td>UNVERIFIED</td>	 
-			    <td>student</td>
+                        %>
+                        <tr>
+                            <td>null</td>
+                            <td>null</td>
+                            <td><%=records.getString("EMAIL")%></td>
+                            <td><%=records.getString("USERNAME")%></td>
+                            <td>null</td>
+                            <td>null</td>
+                            <td>null</td>
+                            <td>null</td>
+                            <td>null</td>
+                            <td>null</td>
+                            <td>null</td>
+                            <td>UNVERIFIED</td>	 
+                            <td>student</td>
 
-			</tr>
-			<%
-			    }
-			    String query1 = "SELECT * FROM APP.VERIFIEDDB where DATE=?";
-			    pstmt = conn.prepareStatement(query1);
-			    pstmt.setString(1, todaydate);
-			    records = pstmt.executeQuery();
-			    while (records.next()) {
+                        </tr>
+                        <%
+                            }
+                            String query1 = "SELECT * FROM APP.VERIFIEDDB where DATE=?";
+                            pstmt = conn.prepareStatement(query1);
+                            pstmt.setString(1, todaydate);
+                            records = pstmt.executeQuery();
+                            while (records.next()) {
 
-			%>
-			<tr>
-			    <td><%=records.getString("NAME")%></td>
-			    <td><%=records.getString("COURSE")%></td>
-			    <td><%=records.getString("EMAIL")%></td>
-			    <td><%=records.getString("USERNAME")%></td>
-			    <td><%=records.getString("AGE")%></td>
-			    <td><%=records.getString("BIRTHDAY")%></td>
-			    <td><%=records.getString("GENDER")%></td>
-			    <td><%=records.getString("STUDENTNUMBER")%></td>
-			    <td><%=records.getString("FAVORITEGAME")%></td>
-			    <td><%=records.getString("CONTACTNUMBER")%></td>
-			    <td><%=records.getString("ADDRESS")%></td>
-			    <td>VERIFIED</td>	 
-			    <td><%=records.getString("STATUS")%></td>
+                        %>
+                        <tr>
+                            <td><%=records.getString("NAME")%></td>
+                            <td><%=records.getString("COURSE")%></td>
+                            <td><%=records.getString("EMAIL")%></td>
+                            <td><%=records.getString("USERNAME")%></td>
+                            <td><%=records.getString("AGE")%></td>
+                            <td><%=records.getString("BIRTHDAY")%></td>
+                            <td><%=records.getString("GENDER")%></td>
+                            <td><%=records.getString("STUDENTNUMBER")%></td>
+                            <td><%=records.getString("FAVORITEGAME")%></td>
+                            <td><%=records.getString("CONTACTNUMBER")%></td>
+                            <td><%=records.getString("ADDRESS")%></td>
+                            <td>VERIFIED</td>	 
+                            <td><%=records.getString("STATUS")%></td>
 
-			</tr>
-			<%
-				}
-			    } catch (Exception e) {
-				e.printStackTrace();
-			    }%>
+                        </tr>
+                        <%
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }%>
 
                     </table>
                 </div>       
 
                 <div class="all-records-buttons"> 
                     <span class='all-records-buttons1'>
-                        <form  action="profile-page-admin.jsp">
-                            <button type="submit" value="GO BACK"  class="button"/>GO BACK</button>
+                        <form onclick="openForm()" >
+                            <button class="button"  onclick="openForm()">UPDATE</button>
                         </form>
                         <form onclick ="deleteOpenForm()">
                             <button class="button" onclick="">DELETE</button>
@@ -208,10 +208,13 @@
                         </form>
                     </span>
                     <span class='all-records-buttons2'>
-                        <form onclick="openForm()" >
-                            <button class="button"  onclick="openForm()">UPDATE</button>
+                        <form  action="profile-page-admin.jsp">
+                            <button type="submit" value="GO BACK"  class="button"/>GO BACK</button>
                         </form>
-                        <button id="modalBtn"  class="button"/>GENERATE PDF</button>
+
+                        <form onclick="pdfOpenForm()">
+                            <button onclick="pdfOpenForm()" class="button">GENERATE PDF</button>
+                        </form>
 
                         <form  action="../LogoutServlet">
                             <button type="submit" value="LOGOUT"  class="button"/>LOGOUT</button>
@@ -224,16 +227,18 @@
 
 
         <div id="deleteForm" class="modal-section">
-            <form action="../DeleteRecordServlet" class="form-container">
-                <h1>Delete Record</h1>
+            <form action="../DeleteRecordServlet" class="modal-content">
+                <h3 class="modal-header">Delete Record</h3>
                 <%
-		    session.setAttribute("ident", "all");
+                    session.setAttribute("ident", "all");
                 %>
-                <label for="uname"><b>Username of record being deleted</b></label>
-                <input type="text" placeholder="Enter Username" name="uname" required>
+                <label class="modal-msg" for="uname"><b>Username of record being deleted</b></label>
+                <input class="modal-input" type="text" placeholder="Enter Username" name="uname" required>
 
-                <button type="submit" class="submit">Submit</button>
-                <button type="button" class="cancel" onclick="deleteCloseForm()">Cancel</button>
+                <span class="modal-buttoncon"> 
+                    <button  class="close modal-button" type="button" class="cancel" onclick="deleteCloseForm()">Cancel</button>
+                    <button  class="modal-button"  type="submit" class="submit">Submit</button>
+                </span>
             </form>
         </div>
 
@@ -241,13 +246,13 @@
             <form action="../TransferRecordServlet" class="modal-content">
                 <h3 class="modal-header">Verify Record</h3>
                 <%
-		    session.setAttribute("ident", "all");
+                    session.setAttribute("ident", "all");
                 %>
                 <label class="modal-msg" for="uname"><b>Username of record being verified</b></label>
                 <input class="modal-input"  type="text" placeholder="Enter Username" name="uname" required>
                 <span class="modal-buttoncon"> 
-                    <button class="close modal-button" type="submit" class="submit">Submit</button>
-                    <button class="modal-button" type="button" class="cancel" onclick="verifyCloseForm()">Cancel</button>
+                    <button class="close modal-button" type="button" class="cancel" onclick="verifyCloseForm()">Cancel</button>
+                    <button class="modal-button" type="submit" class="submit">Submit</button>
                 </span>
             </form>
         </div>
@@ -265,11 +270,12 @@
             </form>
         </div>
 
-        <section id="modalSection" class="modal-section">
+        <section id="pdfForm" class="modal-section">
             <div class="modal-content">
                 <h3 class="modal-header">SUCCESS!</h3>
                 <p class="modal-msg">Your PDF has been generated.</p>   
                 <form class="modal-buttoncon" method="POST" action ="../PDFServlet">
+                    <button class="close modal-button" type="button" class="cancel" onclick="pdfCloseForm()">Cancel</button>
                     <button class="modal-button"  name="pdfbutton" value="alluserpdf">Download PDF</button>
                 </form>
             </div>"
@@ -286,43 +292,54 @@
                     </div>
                 </section>-->
         <script>
-	    function openForm() {
-		event.preventDefault();
-		document.getElementById("myForm").style.display = "block";
-	    }
-	    ;
-	    function closeForm() {
-		event.preventDefault();
-		document.getElementById("myForm").style.display = "none";
+            function openForm() {
+                event.preventDefault();
+                document.getElementById("myForm").style.display = "block";
+            }
+            ;
+            function closeForm() {
+                event.preventDefault();
+                document.getElementById("myForm").style.display = "none";
 
-	    }
-	    ;
-	    function verifyOpenForm() {
-		event.preventDefault();
-		document.getElementById("verifyForm").style.display = "block";
-	    }
-	    ;
-	    function verifyCloseForm() {
-		event.preventDefault();
-		document.getElementById("verifyForm").style.display = "none";
-	    }
-	    ;
-	    function deleteOpenForm() {
-		event.preventDefault();
-		document.getElementById("deleteForm").style.display = "block";
-	    }
-	    ;
-	    function deleteCloseForm() {
-		event.preventDefault();
-		document.getElementById("deleteForm").style.display = "none";
-	    }
-	    ;
+            }
+            ;
+            function verifyOpenForm() {
+                event.preventDefault();
+                document.getElementById("verifyForm").style.display = "block";
+            }
+            ;
+            function verifyCloseForm() {
+                event.preventDefault();
+                document.getElementById("verifyForm").style.display = "none";
+            }
+            ;
+            function deleteOpenForm() {
+                event.preventDefault();
+                document.getElementById("deleteForm").style.display = "block";
+            }
+            ;
+            function deleteCloseForm() {
+                event.preventDefault();
+                document.getElementById("deleteForm").style.display = "none";
+            }
+            ;
+            function pdfOpenForm() {
+                event.preventDefault();
+                document.getElementById("pdfForm").style.display = "block";
+            }
+            ;
+            function pdfCloseForm() {
+                event.preventDefault();
+                document.getElementById("pdfForm").style.display = "none";
 
-	    window.onclick = function (event) {
-		if (event.target === document.getElementById("myForm")) {
-		    document.getElementById("myForm").style.display = "none";
-		}
-	    };
+            }
+            ;
+
+//            window.onclick = function (event) {
+//                if (event.target === document.getElementById("myForm")) {
+//                    document.getElementById("myForm").style.display = "none";
+//                }
+//            };
 
         </script>
     </body>

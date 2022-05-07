@@ -84,30 +84,51 @@ and open the template in the editor.
 
 .all-records-section .all-records-container .table-container .records-table th:nth-child(1), td:nth-child(1){
     text-align: center;
+    vertical-align: middle;
     width: 60px;
+
 }
 
+.all-records-section .all-records-container .table-container .records-table td:nth-child(1){
+    text-align: center;
+    vertical-align: middle;
+    margin: auto;
+    padding: 0;
+}
 
-.all-records-section .all-records-container .table-container .records-table th:nth-child(13), td:nth-child(13){
+.all-records-section .all-records-container .table-container .records-table td:nth-child(1) form{
+    padding: 15px;
+    width: 100%;
+    height: 100%;
+}
+
+/*.all-records-section .all-records-container .table-container .records-table th:nth-child(13), td:nth-child(13){
     text-align: center;
     vertical-align: central;
     width: 60px;
-}
+}*/
 
 
 /*end of table*/
 
 .all-records-section .all-records-container .all-records-buttons{
     display: flex;
-    margin-top:2rem;
+    margin-top: 1.2rem;
     width: 90%;
+    flex-direction: column;
     justify-content: space-around;
 }
 
 .all-records-section .all-records-container .all-records-buttons span{
     display: flex; 
-    width: 50%;
-    justify-content: space-between;
+    width: 100%;
+    margin-top: 1.2rem;
+    justify-content: space-around;
+}
+
+
+.all-records-section .all-records-container .all-records-buttons form {
+    width: 20%;
 }
 
 .all-records-section .all-records-container .all-records-buttons .button{
@@ -118,9 +139,10 @@ and open the template in the editor.
     color: white;
     cursor: pointer;
     font-family: var(--font2);
-    font-size: 2rem;
+    font-size: 1.5rem;
     height: 3rem;
-    padding: 0px 40px;
+    padding: 0px 30px;
+    width: 100%;
 }
 
 /*CHECKBOX CSS*/
@@ -302,6 +324,10 @@ and open the template in the editor.
         flex-direction: column-reverse;
     }
 
+    .all-records-section .all-records-container .all-records-buttons form {
+        width: 80%;
+    }
+
     .all-records-section .all-records-container .all-records-buttons .button{
         margin-top: 1rem;
         font-size: 1.5rem;
@@ -315,10 +341,15 @@ and open the template in the editor.
         border-radius: 20px;
     }
 
+    .all-records-section .all-records-container .all-records-buttons form {
+        width: 80%;
+    }
+
     .all-records-section .all-records-container .all-records-buttons .button{
         margin-top: 1rem;
         font-size: 1.2rem;
         height: 2.5rem;
-        padding: 0 30px;
+        padding: 0 20px;
+        width: 100%;
     }
 }
