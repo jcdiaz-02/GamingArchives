@@ -20,6 +20,7 @@
         <link rel="stylesheet" href="../assets/css/navbar-style.css">
         <link rel="stylesheet" href="../assets/css/events-style.css">
         <link rel="stylesheet" href="../assets/css/calendar-style.css">
+        <link rel="stylesheet" href="../assets/css/event-modal.css">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -113,15 +114,15 @@
                     <h2>Planned Events</h2>
                     <ul class="planned-events">
                         <%
-                            
+
                             for (int i = 0; i < recordList.size(); i++) {
                                 try {
                                     DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                                     LocalDate eventDate = LocalDate.parse(recordList.get(i).getDate(), f);
                                     LocalDate currentDate = LocalDate.parse(datenow, f);
-                                    if (eventDate.isAfter(currentDate)) {
-                                        out.println("<li>" + recordList.get(i).getName() + "</li>");
-                                    }
+                                    if (eventDate.isAfter(currentDate)) { %>
+                                        <li><a onclick="tooglePopup(<%= recordList.get(i).getId()%>)"><%= recordList.get(i).getName()%></a></li>                  
+                                <%    }
                                 } catch (Exception e) {
                                 }
                             }
@@ -137,14 +138,14 @@
                         %>
                         <li>
                             <% try {
-                                    
-                               
+
+
                             %>
                             <div>
-                                <p><%= recordList.get(i).getName()%></p>
-                                <%if (recordList.get(i).getImgURL().contains("Images")) {
-                                        out.println("<img src=" + "\"../" + recordList.get(i).getImgURL() + "\">");
-                                    }%>
+                                <p><a onclick="tooglePopup(<%= recordList.get(i).getId()%>)"><%= recordList.get(i).getName()%></a></p>
+                                    <%if (recordList.get(i).getImgURL().contains("Images")) {
+                                            out.println("<img src=" + "\"../" + recordList.get(i).getImgURL() + "\">");
+                                        }%>
                             </div>
                             <% } catch (Exception e) {
                                 }%>
@@ -177,6 +178,33 @@
                 </div>
             </div>     
         </section>
+                
+         <div class="popup" id="popup-1">
+        <div class="overlay" onclick="tooglePopup()"></div>
+        <div class="content">
+            <div class="close-btn" onclick="tooglePopup()">&times;</div>
+            <h2>Modal 1</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi istud?</p>
+            <p id="name-modal"> name </p>
+            <p id="description-modal"> description </p>
+            <p id="date-modal"> date</p>
+            <img id="image-modal" alt="pubmat">
+            <p id="driveURL-modal"> URL here</p>
+                                <%
+                       // if (role.equalsIgnoreCase("admin")) {
+                        if (true) {
+                    %>
+                    <form action="../AddDriveURL" method="get">
+                    <div class="input"> 
+                        <input type="text" placeholder="Enter Gdrive URL" name="edriveurl" required>
+                    </div>
+                        <input type="hidden" name="eID" id="eID-modal" value="">
+                        <input type="submit" value="SUBMIT"  class="button"/>
+                    </form>
+                                        <% }    %>
+        </div>
+    </div>
+    <button onclick="tooglePopup(1)">show popup</button>
 
         <script language="JavaScript" type="text/javascript">
             !function () {
@@ -508,45 +536,31 @@
             }();
 
             !function () {
-                         <% if(!recordList.isEmpty()) {  %>
+            <% if (!recordList.isEmpty()) {  %>
                 var data = [
-   
+
             <%
                 DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 for (int i = 0; i < recordList.size() - 1; i++) {
                     LocalDate temp = LocalDate.parse(recordList.get(i).getDate(), f);
-                    LocalDate endDate = LocalDate.parse(recordList.get(i).getEndDate(),f);
-                    while(!temp.equals(endDate.plusDays(1))){
+                    LocalDate endDate = LocalDate.parse(recordList.get(i).getEndDate(), f);
+                    while (!temp.equals(endDate.plusDays(1))) {
             %>
                     {date: "<%= temp.toString()%>", eventName: "<%= recordList.get(i).getName()%>", calendar: 'Work', color: 'orange'},
-                    <% temp = temp.plusDays(1); }}
-                    LocalDate temp = LocalDate.parse(recordList.get(recordList.size() - 1).getDate(), f);
-                    LocalDate endDate = LocalDate.parse(recordList.get(recordList.size() - 1).getEndDate(),f);
-                    while(!temp.equals(endDate)){
-                    %>
+            <% temp = temp.plusDays(1);
+                    }
+                }
+                LocalDate temp = LocalDate.parse(recordList.get(recordList.size() - 1).getDate(), f);
+                LocalDate endDate = LocalDate.parse(recordList.get(recordList.size() - 1).getEndDate(), f);
+                while (!temp.equals(endDate)) {
+            %>
                     {date: "<%= temp.toString()%>", eventName: "<%= recordList.get(recordList.size() - 1).getName()%>", calendar: 'Work', color: 'orange'},
-                                <% temp = temp.plusDays(1);  }     %>
+            <% temp = temp.plusDays(1);
+                }%>
                     {date: "<%= recordList.get(recordList.size() - 1).getEndDate()%>", eventName: "<%= recordList.get(recordList.size() - 1).getName()%>", calendar: 'Work', color: 'orange'}];
-               <%    } else {%>
-                        var data =[];
-              <%  }%>
- //    { eventName: 'Game vs Portalnd', calendar: 'Sports', color: 'blue' },
-                //    { eventName: 'Game vs Houston', calendar: 'Sports', color: 'blue' },
-                //    { eventName: 'Game vs Denver', calendar: 'Sports', color: 'blue' },
-                //    { eventName: 'Game vs San Degio', calendar: 'Sports', color: 'blue' },
-                //
-                //    { eventName: 'School Play', calendar: 'Kids', color: 'yellow' },
-                //    { eventName: 'Parent/Teacher Conference', calendar: 'Kids', color: 'yellow' },
-                //    { eventName: 'Pick up from Soccer Practice', calendar: 'Kids', color: 'yellow' },
-                //    { eventName: 'Ice Cream Night', calendar: 'Kids', color: 'yellow' },
-                //
-                //    { eventName: 'Free Tamale Night', calendar: 'Other', color: 'green' },
-                //    { eventName: 'Bowling Team', calendar: 'Other', color: 'green' },
-                //    { eventName: 'Teach Kids to Code', calendar: 'Other', color: 'green' },
-                //    { eventName: 'Startup Weekend', calendar: 'Other', color: 'green' }
-                //  ];
-
-
+            <%    } else {%>
+                var data = [];
+            <%  }%>
                 function addDate(ev) {
 
                 }
@@ -554,7 +568,47 @@
 
                 var calendar = new Calendar('#calendar', data);
 
-            }();
+            }();       
+            
+            
+             function filldata(){
+                 let data = new Array();
+                      <%for (int i = 0; i < recordList.size(); i++) {   try {%>
+ data.push({ id: <%= recordList.get(i).getId()%>, eventSingle: { name: '<%= recordList.get(i).getName()%>', description: '<%= recordList.get(i).getDescription()%>', Date: '<%= recordList.get(i).getDate()%> - <%= recordList.get(i).getEndDate()%>', image: '<%= recordList.get(i).getImgURL()%>', driveURL: '<%= recordList.get(i).getdriveURL()%>' } });
+                  <%        }catch(Exception e){}  }%>
+                                 return data;
+                                  }
+            function tooglePopup(id) {
+                var eventData;
+                if(typeof eventData === 'undefined'){
+                    eventData = filldata();
+                }
+                if (typeof id !== 'undefined' && typeof eventData !== 'undefined') {
+                    let eventID = eventData.findIndex(x => x.id === id);
+                    let name = document.getElementById("name-modal");
+                    let description = document.getElementById("description-modal");
+                    let date = document.getElementById("date-modal");
+                 
+                    let driveURL = document.getElementById("driveURL-modal");
+                    name.innerHTML = eventData[eventID].eventSingle.name;
+                    description.innerHTML = eventData[eventID].eventSingle.description;
+                    if(eventData[eventID].eventSingle.image !== 'none'){
+                           let image = document.getElementById("image-modal");
+                        image.setAttribute('src', eventData[eventID].eventSingle.image);
+                    } 
+                    date.innerHTML = eventData[eventID].eventSingle.Date;
+                    if (eventData[eventID].eventSingle.driveURL !== 'none') {
+                        let refer = document.createElement("a");
+                        refer.setAttribute('href',eventData[eventID].eventSingle.driveURL);
+                        refer.innerHTML = 'DRIVE FOLDER';
+                        driveURL.innerHTML= '';
+                        driveURL.appendChild(refer);
+                            }
+                   let eID = document.getElementById("eID-modal");
+                   eID.setAttribute('value', id);
+                 }
+            document.getElementById("popup-1").classList.toggle("active");
+             }
         </script>
         <!--        <script language="JavaScript" type="text/javascript"src="../assets/scripts/calendar.js"></script>-->
     </body>

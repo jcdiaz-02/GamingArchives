@@ -16,14 +16,16 @@ public class EventRecord {
     private String date;
     private String endDate;
     private String imgURL;
+    private String driveURL;
 
-    public EventRecord(int id, String name, String description, String date, String endDate, String imgURL) {
+    public EventRecord(int id, String name, String description, String date, String endDate, String imgURL, String driveURL) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.date = date;
         this.endDate = endDate;
         this.imgURL = imgURL;
+        this.driveURL = driveURL;
     }
 
     public EventRecord(String name, String description, String date, String endDate) {
@@ -66,5 +68,9 @@ public class EventRecord {
 
     public String getImgURL() {
         return imgURL;
+    }
+    
+    public String getdriveURL(){
+        return driveURL;
     }
 }

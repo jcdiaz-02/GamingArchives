@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="4.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
     <servlet>
-	        <servlet-name>LoginServlet</servlet-name>
+        <servlet-name>LoginServlet</servlet-name>
         <servlet-class>LoginServlet</servlet-class>
-	
         <init-param>
             <param-name>DBdriver</param-name>
             <param-value>org.apache.derby.jdbc.ClientDriver</param-value>
@@ -143,7 +142,7 @@
         <init-param>
             <param-name>DBurl</param-name>
             <param-value>jdbc:derby://localhost:1527/userDB</param-value>
-        </init-param> 
+        </init-param>
         <init-param>
             <param-name>publicKey</param-name>
             <param-value>zkay9vTfUHrx2fFZ</param-value>
@@ -365,8 +364,22 @@
         <servlet-name>ForgotPassVerification</servlet-name>
         <servlet-class>ForgotPassVerification</servlet-class>
     </servlet>
-    
-    
+    <servlet>
+        <servlet-name>AddDriveURL</servlet-name>
+        <servlet-class>EventsRecordServlet.AddDriveURL</servlet-class>
+                <init-param>
+            <param-name>DBurl</param-name>
+            <param-value>jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/gamingarchives</param-value>
+        </init-param>
+        <init-param>
+            <param-name>DBusername</param-name>
+            <param-value>gamingarchivesAdmin</param-value>
+        </init-param>
+        <init-param>
+            <param-name>DBpassword</param-name>
+            <param-value>zt.sw9"D6`VjBnhh</param-value>
+        </init-param>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginVerification</servlet-name>
         <url-pattern>/LoginVerification</url-pattern>
@@ -454,6 +467,10 @@
     <servlet-mapping>
         <servlet-name>ForgotPassVerification</servlet-name>
         <url-pattern>/ForgotPassVerification</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddDriveURL</servlet-name>
+        <url-pattern>/AddDriveURL</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

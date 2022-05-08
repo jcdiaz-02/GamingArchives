@@ -1,34 +1,27 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package EventsRecordServlet;
 
+import Database.ConnectToDB;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
-import java.sql.ResultSet;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
-import Database.ConnectToDB;
-import EventsRecordKeeper.EventRecord;
-
-/**
- *
- * @author Oracle
- */
-public class EventOverview extends HttpServlet {
-
+public class AddDriveURL extends HttpServlet {
+    
     Connection conn;
-    EventRecord eventRecord;
     ConnectToDB db;
 
     @Override
@@ -44,36 +37,41 @@ public class EventOverview extends HttpServlet {
             e.printStackTrace();
         }
     }
+
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-     try {
-         System.out.println("weent to event overview");
+        try {
+            System.out.println("went to addriveurl java");
             HttpSession session = request.getSession();
             String username = (String) session.getAttribute("username");
             String role = (String) session.getAttribute("role");
-            List<EventRecord> recordList = new ArrayList<>();
-            String datenow;
-                String tablename = "event_record";
-                ResultSet rs = db.getSortedTableRS(tablename, conn);
-
-                while (rs.next()) {
-                    EventRecord record = new EventRecord(rs.getInt(1), rs.getString(2), rs.getString(3),
-                            rs.getString(4),
-                            rs.getString(5),
-                            rs.getString(6),
-                            rs.getString(7));
-                    recordList.add(record);
-                }
-                // recordList.get(1).getEventName(); sample
-            datenow=  java.time.LocalDate.now().toString();
-                    session.setAttribute("date", datenow);
-            session.setAttribute("eventList", recordList);
-            // give list of event to jsp
-            response.sendRedirect("subpage/events.jsp");
-        } catch (Exception e) {
-            System.out.println("went to cath");
-            System.out.println(e);
+            role = "admin";
+            if ("admin".equalsIgnoreCase(role)) {
+                // url input
+                String driveURL = request.getParameter("edriveurl");
+                int id =Integer.parseInt(request.getParameter("eID"));
+                System.out.println(driveURL);
+                System.out.println(id);
+                String query = "UPDATE event_record SET event_driveurl = ?  WHERE event_record_id = ?";
+                        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, driveURL);
+            pstmt.setInt(2, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
+                response.sendRedirect("EventOverview");
+            } else {
+                // not an admin cant add url
+                response.sendRedirect("home.jsp");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("adding url failed");
+          response.sendRedirect("errorPages/Error404.jsp");
+        }        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
