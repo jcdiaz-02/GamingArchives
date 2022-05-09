@@ -21,10 +21,10 @@
     String password = "zt.sw9\"D6`VjBnhh";
     Connection conn;
     try {
-        Class.forName(driver);
+	Class.forName(driver);
 
     } catch (ClassNotFoundException e) {
-        e.printStackTrace();
+	e.printStackTrace();
     }
     Connection connection = null;
     Statement statement = null;
@@ -63,16 +63,16 @@
     </head>
     <body>
         <%
-            response.setHeader("Cache-Control", "no-cache");
-            response.setHeader("Cache-Control", "no-store");
-            response.setHeader("Pragma", "no-cache");
-            response.setDateHeader("Expires", 0);
+	    response.setHeader("Cache-Control", "no-cache");
+	    response.setHeader("Cache-Control", "no-store");
+	    response.setHeader("Pragma", "no-cache");
+	    response.setDateHeader("Expires", 0);
 
-            session.setAttribute("verify", session.getAttribute("verify"));
+	    session.setAttribute("verify", session.getAttribute("verify"));
 
-            if (session.getAttribute("username") == null) {
-                response.sendRedirect("login.jsp");
-            }
+	    if (session.getAttribute("username") == null) {
+		response.sendRedirect("login.jsp");
+	    }
 
         %>
 
@@ -230,7 +230,7 @@
             <form action="../DeleteRecordServlet" class="modal-content">
                 <h3 class="modal-header">Delete Record</h3>
                 <%
-                    session.setAttribute("ident", "all");
+		    session.setAttribute("ident", "all");
                 %>
                 <label class="modal-msg" for="uname"><b>Username of record being deleted</b></label>
                 <input class="modal-input" type="text" placeholder="Enter Username" name="uname" required>
@@ -246,7 +246,7 @@
             <form action="../TransferRecordServlet" class="modal-content">
                 <h3 class="modal-header">Verify Record</h3>
                 <%
-                    session.setAttribute("ident", "all");
+		    session.setAttribute("ident", "all");
                 %>
                 <label class="modal-msg" for="uname"><b>Username of record being verified</b></label>
                 <input class="modal-input"  type="text" placeholder="Enter Username" name="uname" required>

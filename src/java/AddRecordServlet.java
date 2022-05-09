@@ -99,6 +99,7 @@ public class AddRecordServlet extends HttpServlet {
 
 		}
 	    }
+            
 	    String a = String.valueOf(age);
 
 	    String query = "UPDATE APP.VERIFIEDDB set NAME=?, COURSE=?, AGE=?, BIRTHDAY=?, GENDER=?,"

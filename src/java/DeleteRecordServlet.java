@@ -105,6 +105,14 @@ public class DeleteRecordServlet extends HttpServlet {
 	    } else if (ident.equals("arch")) {
 		response.sendRedirect("account/records-archive.jsp");
 	    }
+
+	    if (ident.equals("all")) {
+		response.sendRedirect("account/records-all.jsp");
+	    } else if (ident.equals("today")) {
+		response.sendRedirect("account/records-today.jsp");
+	    } else if (ident.equals("arch")) {
+		response.sendRedirect("account/records-archive.jsp");
+	    }
 	} catch (SQLException sqle) {
 	    response.sendRedirect("errPages/Error404.jsp");
 	}

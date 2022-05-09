@@ -68,12 +68,12 @@ public class LoginVerification extends HttpServlet {
 	    String pass = request.getParameter("psw");
 	    String button = request.getParameter("button");
 
-	    String query = "SELECT EMAIL FROM APP.USERDB where USERNAME=?";
+	    String query = "SELECT * FROM APP.USERDB where USERNAME=?";
 	    PreparedStatement pstmt = conn.prepareStatement(query);
 	    pstmt.setString(1, uname);
 	    ResultSet records = pstmt.executeQuery();
 	    if (records.next() == false) {
-		query = "SELECT EMAIL FROM APP.VERIFIEDDB where USERNAME=?";
+		query = "SELECT * FROM APP.VERIFIEDDB where USERNAME=?";
 		pstmt = conn.prepareStatement(query);
 		pstmt.setString(1, uname);
 		records = pstmt.executeQuery();
@@ -90,6 +90,9 @@ public class LoginVerification extends HttpServlet {
 		    response.sendRedirect("UserVerification");
 		}
 	    } else {
+		if (!pass.equals(records.getString("PASSWORD"))) {
+		    response.sendRedirect("login/login.jsp");
+		}
 		String email = records.getString("EMAIL");
 		httpsession.setAttribute("uname", uname);
 		httpsession.setAttribute("psw", pass);

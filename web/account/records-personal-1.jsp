@@ -163,7 +163,7 @@
                         <input type='text' id='address' name='address' value='${address}' readonly> 
 
                     </div>
-
+			
                     <div class='personal-records-info-container1'>
                         <label for=''>Favorite Game:</label>
                         <input type='text' id='favgame' name='favgame' value='${favgame}' readonly> 

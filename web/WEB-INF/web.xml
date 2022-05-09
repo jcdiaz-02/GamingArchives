@@ -472,6 +472,14 @@
         <servlet-name>ArchiveTransferServlet</servlet-name>
         <url-pattern>/ArchiveTransferServlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+	<servlet-name>ArchiveMembersServlet</servlet-name>
+	<url-pattern>/ArchiveMembersServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+	<servlet-name>ArchiveTransferServlet</servlet-name>
+	<url-pattern>/ArchiveTransferServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
