@@ -108,7 +108,7 @@
                                 <%= recordList.get(i).getDescription()%>
                             </td>
                             <td>
-                                <%= recordList.get(i).getDate()%>
+                                <%= recordList.get(i).getDate()%>-<%= recordList.get(i).getEndDate()%>
                             </td>
                             <td>
                                 <form id="myform" action="../DeleteEvent"  method="get">

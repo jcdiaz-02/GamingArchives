@@ -53,8 +53,8 @@ public class EventOverview extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        try {
+     try {
+         System.out.println("weent to event overview");
             HttpSession session = request.getSession();
             String username = (String) session.getAttribute("username");
             String role = (String) session.getAttribute("role");
@@ -63,15 +63,17 @@ public class EventOverview extends HttpServlet {
             String tablename = "event_record";
             ResultSet rs = db.getSortedTableRS(tablename, conn);
 
-            while (rs.next()) {
-                EventRecord record = new EventRecord(rs.getInt(1), rs.getString(2), rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5));
-                recordList.add(record);
-            }
-            // recordList.get(1).getEventName(); sample
-            datenow = java.time.LocalDate.now().toString();
-            session.setAttribute("date", datenow);
+                while (rs.next()) {
+                    EventRecord record = new EventRecord(rs.getInt(1), rs.getString(2), rs.getString(3),
+                            rs.getString(4),
+                            rs.getString(5),
+                            rs.getString(6),
+                            rs.getString(7));
+                    recordList.add(record);
+                }
+                // recordList.get(1).getEventName(); sample
+            datenow=  java.time.LocalDate.now().toString();
+                    session.setAttribute("date", datenow);
             session.setAttribute("eventList", recordList);
             // give list of event to jsp
             response.sendRedirect("subpage/events.jsp");

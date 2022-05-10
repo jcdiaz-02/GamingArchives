@@ -56,6 +56,10 @@ and open the template in the editor.
     padding-bottom: 2rem;
 }
 
+.events-container .events-list-container .planned-events li a:hover{
+    cursor: pointer;
+    color: var(--brown5);
+}
 .events-container .events-list-container .organized-events {    
     padding-left: 0;
 }
@@ -65,7 +69,12 @@ and open the template in the editor.
     text-align: center;
     font-family: var(--font6);
     font-size: 1.2rem;
-    padding-bottom: 2rem;
+    padding-bottom: 2rem; 
+}
+
+.events-container .events-list-container .organized-events li a:hover{
+    cursor: pointer;
+    color: var(--brown5);
 }
 
 .events-container .events-list-container .organized-events li div{    
@@ -92,6 +101,7 @@ and open the template in the editor.
 
 .events-container .upcoming-events-container h3  a{
     color: var(--brown1);
+
 }
 
 .events-container .upcoming-events-container .calendar-container{
@@ -123,7 +133,7 @@ and open the template in the editor.
     .events-section{
         width: 95%;
     }
-    
+
     .events-container h2{
         font-size: 1.5rem;
     }

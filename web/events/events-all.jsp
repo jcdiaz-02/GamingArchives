@@ -99,6 +99,7 @@
                             <th>Event Name</th>
                             <th>Event Description</th>
                             <th>Event Date</th>
+                            <th>drive URL</th>
                         </tr>
                         <% for (int i = 0; i < recordList.size(); i++) {%>
                         <tr>
@@ -113,7 +114,10 @@
                                 <%= recordList.get(i).getDescription()%>
                             </td>
                             <td>
-                                <%= recordList.get(i).getDate()%>
+                                <%= recordList.get(i).getDate()%>-<%= recordList.get(i).getEndDate()%>
+                            </td>
+                            <td>
+                                 <%= recordList.get(i).getdriveURL()%>
                             </td>
                         </tr>
                         <% } catch (Exception e) {

@@ -14,26 +14,32 @@ public class EventRecord {
     private String name;
     private String description;
     private String date;
+    private String endDate;
     private String imgURL;
+    private String driveURL;
 
-    public EventRecord(int id, String name, String description, String date, String imgURL) {
+    public EventRecord(int id, String name, String description, String date, String endDate, String imgURL, String driveURL) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.date = date;
+        this.endDate = endDate;
         this.imgURL = imgURL;
+        this.driveURL = driveURL;
     }
 
-    public EventRecord(String name, String description, String date) {
+    public EventRecord(String name, String description, String date, String endDate) {
         this.name = name;
         this.description = description;
         this.date = date;
+        this.endDate = endDate;
     }
 
-    public EventRecord(String name, String description, String date, String imgURL) {
+    public EventRecord(String name, String description, String date, String imgURL, String endDate) {
         this.name = name;
         this.description = description;
         this.date = date;
+        this.endDate = endDate;
         this.imgURL = imgURL;
     }
 
@@ -48,6 +54,9 @@ public class EventRecord {
     public String getDate() {
         return date;
     }
+    public String getEndDate(){
+        return endDate;
+    }
 
     public String getDescription() {
         return description;
@@ -59,5 +68,9 @@ public class EventRecord {
 
     public String getImgURL() {
         return imgURL;
+    }
+    
+    public String getdriveURL(){
+        return driveURL;
     }
 }

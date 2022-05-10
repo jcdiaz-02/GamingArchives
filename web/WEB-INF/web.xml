@@ -345,6 +345,22 @@
         <servlet-class>ForgotPassVerification</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>AddDriveURL</servlet-name>
+        <servlet-class>EventsRecordServlet.AddDriveURL</servlet-class>
+        <init-param>
+            <param-name>DBurl</param-name>
+            <param-value>jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/gamingarchives</param-value>
+        </init-param>
+        <init-param>
+            <param-name>DBusername</param-name>
+            <param-value>gamingarchivesAdmin</param-value>
+        </init-param>
+        <init-param>
+            <param-name>DBpassword</param-name>
+            <param-value>zt.sw9"D6`VjBnhh</param-value>
+        </init-param>
+    </servlet>
+    <servlet>
         <servlet-name>ArchiveMembersServlet</servlet-name>
         <servlet-class>ArchiveMembersServlet</servlet-class>
         <init-param>
@@ -465,6 +481,10 @@
         <url-pattern>/ForgotPassVerification</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>AddDriveURL</servlet-name>
+        <url-pattern>/AddDriveURL</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ArchiveMembersServlet</servlet-name>
         <url-pattern>/ArchiveMembersServlet</url-pattern>
     </servlet-mapping>
@@ -473,12 +493,12 @@
         <url-pattern>/ArchiveTransferServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-	<servlet-name>ArchiveMembersServlet</servlet-name>
-	<url-pattern>/ArchiveMembersServlet</url-pattern>
+        <servlet-name>ArchiveMembersServlet</servlet-name>
+        <url-pattern>/ArchiveMembersServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-	<servlet-name>ArchiveTransferServlet</servlet-name>
-	<url-pattern>/ArchiveTransferServlet</url-pattern>
+        <servlet-name>ArchiveTransferServlet</servlet-name>
+        <url-pattern>/ArchiveTransferServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

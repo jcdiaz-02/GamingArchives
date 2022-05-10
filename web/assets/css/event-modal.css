@@ -1,0 +1,143 @@
+.popup .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    display: none;
+}
+
+.popup .content {
+    -ms-transform: translate(-50%, -50%);
+    background: white;
+    margin: auto;
+    margin-top: 6rem;
+    border: 1px solid #888;
+    width: 40rem;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    height: auto;
+    z-index: 2;
+    padding: 2rem 3.5rem;
+    box-sizing: border-box;
+
+    /*justify-content: space-around;*/
+}
+
+.popup .content h2{
+    font-family: var(--font3);
+    font-size: 2rem;
+    line-height: 1.6;
+    color: var(--brown3);
+    /*    margin-bottom: 1rem;*/
+} 
+
+.popup .content .event-popup-date{
+    font-size: 1rem;
+    font-family: var(--font1);
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+
+.popup .content .event-popup-desc{
+    font-size: 1.2rem;
+    font-family: var(--font1);
+    margin-bottom: 1rem;
+}
+
+
+.popup .content .event-popup-img{
+    margin: auto;
+    margin-bottom: 1rem;
+    width: 450px;
+    height: 450px;
+}
+
+.popup .content .event-popup-drive{
+    text-align: center;
+    font-family: var(--font1);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+.popup .content .event-popup-drive a:link{
+    color: var(--brown3); 
+}
+
+.popup .content .input {
+    margin: auto;
+    width: 80%;
+    margin-bottom: 1rem;
+}
+
+.event-popup-form{
+    text-align: center;
+    width: 100%;
+}
+
+.popup .content .input input{
+    width: 100%;
+    border: none;
+    background: var(--grey2);
+    font-family: var(--font5);
+    font-size: 1.2rem;
+    padding: 5px 20px;
+    overflow: auto;
+}
+
+
+.popup .content .button{
+    align-items: center;
+    background: var(--brown5);
+    border: 1px solid var(--brown1);
+    border-radius: 30px;
+    color: white;
+    cursor: pointer;
+    font-family: var(--font2);
+    font-size: 1.7rem;
+    height: 3rem;
+    margin: auto;
+    padding: 0px 30px;
+}
+
+.popup .close-btn {
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 30px;
+    height: 30px;
+    background: #222;
+    color: #fff;
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 50%;
+}
+
+.popup.active .overlay {
+    display: block;
+}
+
+.popup.active .content {
+    transition: all 300ms ease-in-out;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+@media(max-width: 800px){
+    .popup .content{
+        -ms-transform: translate(-50%, 0);
+        margin-top: 5rem;
+        position: fixed;
+        transform: translate(-50%, 0) scale(0);
+        padding: 2rem 3.5rem;
+        width: 80%;
+    }
+}
