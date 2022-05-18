@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
+import Exceptions.AuthenticationExceptionPassword;
 import Exceptions.AuthenticationExceptionUsername;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -29,24 +30,28 @@ public class LoginVerification extends HttpServlet {
 
     String username;
     String password;
+    String stringKey;
+
     Connection conn;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-	username = config.getInitParameter("DBusername");
-	password = config.getInitParameter("DBpassword");
-	super.init(config);
-	try {
-	    Class.forName(config.getServletContext().getInitParameter("DBdriver"));
-	    String url = config.getInitParameter("DBurl");
-	    conn = DriverManager.getConnection(url, username, password);
-	} catch (SQLException sqle) {
-	    System.out.println("SQLException error occured - "
-		    + sqle.getMessage());
-	} catch (ClassNotFoundException nfe) {
-	    System.out.println("ClassNotFoundException error occured - "
-		    + nfe.getMessage());
-	}
+        username = config.getInitParameter("DBusername");
+        password = config.getInitParameter("DBpassword");
+        stringKey = config.getInitParameter("publicKey");
+
+        super.init(config);
+        try {
+            Class.forName(config.getServletContext().getInitParameter("DBdriver"));
+            String url = config.getInitParameter("DBurl");
+            conn = DriverManager.getConnection(url, username, password);
+        } catch (SQLException sqle) {
+            System.out.println("SQLException error occured - "
+                    + sqle.getMessage());
+        } catch (ClassNotFoundException nfe) {
+            System.out.println("ClassNotFoundException error occured - "
+                    + nfe.getMessage());
+        }
 
     }
 
@@ -60,50 +65,61 @@ public class LoginVerification extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-	    throws ServletException, IOException {
-	try {
-	    HttpSession httpsession = request.getSession();
+            throws ServletException, IOException {
+        byte[] key = new byte[16];
+        for (int i = 0; i < key.length; i++) {
+            key[i] = (byte) stringKey.charAt(i);
+        }
+        try {
+            HttpSession httpsession = request.getSession();
 
-	    String uname = request.getParameter("uname");
-	    String pass = request.getParameter("psw");
-	    String button = request.getParameter("button");
+            String uname = request.getParameter("uname");
+            String pass = request.getParameter("psw");
+            String button = request.getParameter("button");
+            String ePass = Security.encrypt(pass, key);
 
-	    String query = "SELECT * FROM APP.USERDB where USERNAME=?";
-	    PreparedStatement pstmt = conn.prepareStatement(query);
-	    pstmt.setString(1, uname);
-	    ResultSet records = pstmt.executeQuery();
-	    if (records.next() == false) {
-		query = "SELECT * FROM APP.VERIFIEDDB where USERNAME=?";
-		pstmt = conn.prepareStatement(query);
-		pstmt.setString(1, uname);
-		records = pstmt.executeQuery();
+            String query = "SELECT * FROM APP.USERDB where USERNAME=?";
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, uname);
+            ResultSet records = pstmt.executeQuery();
+            
+            
+            if (records.next() == false) {
+                query = "SELECT * FROM APP.VERIFIEDDB where USERNAME=?";
+                pstmt = conn.prepareStatement(query);
+                pstmt.setString(1, uname);
+                records = pstmt.executeQuery();
 
-		if (records.next() == false) {
-		    throw new AuthenticationExceptionUsername();
-		} else {
-		    String email = records.getString("EMAIL");
-		    httpsession.setAttribute("uname", uname);
-		    httpsession.setAttribute("psw", pass);
-		    httpsession.setAttribute("button", button);
-		    httpsession.setAttribute("email", email);
-		    httpsession.setAttribute("identifier", httpsession.getAttribute("identifier"));
-		    response.sendRedirect("UserVerification");
-		}
-	    } else {
-		if (!pass.equals(records.getString("PASSWORD"))) {
-		    response.sendRedirect("login/login.jsp");
-		}
-		String email = records.getString("EMAIL");
-		httpsession.setAttribute("uname", uname);
-		httpsession.setAttribute("psw", pass);
-		httpsession.setAttribute("button", button);
-		httpsession.setAttribute("email", email);
-		httpsession.setAttribute("identifier", httpsession.getAttribute("identifier"));
-		response.sendRedirect("UserVerification");
-	    }
-	} catch (SQLException e) {
-	    System.out.println(" exception: " + e);
-	}
+                if (records.next() == false) {
+                    throw new AuthenticationExceptionUsername();
+                } else {
+                    if (!ePass.equals(records.getString("PASSWORD"))) {
+                        throw new AuthenticationExceptionPassword();
+                    }
+
+                    String email = records.getString("EMAIL");
+                    httpsession.setAttribute("uname", uname);
+                    httpsession.setAttribute("psw", pass);
+                    httpsession.setAttribute("button", button);
+                    httpsession.setAttribute("email", email);
+                    httpsession.setAttribute("identifier", httpsession.getAttribute("identifier"));
+                    response.sendRedirect("UserVerification");
+                }
+            } else {
+                if (!ePass.equals(records.getString("PASSWORD"))) {
+                    throw new AuthenticationExceptionPassword();
+                }
+                String email = records.getString("EMAIL");
+                httpsession.setAttribute("uname", uname);
+                httpsession.setAttribute("psw", pass);
+                httpsession.setAttribute("button", button);
+                httpsession.setAttribute("email", email);
+                httpsession.setAttribute("identifier", httpsession.getAttribute("identifier"));
+                response.sendRedirect("UserVerification");
+            }
+        } catch (SQLException e) {
+            System.out.println(" exception: " + e);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -117,8 +133,8 @@ public class LoginVerification extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-	    throws ServletException, IOException {
-	processRequest(request, response);
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**
@@ -131,8 +147,8 @@ public class LoginVerification extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-	    throws ServletException, IOException {
-	processRequest(request, response);
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**
@@ -142,7 +158,7 @@ public class LoginVerification extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-	return "Short description";
+        return "Short description";
     }// </editor-fold>
 
 }

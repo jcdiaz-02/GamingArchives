@@ -41,7 +41,7 @@ public class SignUpServlet extends HttpServlet {
 
 	super.init(config);
 	try {
-	    Class.forName(config.getInitParameter("DBdriver"));
+	    Class.forName(config.getServletContext().getInitParameter("DBdriver"));
 	    String url = config.getInitParameter("DBurl");
 	    conn = DriverManager.getConnection(url, username, password);
 	} catch (SQLException sqle) {
@@ -111,7 +111,7 @@ public class SignUpServlet extends HttpServlet {
 	    }
 
 	} catch (Exception e) {
-	    response.sendRedirect("errPages/Error404.jsp");
+	    response.sendRedirect("errorPages/Error404.jsp");
 	}
 
     }

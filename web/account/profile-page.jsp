@@ -14,7 +14,7 @@
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
 <%
-    String driver = "org.apache.derby.jdbc.ClientDriver";
+    /*String driver = "org.apache.derby.jdbc.ClientDriver";
     String url = "jdbc:derby://localhost:1527/userDB";
     String username = "app";
     String password = "app";
@@ -27,7 +27,7 @@
     }
     Connection connection = null;
     Statement statement = null;
-    ResultSet resultSet = null;
+    ResultSet resultSet = null;*/
 %>
 <!DOCTYPE html>
 <html>
@@ -72,11 +72,11 @@
                 response.sendRedirect("../login.jsp");
             }
             try {
-                conn = DriverManager.getConnection(url, username, password);
+               /* conn = DriverManager.getConnection(url, username, password);
                 String query = "SELECT NAME FROM APP.VERIFIEDDB where USERNAME=?";
                 PreparedStatement pstmt = conn.prepareStatement(query);
                 pstmt.setString(1, uname);
-                ResultSet records = pstmt.executeQuery();
+                ResultSet records = pstmt.executeQuery();*/
 
         %>
         <!-- navbar -->
@@ -85,6 +85,11 @@
             <label for="check" class="checkbtn">
                 <i class="fas fa-bars"></i>
             </label>
+
+            <div class="logo-container" >
+                <a href="../subpage/authenticatedHome.jsp"><img class="nav-logo nav-logo2" src="../assets/logo.svg" ></a>
+            </div>
+            
             <div class="nav-content">
                 <div class="nav-title">
                     <img class="nav-logo" src="../assets/logo.svg" alt="UST-TGS logo">

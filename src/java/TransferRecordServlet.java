@@ -74,7 +74,7 @@ public class TransferRecordServlet extends HttpServlet {
 	    pst.setString(1, uname);
 	    ResultSet records = pst.executeQuery();
 	    records.next();
-
+            
 	    String pass = records.getString("PASSWORD");
 	    String email = records.getString("EMAIL");
 
@@ -83,13 +83,14 @@ public class TransferRecordServlet extends HttpServlet {
 	    pst.setString(1, uname);
 	    pst.executeUpdate();
 
-	    String query2 = "INSERT INTO APP.VERIFIEDDB(username,password,email,role,date)VALUES(?,?,?,?,?)";
+	    String query2 = "INSERT INTO APP.VERIFIEDDB(username,password,email,role,date,status)VALUES(?,?,?,?,?,?)";
 	    pst = conn.prepareStatement(query2);
 	    pst.setString(1, uname);
 	    pst.setString(2, pass);
 	    pst.setString(3, email);
 	    pst.setString(4, "member");
 	    pst.setString(5, date);
+            pst.setString(6, "student");
 	    pst.executeUpdate();
 	    if (ident.equals("all")) {
 		response.sendRedirect("account/records-all.jsp");
@@ -97,7 +98,7 @@ public class TransferRecordServlet extends HttpServlet {
 		response.sendRedirect("account/records-today.jsp");
 	    }
 	} catch (SQLException sqle) {
-	    response.sendRedirect("errPages/Error404.jsp");
+	    response.sendRedirect("errorPages/Error404.jsp");
 	}
     }
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

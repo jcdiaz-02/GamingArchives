@@ -86,7 +86,7 @@ public class LoginServlet extends HttpServlet {
 			    String dPass = records.getString("PASSWORD");
 			    String ePass = Security.decrypt(dPass, key);//encrypts the password the user has inputted and compares it to the encrypted password in DB
 
-//                    System.out.println("password is:" + dPass);
+//                 System.out.println("password is:" + dPass);
 			    if (!ePass.equals(pass)) {
 				//password is incorrect
                                 response.sendRedirect("login/login.jsp");

@@ -53,7 +53,7 @@
             <div class="nav-content">
                 <div class="nav-title">
                     <img class="nav-logo" src="../assets/logo.svg" alt="UST-TGS logo">
-                    <a class="" href="/"> 
+                    <a class="" href="../home.jsp"> 
                         <h1>UST Thomasian Gaming Society</h1>
                     </a>
                 </div>

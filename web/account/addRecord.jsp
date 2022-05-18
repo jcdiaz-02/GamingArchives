@@ -11,7 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="icon" href="assets/logo.svg">
+        <link rel="icon" href="../assets/logo.svg">
         <link rel="stylesheet" href="../assets/css/asset-sheet.css">
         <link rel="stylesheet" href="../assets/css/navbar-style.css">
         <link rel="stylesheet" href="../assets/css/records-personal-style.css">
@@ -49,13 +49,13 @@
             </label>
 
             <div class="logo-container" >
-                <a href="../home.jsp"><img class="nav-logo nav-logo2" src="../assets/logo.svg" ></a>
+                <a href="../subpage/authenticatedHome.jsp"><img class="nav-logo nav-logo2" src="../assets/logo.svg" ></a>
             </div>
             
             <div class="nav-content">
                 <div class="nav-title">
                     <img class="nav-logo" src="../assets/logo.svg" alt="UST-TGS logo">
-                    <a class="" href="/"> 
+                    <a class="" href="../home.jsp"> 
                         <h1>UST Thomasian Gaming Society</h1>
                     </a>
                 </div>
@@ -84,7 +84,7 @@
                     </div>
 
                     <div class='personal-records-info-container1'>
-                        <h1>Course: </h1>
+                        <label>Course: </label>
                         <select id="course" name="course">
                             <option value="Computer Science">Computer Science</option>
                             <option value="Information Technology">Information Technology</option>
@@ -111,8 +111,8 @@
                     </div>
 
                     <div class='personal-records-info-container1'>
-                        <label>Contact Number: </label>
-                        <input required type="number" placeholder="Enter Conatct Number(+63)" name="cnumber" minlength="10" maxlength="10"><br>
+                        <label>Contact Number (+63): </label>
+                        <input required type="number" placeholder="Enter Conatct Number" name="cnumber" minlength="10" maxlength="10"><br>
                     </div>
 
                     <div class='personal-records-info-container1'>

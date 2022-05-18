@@ -43,7 +43,9 @@
             </label>
 
             <div class="logo-container" >
-                <a href="../home.jsp"><img class="nav-logo nav-logo2" src="../assets/logo.svg" ></a>
+                <a href="../home.jsp">
+                    <img class="nav-logo nav-logo2" src="../assets/logo.svg" >
+                </a>
             </div>
 
             <div class="nav-content">
@@ -100,12 +102,12 @@
                         <input type='text' id='password' name='password' value="${password}" readonly> 
                     </div>
 
-		    <div class='personal-records-info-container1'> 
+                    <div class='personal-records-info-container1'> 
                         <label for=''>Status:</label>
 
                         <input type='text' id='status' name='status' value="${status}" readonly> 
                     </div>
-		    
+
                     <span class='verification-container'>
                         <span class="material-icons verification-icon" style="color:red;">
                             cancel

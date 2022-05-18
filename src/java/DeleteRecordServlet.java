@@ -31,91 +31,88 @@ public class DeleteRecordServlet extends HttpServlet {
     String password;
 
     Connection conn;
+    
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-	username = config.getInitParameter("DBusername");
-	password = config.getInitParameter("DBpassword");
+        username = config.getInitParameter("DBusername");
+        password = config.getInitParameter("DBpassword");
         super.init(config);
         try {
             Class.forName(config.getServletContext().getInitParameter("DBdriver"));
             String url = config.getInitParameter("DBurl");
-	    conn = DriverManager.getConnection(url, username, password);
+            conn = DriverManager.getConnection(url, username, password);
         } catch (SQLException sqle) {
-	    System.out.println("SQLException error occured - "
-		    + sqle.getMessage());
+            System.out.println("SQLException error occured - "
+                    + sqle.getMessage());
         } catch (ClassNotFoundException nfe) {
-	    System.out.println("ClassNotFoundException error occured - "
-		    + nfe.getMessage());
+            System.out.println("ClassNotFoundException error occured - "
+                    + nfe.getMessage());
         }
 
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-	    throws ServletException, IOException {
+            throws ServletException, IOException {
 
-	try {
-	    HttpSession session = request.getSession();
-	    String uname = request.getParameter("uname");
-	    String ident = (String) session.getAttribute("ident");
-	    String primaryuname = (String) session.getAttribute("uname");
+        try {
+            HttpSession session = request.getSession();
+            String uname = request.getParameter("uname");
+            String ident = (String) session.getAttribute("ident");
+            String primaryuname = (String) session.getAttribute("uname");
 
-	    if (uname.isEmpty()) {
-		if (ident.equals("all")) {
-		    response.sendRedirect("account/records-all.jsp");
-		} else if (ident.equals("today")) {
-		    response.sendRedirect("account/records-today.jsp");
-		} else if (ident.equals("arch")) {
-		    response.sendRedirect("account/records-archive.jsp");
-		}
-	    }
+            if (uname.equals(primaryuname)) {
+                response.sendRedirect("account/records-all.jsp");
+                System.out.println(primaryuname + " and " + uname);
+            }
 
+            if (uname.isEmpty()) {
+                if (ident.equals("all")) {
+                    response.sendRedirect("account/records-all.jsp");
+                } else if (ident.equals("today")) {
+                    response.sendRedirect("account/records-today.jsp");
+                } else if (ident.equals("arch")) {
+                    response.sendRedirect("account/records-archive.jsp");
+                }
+            }
 
-	    if (ident.equals("arch")) {
-		String query = "DELETE FROM APP.ARCHIVEDB where USERNAME = ?";
-		PreparedStatement pst = conn.prepareStatement(query);
+            if (ident.equals("arch")) {
+                String query = "DELETE FROM APP.ARCHIVEDB where USERNAME = ?";
+                PreparedStatement pst = conn.prepareStatement(query);
                 pst.setString(1, uname);
                 pst.executeUpdate();
 
-	    } else {
-		if (uname.equals(primaryuname)) {
-		    if (ident.equals("all")) {
-			response.sendRedirect("account/records-all.jsp");
-		    } else if (ident.equals("today")) {
-			response.sendRedirect("account/records-today.jsp");
-		    }
-		} else {
-		    String query = "DELETE FROM APP.USERDB where USERNAME = ?";
-		    PreparedStatement pst = conn.prepareStatement(query);
-		    pst.setString(1, uname);
-		    pst.executeUpdate();
+            } else {
+                if (uname.equals(primaryuname)) {
+                    if (ident.equals("all")) {
+                        response.sendRedirect("account/records-all.jsp");
+                    } else if (ident.equals("today")) {
+                        response.sendRedirect("account/records-today.jsp");
+                    }
+                } else {
+                    String query = "DELETE FROM APP.USERDB where USERNAME = ?";
+                    PreparedStatement pst = conn.prepareStatement(query);
+                    pst.setString(1, uname);
+                    pst.executeUpdate();
 
-		    query = "DELETE FROM APP.VERIFIEDDB where USERNAME = ?";
-		    pst = conn.prepareStatement(query);
-		    pst.setString(1, uname);
-		    pst.executeUpdate();
+                    query = "DELETE FROM APP.VERIFIEDDB where USERNAME = ?";
+                    pst = conn.prepareStatement(query);
+                    pst.setString(1, uname);
+                    pst.executeUpdate();
 
-		}
-	    }
+                }
+            }
 
-	    if (ident.equals("all")) {
-		response.sendRedirect("account/records-all.jsp");
-	    } else if (ident.equals("today")) {
-		response.sendRedirect("account/records-today.jsp");
-	    } else if (ident.equals("arch")) {
-		response.sendRedirect("account/records-archive.jsp");
-	    }
-
-	    if (ident.equals("all")) {
-		response.sendRedirect("account/records-all.jsp");
-	    } else if (ident.equals("today")) {
-		response.sendRedirect("account/records-today.jsp");
-	    } else if (ident.equals("arch")) {
-		response.sendRedirect("account/records-archive.jsp");
-	    }
-	} catch (SQLException sqle) {
-	    response.sendRedirect("errPages/Error404.jsp");
-	}
+            if (ident.equals("all")) {
+                response.sendRedirect("account/records-all.jsp");
+            } else if (ident.equals("today")) {
+                response.sendRedirect("account/records-today.jsp");
+            } else if (ident.equals("arch")) {
+                response.sendRedirect("account/records-archive.jsp");
+            }
+        } catch (SQLException sqle) {
+            response.sendRedirect("errPages/Error404.jsp");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

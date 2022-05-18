@@ -94,12 +94,12 @@
 
                     <div class="input">
                         <label for="edate"><b>Event Date:</b></label>
-                        <input type="date" placeholder="Enter Event Start Date" name="edate" required>
+                        <input type="date" placeholder="Enter Event Start Date" name="edate" id="start" required>
                     </div>
-                    
+
                     <div class="input">
                         <label for="dateEnd"><b>Event Date:</b></label>
-                        <input type="date" placeholder="Enter Event End Date" name="dateEnd" required>
+                        <input type="date" placeholder="Enter Event End Date" name="dateEnd" id="end" required>
                     </div>
 
                     <div class="input">
@@ -119,5 +119,20 @@
 
 
         </section>
+
+        <script language="JavaScript" type="text/javascript">
+            var start = document.getElementById('start');
+            var end = document.getElementById('end');
+
+            start.addEventListener('change', function () {
+                if (start.value)
+                    end.min = start.value;
+            }, false);
+            end.addEventLiseter('change', function () {
+                if (end.value)
+                    start.max = end.value;
+            }, false);
+
+        </script>
     </body>
 </html>

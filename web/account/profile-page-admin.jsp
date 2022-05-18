@@ -51,7 +51,7 @@
             </label>
 
             <div class="logo-container" >
-                <a href="home.jsp"><img class="nav-logo nav-logo2" src="../assets/logo.svg" ></a>
+                <a href="../subpage/authenticatedHome.jsp"><img class="nav-logo nav-logo2" src="../assets/logo.svg" ></a>
             </div>
 
             <div class="nav-content">

@@ -21,10 +21,10 @@
     String password = "zt.sw9\"D6`VjBnhh";
     Connection conn;
     try {
-	Class.forName(driver);
+        Class.forName(driver);
 
     } catch (ClassNotFoundException e) {
-	e.printStackTrace();
+        e.printStackTrace();
     }
     Connection connection = null;
     Statement statement = null;
@@ -63,16 +63,16 @@
     </head>
     <body>
         <%
-	    response.setHeader("Cache-Control", "no-cache");
-	    response.setHeader("Cache-Control", "no-store");
-	    response.setHeader("Pragma", "no-cache");
-	    response.setDateHeader("Expires", 0);
+            response.setHeader("Cache-Control", "no-cache");
+            response.setHeader("Cache-Control", "no-store");
+            response.setHeader("Pragma", "no-cache");
+            response.setDateHeader("Expires", 0);
 
-	    session.setAttribute("verify", session.getAttribute("verify"));
+            session.setAttribute("verify", session.getAttribute("verify"));
 
-	    if (session.getAttribute("username") == null) {
-		response.sendRedirect("login.jsp");
-	    }
+            if (session.getAttribute("username") == null) {
+                response.sendRedirect("login.jsp");
+            }
 
         %>
 
@@ -84,7 +84,7 @@
             </label>
 
             <div class="logo-container" >
-                <a href="home.jsp"><img class="nav-logo nav-logo2" src="../assets/logo.svg" ></a>
+                <a href="../home.jsp"><img class="nav-logo nav-logo2" src="../assets/logo.svg" ></a>
             </div>
 
             <div class="nav-content">
@@ -146,19 +146,19 @@
 
                         %>
                         <tr>
-                            <td>null</td>
-                            <td>null</td>
+                            <td>-</td>
+                            <td>-</td>
                             <td><%=records.getString("EMAIL")%></td>
                             <td><%=records.getString("USERNAME")%></td>
-                            <td>null</td>
-                            <td>null</td>
-                            <td>null</td>
-                            <td>null</td>
-                            <td>null</td>
-                            <td>null</td>
-                            <td>null</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
                             <td>UNVERIFIED</td>	 
-                            <td>student</td>
+                            <td>-</td>
 
                         </tr>
                         <%
@@ -171,19 +171,19 @@
 
                         %>
                         <tr>
-                            <td><%=records.getString("NAME")%></td>
-                            <td><%=records.getString("COURSE")%></td>
-                            <td><%=records.getString("EMAIL")%></td>
-                            <td><%=records.getString("USERNAME")%></td>
-                            <td><%=records.getString("AGE")%></td>
-                            <td><%=records.getString("BIRTHDAY")%></td>
-                            <td><%=records.getString("GENDER")%></td>
-                            <td><%=records.getString("STUDENTNUMBER")%></td>
-                            <td><%=records.getString("FAVORITEGAME")%></td>
-                            <td><%=records.getString("CONTACTNUMBER")%></td>
-                            <td><%=records.getString("ADDRESS")%></td>
+                            <td><%=((records.getString("NAME") == null) ? "-" : records.getString("NAME"))%></td>
+                            <td><%=((records.getString("COURSE") == null) ? "-" : records.getString("COURSE"))%></td>
+                            <td><%=((records.getString("EMAIL") == null) ? "-" : records.getString("EMAIL"))%></td>
+                            <td><%=((records.getString("USERNAME") == null) ? "-" : records.getString("USERNAME"))%></td>
+                            <td><%=((records.getString("AGE") == null) ? "-" : records.getString("AGE"))%></td>
+                            <td><%=((records.getString("BIRTHDAY") == null) ? "-" : records.getString("BIRTHDAY"))%></td>
+                            <td><%=((records.getString("GENDER") == null) ? "-" : records.getString("GENDER"))%></td>
+                            <td><%=((records.getString("STUDENTNUMBER") == null) ? "-" : records.getString("STUDENTNUMBER"))%></td>
+                            <td><%=((records.getString("FAVORITEGAME") == null) ? "-" : records.getString("FAVORITEGAME"))%></td>
+                            <td><%=((records.getString("CONTACTNUMBER") == null) ? "-" : records.getString("CONTACTNUMBER"))%></td>
+                            <td><%=((records.getString("ADDRESS") == null) ? "-" : records.getString("ADDRESS"))%></td>
                             <td>VERIFIED</td>	 
-                            <td><%=records.getString("STATUS")%></td>
+                            <td><%=((records.getString("STATUS") == null) ? "-" : records.getString("STATUS"))%></td>
 
                         </tr>
                         <%
@@ -197,26 +197,26 @@
 
                 <div class="all-records-buttons"> 
                     <span class='all-records-buttons1'>
-                        <form onclick="openForm()" >
+                        <form class="form" onclick="openForm()" >
                             <button class="button"  onclick="openForm()">UPDATE</button>
                         </form>
-                        <form onclick ="deleteOpenForm()">
+                        <form class="form" onclick ="deleteOpenForm()">
                             <button class="button" onclick="">DELETE</button>
                         </form>
-                        <form onclick="verifyOpenForm()" >
+                        <form class="form" onclick="verifyOpenForm()" >
                             <button class="button"  onclick="verifyOpenForm()">VERIFY </button>
                         </form>
                     </span>
                     <span class='all-records-buttons2'>
-                        <form  action="profile-page-admin.jsp">
+                        <form class="form" action="profile-page-admin.jsp">
                             <button type="submit" value="GO BACK"  class="button"/>GO BACK</button>
                         </form>
 
-                        <form onclick="pdfOpenForm()">
+                        <form class="form" onclick="pdfOpenForm()">
                             <button onclick="pdfOpenForm()" class="button">GENERATE PDF</button>
                         </form>
 
-                        <form  action="../LogoutServlet">
+                        <form class="form"  action="../LogoutServlet">
                             <button type="submit" value="LOGOUT"  class="button"/>LOGOUT</button>
                         </form>
                     </span>
@@ -230,7 +230,7 @@
             <form action="../DeleteRecordServlet" class="modal-content">
                 <h3 class="modal-header">Delete Record</h3>
                 <%
-		    session.setAttribute("ident", "all");
+                    session.setAttribute("ident", "all");
                 %>
                 <label class="modal-msg" for="uname"><b>Username of record being deleted</b></label>
                 <input class="modal-input" type="text" placeholder="Enter Username" name="uname" required>
@@ -246,7 +246,7 @@
             <form action="../TransferRecordServlet" class="modal-content">
                 <h3 class="modal-header">Verify Record</h3>
                 <%
-		    session.setAttribute("ident", "all");
+                    session.setAttribute("ident", "all");
                 %>
                 <label class="modal-msg" for="uname"><b>Username of record being verified</b></label>
                 <input class="modal-input"  type="text" placeholder="Enter Username" name="uname" required>

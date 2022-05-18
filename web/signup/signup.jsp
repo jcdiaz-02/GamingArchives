@@ -3,8 +3,6 @@
     Created on : 02 28, 22, 12:46:41 AM
     Author     : Admin
 --%>
-
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page session="true" %>
 
@@ -64,41 +62,41 @@
                 </div>
             </div>
         </div>
-	<%
-	    response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
-	    session.setAttribute("identifier", "signup");
-	%>
+        <%
+            response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
+            session.setAttribute("identifier", "signup");
+        %>
         <section class="signup-section">
-            <form class="signup-container" method="post" action="../UserVerification">
+            <form autocomplete="off" class="signup-container" method="post" action="../UserVerification">
                 <h2>Sign Up</h2>
                 <h3>Already registered? <a href="../login/login.jsp">Login</a></h3>
 
                 <div class="input-container">
 
 
-		    <h3>${sessionScope.notif}</h3>
+                    <h3 style="color:red;">${sessionScope.notif}</h3>
 
 
                     <label for="email"><b>Email</b></label>    
                     <div class="input">
-                        <input type="text" pattern="[a-z0-9._%+-]+@ust.edu.ph$" placeholder="Enter Email" name="email" required>
+                        <input type="text" title="Please use a valid UST email" pattern="[a-z0-9._%+-]+@ust.edu.ph$" placeholder="Enter Email" name="email" required>
                     </div>
 
-                    <label for="uname"><b>Username</b></label>
+                    <label for="uname"><b>Username (minimum of 5 characters)</b></label>
                     <div class="input">
-                        <input type="text" placeholder="Enter Username (minimum of 5 characters)" name="uname" minlength="5" required >
+                        <input type="text" placeholder="Enter Username" name="uname" minlength="5" required >
 
                     </div>
 
-                    <label for="psw"><b>Password</b></label>
+                    <label for="psw"><b>Password (minimum of 8 characters)</b></label>
                     <div class="input">
-                        <input type="password" placeholder="Enter Password (minimum of 8 characters)" name="psw" minlength="8" required>
+                        <input type="password" title="Password must be minimum of 8 characters"  placeholder="Enter Password" name="psw" id="psw" minlength="8" required>
                         <span onclick="toggleVisibility()"  class="material-icons-outlined psw-show">visibility_off</span>
                     </div>
 
                     <div class="input">
-                        <input type="password" placeholder="Confirm Password (minimum of 8 characters)" name="cpsw" minlength="8" required>
-                        <span onclick="toggleVisibility()1" class="material-icons-outlined psw-show">&#xe8f5;</span>
+                        <input type="password" title="Password must be minimum of 8 characters" placeholder="Confirm Password" name="cpsw" id="cpsw" minlength="8" required>
+                        <span onclick="toggleVisibility1()" class="material-icons-outlined psw-show">&#xe8f5;</span>
                     </div>
 
                 </div>
@@ -111,9 +109,9 @@
                     </label>
                 </div>
                 <button type="submit" name="button" value="signup">SIGN UP</button>
-		<%
-		    session.removeAttribute("notif");
-		%>
+                <%
+                    session.removeAttribute("notif");
+                %>
             </form>
         </section>       
     </body>
@@ -121,12 +119,13 @@
     <script>
         function toggleVisibility() {
             var psw = document.getElementById("psw");
-            if (psw.type === "password") {
+            if (psw.type === 'password') {
                 psw.type = "text";
             } else {
                 psw.type = "password";
             }
         }
+        ;
 
         function toggleVisibility1() {
             var cpsw = document.getElementById("cpsw");
@@ -135,6 +134,6 @@
             } else {
                 cpsw.type = "password";
             }
-        }
+        };
     </script>
 </html>

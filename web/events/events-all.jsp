@@ -97,7 +97,7 @@
                         <tr>
                             <th class="event-id">Event ID</th>
                             <th>Event Name</th>
-                            <th>Event Description</th>
+<!--                            <th>Event Description</th>-->
                             <th>Event Date</th>
                             <th>drive URL</th>
                         </tr>
@@ -110,9 +110,9 @@
                             <td>
                                 <%= recordList.get(i).getName()%>
                             </td>
-                            <td>
+<!--                            <td>
                                 <%= recordList.get(i).getDescription()%>
-                            </td>
+                            </td>-->
                             <td>
                                 <%= recordList.get(i).getDate()%>-<%= recordList.get(i).getEndDate()%>
                             </td>

@@ -33,7 +33,7 @@
                 response.sendRedirect("subpage/authenticatedHome.jsp");
             }
         %>
-       <!-- navbar -->
+        <!-- navbar -->
         <div class="bar"> 
             <input type="checkbox" id="check">
             <label for="check" class="checkbtn">
@@ -43,7 +43,7 @@
             <div class="logo-container" >
                 <a href="home.jsp"><img class="nav-logo nav-logo2" src="assets/logo.svg" ></a>
             </div>
-            
+
             <div class="nav-content">
                 <div class="nav-title">
                     <img class="nav-logo" src="assets/logo.svg" alt="UST-TGS logo">

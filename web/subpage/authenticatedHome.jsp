@@ -49,7 +49,7 @@
             <div class="nav-content">
                 <div class="nav-title">
                     <img class="nav-logo" src="../assets/logo.svg" alt="UST-TGS logo">
-                    <a class="" href="/"> 
+                    <a class="" href="../home.jsp"> 
                         <h1>UST Thomasian Gaming Society</h1>
                     </a>
                 </div>
@@ -87,7 +87,7 @@
             <div class="home-sub">
 
                 <h5>UNIVERSITY OF SANTO TOMAS' GAMING ORGANIZATION</h5>
-                <form class="lg-form" method="POST" action="subpage/authenticatedContacts.jsp">
+                <form class="lg-form" method="POST" action="authenticatedAbout.jsp">
                     <button class="button">LEARN MORE</button>
                 </form>
             </div>

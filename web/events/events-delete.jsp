@@ -89,27 +89,16 @@
                 <div class="table-container">
                     <table class="events-table js-sort-table">
                         <tr>
+                            <th>Select</th>
                             <th class="event-id">Event ID</th>
                             <th>Event Name</th> 
-                            <th>Event Description</th>
+<!--                            <th>Event Description</th>-->
                             <th>Event Date</th>
-                            <th>Select</th>
+
                         </tr>
                         <% for (int i = 0; i < recordList.size(); i++) {%>
                         <tr>
                             <% try {%>
-                            <td>
-                                <%= recordList.get(i).getId()%>
-                            </td>
-                            <td>
-                                <%= recordList.get(i).getName()%>
-                            </td>
-                            <td>
-                                <%= recordList.get(i).getDescription()%>
-                            </td>
-                            <td>
-                                <%= recordList.get(i).getDate()%>-<%= recordList.get(i).getEndDate()%>
-                            </td>
                             <td>
                                 <form id="myform" action="../DeleteEvent"  method="get">
                                     <label class="checkbox-container">
@@ -118,6 +107,19 @@
                                     </label>
                                 </form>
                             </td>
+                            <td>
+                                <%= recordList.get(i).getId()%>
+                            </td>
+                            <td>
+                                <%= recordList.get(i).getName()%>
+                            </td>
+<!--                            <td>
+                                <//%= recordList.get(i).getDescription()%>
+                            </td>-->
+                            <td>
+                                <%= recordList.get(i).getDate()%>-<%= recordList.get(i).getEndDate()%>
+                            </td>
+
                         </tr>
                         <%  } catch (Exception e) {
                                 }
@@ -130,6 +132,7 @@
                     <form  action="../subpage/events.jsp">
                         <button type="submit" value="GO BACK"  class="button"/>GO BACK</button>
                     </form>
+
                     <button id="modalBtn"  class="button"/>DELETE</button>
 
 

@@ -69,7 +69,7 @@
             </label>
 
             <div class="logo-container" >
-                <a href="home.jsp"><img class="nav-logo nav-logo2" src="../assets/logo.svg" ></a>
+                <a href="../subpage/authenticatedHome.jsp"><img class="nav-logo nav-logo2" src="../assets/logo.svg" ></a>
             </div>
 
             <div class="nav-content">
@@ -173,25 +173,25 @@
 
                 <div class="all-records-buttons"> 
                     <span class='all-records-buttons1'>
-                        <form onclick ="deleteOpenForm()">
+                        <form class="form" onclick ="deleteOpenForm()">
                             <button class="button" onclick="">DELETE</button>
                         </form>    
 
-                        <form onclick="pdfOpenForm()">
+                        <form class="form" onclick="pdfOpenForm()">
                             <button onclick="pdfOpenForm()" class="button">GENERATE PDF</button>
                         </form>
 
-                        <form>
-                            <button onclick="document.getElementById('myform').submit()"  class="button" >RESTORE</button>
-                        </form>
+                        <div onclick="archiveSubmit()" class="form">
+                            <button  class="button" >RESTORE</button>
+                        </div>
 
                     </span>
 
                     <span class='all-records-buttons2'>
-                        <form  action="records-all.jsp">
+                        <form class="form" action="records-all.jsp">
                             <input type="submit" value="GO BACK"  class="button"/>
                         </form>
-                        <form  action="../LogoutServlet">
+                        <form class="form"  action="../LogoutServlet">
                             <input type="submit" value="LOGOUT"  class="button"/>
                         </form>
 
@@ -235,6 +235,18 @@
             </div>
         </section> 
 
+        <section id="archiveForm" class="modal-section">
+            <div class="modal-content">
+                <%
+                    session.setAttribute("ident", "all");
+                %>
+                <h3 class="modal-header">ERROR!</h3>
+                <p class="modal-msg">There are no users selected to RESTORE.</p>   
+                <form class="modal-buttoncon" method="POST" action ="">
+                    <button class="modal-button" type="button" class="cancel" onclick="closeArchiveSubmit()">Cancel</button>
+                </form>
+            </div>
+        </section> 
 
 
         <!--        <section id="modalSection" class="modal-section">
@@ -288,6 +300,29 @@
                 event.preventDefault();
                 document.getElementById("pdfForm").style.display = "none";
 
+            }
+            ;
+
+
+            function archiveSubmit() {
+                checkboxes = document.querySelectorAll('input[name="selectedRows"]:checked');
+                myform = document.getElementById('myform');
+                archiveForm = document.getElementById("archiveForm");
+
+//                for (let i = 0; i < checkboxes.length; i++) {
+                if (checkboxes.length === 0) {
+                    archiveForm.style.display = "block";
+
+                } else {
+                    myform.submit();
+                }
+//                }
+            }
+            ;
+
+            function closeArchiveSubmit() {
+                event.preventDefault();
+                document.getElementById("archiveForm").style.display = "none";
             }
             ;
 

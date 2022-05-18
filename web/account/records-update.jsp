@@ -14,11 +14,17 @@
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
+
+
+<%@page import="java.time.*"%>
+<%@page import="java.time.format.DateTimeFormatter"%>
+<%@page import="java.util.*"%>
+
 <%
-    String driver = "org.apache.derby.jdbc.ClientDriver";
-    String url = "jdbc:derby://localhost:1527/userDB";
-    String username = "app";
-    String password = "app";
+    String driver = "com.mysql.cj.jdbc.Driver";
+    String url = "jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/app?useSSL=false&serverTimezone=UTC";
+    String username = "gamingarchivesAdmin";
+    String password = "zt.sw9\"D6`VjBnhh";
 
     Connection conn;
     try {
@@ -126,24 +132,24 @@
                     <div class="personal-records-info-container1">
                         ${sessionScope.notif}
                         <label>Email: </label>
-                        <input required type="email" placeholder="<%=records.getString("EMAIL")%>" name="email">
+                        <input required type="email" value="<%=records.getString("EMAIL")%>" name="email">
                         <%session.setAttribute("iemail", records.getString("EMAIL"));%>
                     </div>
 
                     <div class="personal-records-info-container1">
                         <label>Name: </label>
-                        <input required type="text" placeholder="<%=records.getString("NAME")%>" name="myname">
+                        <input required type="text" value="<%=records.getString("NAME")%>" name="myname">
                     </div>
 
                     <div class="personal-records-info-container1">
                         <label>Username: </label>
-                        <input required type="text" placeholder="<%=records.getString("USERNAME")%> (minimum of 5 characters)" name="uname" minlength="5">
+                        <input required type="text" value="<%=records.getString("USERNAME")%>" name="uname" minlength="5">
                     </div>
 
-                    <div class="personal-records-info-container1">
-                        <label>Password: </label>
-                        <input required  type="text" placeholder="Password (minimum of 8 characters)" name="pass" minlength="8">
-                    </div>
+                    <!--                    <div class="personal-records-info-container1">
+                                            <label>Password: </label>
+                                            <input required  type="text" placeholder="Password" name="pass" minlength="8">
+                                        </div>-->
 
                     <div class='personal-records-info-container1'>
                         <label>Course: </label>
@@ -156,7 +162,15 @@
 
                     <div class="personal-records-info-container1">
                         <label>Birthday(Age reflects given birth date): </label>
-                        <input required type="date" placeholder="<%=records.getString("BIRTHDAY")%>" name="birthday">
+                        <%
+                            LocalDate birthday= null;
+                            DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                            System.out.println(records.getString("BIRTHDAY"));
+                            if(records.getString("BIRTHDAY") != null){
+                                birthday= LocalDate.parse(records.getString("BIRTHDAY"), f);
+                            }
+                        %>
+                        <input required type="date" value="<%=birthday%>" name="birthday">
                     </div>
 
                     <div class='personal-records-info-container1'>
@@ -168,30 +182,22 @@
                     </div>
 
                     <div class="personal-records-info-container1">
-                        <label>Student Number: </label>
-                        <input required type="number" placeholder="<%=records.getString("STUDENTNUMBER")%>" name="snumber" minlength="10" maxlength="10">
-                    </div>
-
-                    <div class="personal-records-info-container1">
-                        <label for=''>Birthday</label><input type="date" placeholder="<%=records.getString("BIRTHDAY")%>" name="birthday">
-                    </div>
-
-                    <div class="personal-records-info-container1">
-                        <h1>Favorite Game: </h1><input required type="text" placeholder="<%=records.getString("FAVORITEGAME")%>" name="favgame">
+                        <label>Favorite Game: </label><input required type="text" value="<%=records.getString("FAVORITEGAME")%>" name="favgame">
                     </div>
 
                     <div class="personal-records-info-container1">
                         <label for=''>Student Number:</label>
-                        <input type="number" placeholder="<%=records.getString("STUDENTNUMBER")%>" name="snumber">
+                        <input type="number" value="<%=records.getString("STUDENTNUMBER")%>" name="snumber">
                     </div>
 
                     <div class="personal-records-info-container1">
-                        <label>Contact Number: </label><input required type="number" placeholder="<%=records.getString("CONTACTNUMBER")%>(+63)" name="cnumber" minlength="10" maxlength="10">
+                        <label>Contact Number (+63): </label>
+                        <input required type="number" value="<%=records.getString("CONTACTNUMBER")%>" name="cnumber" minlength="10" maxlength="10">
                     </div>
 
                     <div class="personal-records-info-container1">
                         <label>Address: </label>
-                        <input required type="text" placeholder="<%=records.getString("ADDRESS")%>" name="homeaddress">
+                        <input required type="text" value="<%=records.getString("ADDRESS")%>" name="homeaddress">
                     </div>
 
                     <div class='personal-records-info-container1'>

@@ -73,7 +73,7 @@ public class UpdateRecordServlet extends HttpServlet {
 	    String butt = request.getParameter("recbutton");
 	    String uname = request.getParameter("uname");
 	    String name = request.getParameter("myname");
-	    String pass = request.getParameter("pass");
+//	    String pass = request.getParameter("pass");
 	    String email = request.getParameter("email");
 	    String birthday = request.getParameter("birthday");
 	    String course = request.getParameter("course");
@@ -85,7 +85,7 @@ public class UpdateRecordServlet extends HttpServlet {
 	    String role = request.getParameter("userrole");
 	    String status = request.getParameter("status");
 
-	    String ePass = Security.encrypt(pass, key);//encrypts the password the user has inputted and compares it to the encrypted password in DB
+	    //String ePass = Security.encrypt(pass, key);//encrypts the password the user has inputted and compares it to the encrypted password in DB
 
 	    out.print(birthday);
 	    int yr = Integer.parseInt(birthday.substring(0, 4));
@@ -123,8 +123,9 @@ public class UpdateRecordServlet extends HttpServlet {
 		    pst.setString(1, email);
 		    records = pst.executeQuery();
 		    if (records.next() == false || iemail.equals(records.getString("EMAIL"))) {
+                        //PASSWORD=?
 			String query = "UPDATE APP.VERIFIEDDB set NAME=?, COURSE=?, AGE=?, BIRTHDAY=?, GENDER=?, STUDENTNUMBER=?, "
-				+ "FAVORITEGAME=?, CONTACTNUMBER=?, ADDRESS=?, ROLE=?, EMAIL=?, USERNAME=?, PASSWORD=?, DATE=?, STATUS=? where USERNAME =?";
+				+ "FAVORITEGAME=?, CONTACTNUMBER=?, ADDRESS=?, ROLE=?, EMAIL=?, USERNAME=?, DATE=?, STATUS=? where USERNAME =?";
 			pst = conn.prepareStatement(query);
 
 			pst.setString(1, name);
@@ -139,10 +140,10 @@ public class UpdateRecordServlet extends HttpServlet {
 			pst.setString(10, role);
 			pst.setString(11, email);
 			pst.setString(12, uname);
-			pst.setString(13, ePass);
-			pst.setString(14, date);
-			pst.setString(15, status);
-			pst.setString(16, u);
+			//pst.setString(13, ePass);
+			pst.setString(13, date);
+			pst.setString(14, status);
+			pst.setString(15, u);
 
 			pst.executeUpdate();
 			response.sendRedirect("account/records-all.jsp");
@@ -168,8 +169,10 @@ public class UpdateRecordServlet extends HttpServlet {
 		    pst.setString(1, email);
 		    records = pst.executeQuery();
 		    if (records.next() == false) {
+                        
+                        //NO PASSWORD
 			String query = "INSERT INTO APP.VERIFIEDDB(NAME, COURSE, AGE, BIRTHDAY, GENDER, STUDENTNUMBER, "
-				+ "FAVORITEGAME, CONTACTNUMBER, ADDRESS, ROLE, EMAIL, USERNAME, PASSWORD, DATE, STATUS)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ "FAVORITEGAME, CONTACTNUMBER, ADDRESS, ROLE, EMAIL, USERNAME, DATE, STATUS)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			pst = conn.prepareStatement(query);
 			pst.setString(1, name);
 			pst.setString(2, course);
@@ -183,9 +186,9 @@ public class UpdateRecordServlet extends HttpServlet {
 			pst.setString(10, role);
 			pst.setString(11, email);
 			pst.setString(12, uname);
-			pst.setString(13, ePass);
-			pst.setString(14, date);
-			pst.setString(15, status);
+			//pst.setString(13, ePass);
+			pst.setString(13, date);
+			pst.setString(14, status);
 			pst.executeUpdate();
 			response.sendRedirect("account/addRecordAdmin.jsp");
 		    } else {
@@ -201,7 +204,8 @@ public class UpdateRecordServlet extends HttpServlet {
 	    }
 
 	} catch (SQLException sqle) {
-	    response.sendRedirect("error404.jsp");
+            sqle.printStackTrace();
+//	    response.sendRedirect("error404.jsp");
 	} catch (IOException ex) {
 	    ex.printStackTrace();
 	}

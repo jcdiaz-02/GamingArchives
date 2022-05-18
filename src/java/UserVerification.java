@@ -52,6 +52,7 @@ public class UserVerification extends HttpServlet {
                 if (!cpsw.equals(psw)) {
                     httpsession.setAttribute("error", "1");
                     response.sendRedirect("signup/signup.jsp");
+                    return;
                 }
             }
         }
@@ -96,11 +97,12 @@ public class UserVerification extends HttpServlet {
 
             httpsession.setAttribute("code", randomNumber);
             httpsession.setAttribute("uname", uname);
-            httpsession.setAttribute("pass", psw);
+            httpsession.setAttribute("psw", psw);
             httpsession.setAttribute("email", email);
             httpsession.setAttribute("button", button);
             response.sendRedirect(
                     "verificationPage.jsp");
+            return;
         } catch (MessagingException mex) {
             System.out.println("send failed, exception: " + mex);
         }

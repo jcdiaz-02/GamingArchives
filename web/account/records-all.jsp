@@ -15,15 +15,15 @@
 <%@page import="java.sql.Connection"%>
 <%
     String driver = "com.mysql.cj.jdbc.Driver";
-    String url = "jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/gamingarchives?useSSL=false&serverTimezone=UTC";
+    String url = "jdbc:mysql://gamingarchives.mysql.database.azure.com:3306/app?useSSL=false&serverTimezone=UTC";
     String username = "gamingarchivesAdmin";
     String password = "zt.sw9\"D6`VjBnhh";
     Connection conn;
     try {
-	Class.forName(driver);
+        Class.forName(driver);
 
     } catch (ClassNotFoundException e) {
-	e.printStackTrace();
+        e.printStackTrace();
     }
     Connection connection = null;
     Statement statement = null;
@@ -69,7 +69,7 @@
             </label>
 
             <div class="logo-container" >
-                <a href="home.jsp"><img class="nav-logo nav-logo2" src="../assets/logo.svg" ></a>
+                <a href="../subpage/authenticatedHome.jsp"><img class="nav-logo nav-logo2" src="../assets/logo.svg" ></a>
             </div>
 
             <div class="nav-content">
@@ -93,14 +93,14 @@
             </div>
         </div>
         <%
-	    response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
-	    String uname = (String) session.getAttribute("username");
-	    //session.setAttribute("verify", session.getAttribute("verify"));
+            response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
+            String uname = (String) session.getAttribute("username");
+            //session.setAttribute("verify", session.getAttribute("verify"));
 
-	    String role = (String) session.getAttribute("role");
-	    if (uname == null) {
-		response.sendRedirect("home.jsp");
-	    }
+            String role = (String) session.getAttribute("role");
+            if (uname == null) {
+                response.sendRedirect("home.jsp");
+            }
         %>
         <section class="all-records-section">
             <div class="all-records-container">
@@ -137,19 +137,19 @@
                         %>
                         <tr>
                             <td> </td>
-                            <td>null</td>
-                            <td>null</td>
+                            <td>-</td>
+                            <td>-</td>
                             <td><%=records.getString("EMAIL")%></td>
                             <td><%=records.getString("USERNAME")%></td>
-                            <td>null</td>
-                            <td>null</td>
-                            <td>null</td>
-                            <td>null</td>
-                            <td>null</td>
-                            <td>null</td>
-                            <td>null</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
                             <td>UNVERIFIED</td>	
-                            <td>student</td>
+                            <td>Student</td>
                         </tr>
                         <%
                             }
@@ -157,7 +157,6 @@
                             pstmt = conn.prepareStatement(query1);
                             records = pstmt.executeQuery();
                             while (records.next()) {
-
                         %>
                         <tr>
                             <td>
@@ -168,19 +167,19 @@
                                     </label>
                                 </form>
                             </td>
-                            <td><%=records.getString("NAME")%></td>
-                            <td><%=records.getString("COURSE")%></td>
-                            <td><%=records.getString("EMAIL")%></td>
-                            <td><%=records.getString("USERNAME")%></td>
-                            <td><%=records.getString("AGE")%></td>
-                            <td><%=records.getString("BIRTHDAY")%></td>
-                            <td><%=records.getString("GENDER")%></td>
-                            <td><%=records.getString("STUDENTNUMBER")%></td>
-                            <td><%=records.getString("FAVORITEGAME")%></td>
-                            <td><%=records.getString("CONTACTNUMBER")%></td>
-                            <td><%=records.getString("ADDRESS")%></td>
+                            <td><%=((records.getString("NAME") == null) ? "-" : records.getString("NAME"))%></td>
+                            <td><%=((records.getString("COURSE") == null) ? "-" : records.getString("COURSE"))%></td>
+                            <td><%=((records.getString("EMAIL") == null) ? "-" : records.getString("EMAIL"))%></td>
+                            <td><%=((records.getString("USERNAME") == null) ? "-" : records.getString("USERNAME"))%></td>
+                            <td><%=((records.getString("AGE") == null) ? "-" : records.getString("AGE"))%></td>
+                            <td><%=((records.getString("BIRTHDAY") == null) ? "-" : records.getString("BIRTHDAY"))%></td>
+                            <td><%=((records.getString("GENDER") == null) ? "-" : records.getString("GENDER"))%></td>
+                            <td><%=((records.getString("STUDENTNUMBER") == null) ? "-" : records.getString("STUDENTNUMBER"))%></td>
+                            <td><%=((records.getString("FAVORITEGAME") == null) ? "-" : records.getString("FAVORITEGAME"))%></td>
+                            <td><%=((records.getString("CONTACTNUMBER") == null) ? "-" : records.getString("CONTACTNUMBER"))%></td>
+                            <td><%=((records.getString("ADDRESS") == null) ? "-" : records.getString("ADDRESS"))%></td>
                             <td>VERIFIED</td>	 
-                            <td><%=records.getString("STATUS")%></td>
+                            <td><%=((records.getString("STATUS") == null) ? "-" : records.getString("STATUS"))%></td>
 
 
                         </tr>
@@ -195,36 +194,36 @@
 
                 <div class="all-records-buttons"> 
                     <span class='all-records-buttons1'>
-                        <form action="" onclick ="deleteOpenForm()">
+                        <form class="form" action="" onclick ="deleteOpenForm()">
                             <button class="button" onclick="">DELETE</button>
                         </form>
-                        <form onclick="openForm()" >
+                        <form class="form" onclick="openForm()" >
                             <button class="button"  onclick="openForm()">UPDATE</button>
                         </form>
 
-                        <form> 
-                            <button onclick="document.getElementById('myform').submit()"  class="button"/>ARCHIVE</button>
-                        </form>
+                        <div onclick="archiveSubmit()"  class="form"> 
+                            <button class="button"/>ARCHIVE</button>
+                        </div>
 
-                        <form onclick="verifyOpenForm()" >
+                        <form class="form" onclick="verifyOpenForm()" >
                             <button class="button"  onclick="verifyOpenForm()">VERIFY </button>
                         </form>
 
                     </span>
                     <span class='all-records-buttons2'>
-                        <form  action="profile-page-admin.jsp">
+                        <form  class="form" action="profile-page-admin.jsp">
                             <button type="submit" value="GO BACK"  class="button"/>GO BACK</button>
                         </form>
 
-                        <form onclick="pdfOpenForm()">
+                        <form class="form" onclick="pdfOpenForm()">
                             <button onclick="pdfOpenForm()" class="button">GENERATE PDF</button>
                         </form>
 
-                        <form  action="records-archive.jsp">
+                        <form class="form" action="records-archive.jsp">
                             <button type="submit" value="ARCHIVED RECORDS"  class="button"/>ARCHIVED RECORDS</button>
                         </form>
 
-                        <form  action="../LogoutServlet">
+                        <form class="form" action="../LogoutServlet">
                             <button type="submit" value="LOGOUT"  class="button"/>LOGOUT</button>
                         </form>
                     </span>
@@ -239,14 +238,14 @@
             <form action="../DeleteRecordServlet" class="modal-content">
                 <h3 class="modal-header">Delete Record</h3>
                 <%
-		    session.setAttribute("ident", "all");
+                    session.setAttribute("ident", "all");
                 %>
                 <label class="modal-msg" for="uname"><b>Username of record being deleted</b></label>
-                <input class="modal-input" type="text" placeholder="Enter Username" name="uname" required>
-
+                <input class="modal-input" type="text" placeholder="Enter Username" name="uname" id="uname-d" required>
+                <p id="values" style="display:none;font-family:var(--font1);color:red;">CANNOT DELETE OWN RECORD!</p>
                 <span class="modal-buttoncon"> 
-                    <button  class="close modal-button" type="button" class="cancel" onclick="deleteCloseForm()">Cancel</button>
-                    <button  class="modal-button"  type="submit" class="submit">Submit</button>
+                    <button  class="close modal-button"  type="button" class="cancel" onclick="deleteCloseForm()">Cancel</button>
+                    <button  class="modal-button"  id="dButton" type="submit" class="submit">Submit</button>
                 </span>
             </form>
         </div>
@@ -255,12 +254,12 @@
             <form action="../TransferRecordServlet" class="modal-content">
                 <h3 class="modal-header">Verify Record</h3>
                 <%
-		    session.setAttribute("ident", "all");
+                    session.setAttribute("ident", "all");
                 %>
                 <label class="modal-msg" for="uname"><b>Username of record being verified</b></label>
                 <input class="modal-input"  type="text" placeholder="Enter Username" name="uname" required>
                 <span class="modal-buttoncon"> 
-                    <button class="close modal-button" type="button" class="cancel" onclick="verifyCloseForm()">Cancel</button>
+                    <button class="close modal-button" type="button" class="cancel" id="uname-v" onclick="verifyCloseForm()">Cancel</button>
                     <button class="modal-button" type="submit" class="submit">Submit</button>
 
                 </span>
@@ -294,6 +293,19 @@
             </div>
         </section> 
 
+        <section id="archiveForm" class="modal-section">
+            <div class="modal-content">
+                <%
+                    session.setAttribute("ident", "all");
+                %>
+                <h3 class="modal-header">ERROR!</h3>
+                <p class="modal-msg">There are no users selected to ARCHIVE.</p>   
+                <form class="modal-buttoncon" method="POST" action ="">
+                    <button class="modal-button" type="button" class="cancel" onclick="closeArchiveSubmit()">Cancel</button>
+                </form>
+            </div>
+        </section> 
+
 
         <!--        <section id="modalSection" class="modal-section">
                     <div class="modal-content">
@@ -306,14 +318,30 @@
                     </div>
                 </section>-->
         <script>
-	    function openForm() {
-		event.preventDefault();
-		document.getElementById("myForm").style.display = "block";
-	    }
-	    ;
-	    function closeForm() {
-		event.preventDefault();
-		document.getElementById("myForm").style.display = "none";
+
+            const inputD = document.querySelector('input[id="uname-d"]');
+            const inputV = document.querySelector('input[id="uname-v"]');
+            const log = document.getElementById('values');
+            const dButton = document.getElementById('dButton');
+
+            inputD.addEventListener('input', avoidDelete);
+
+            function avoidDelete(e) {
+                if (inputD.value === "<%=uname%>") {
+                    log.style.display = "block";
+                    dButton.disabled = true;
+                }
+            }
+
+
+            function openForm() {
+                event.preventDefault();
+                document.getElementById("myForm").style.display = "block";
+            }
+            ;
+            function closeForm() {
+                event.preventDefault();
+                document.getElementById("myForm").style.display = "none";
 
             }
             ;
@@ -335,6 +363,12 @@
             function deleteCloseForm() {
                 event.preventDefault();
                 document.getElementById("deleteForm").style.display = "none";
+                log.style.display = "none";
+                inputD.value= null;
+                
+                if(dButton.disabled === true){
+                    dButton.disabled = false;
+                }
             }
             ;
             function pdfOpenForm() {
@@ -349,7 +383,27 @@
             }
             ;
 
+            function archiveSubmit() {
+                checkboxes = document.querySelectorAll('input[name="selectedRows"]:checked');
+                myform = document.getElementById('myform');
+                archiveForm = document.getElementById("archiveForm");
 
+//                for (let i = 0; i < checkboxes.length; i++) {
+                if (checkboxes.length === 0) {
+                    archiveForm.style.display = "block";
+
+                } else {
+                    myform.submit();
+                }
+//                }
+            }
+            ;
+
+            function closeArchiveSubmit() {
+                event.preventDefault();
+                document.getElementById("archiveForm").style.display = "none";
+            }
+            ;
 //
 //            window.onclick = function (event) {
 //                if (event.target === document.getElementById("myForm")) {

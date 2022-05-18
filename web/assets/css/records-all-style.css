@@ -127,7 +127,7 @@ and open the template in the editor.
 }
 
 
-.all-records-section .all-records-container .all-records-buttons form {
+.all-records-section .all-records-container .all-records-buttons .form {
     width: 20%;
 }
 
@@ -324,7 +324,7 @@ and open the template in the editor.
         flex-direction: column-reverse;
     }
 
-    .all-records-section .all-records-container .all-records-buttons form {
+    .all-records-section .all-records-container .all-records-buttons .form {
         width: 80%;
     }
 

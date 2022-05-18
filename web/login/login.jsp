@@ -66,7 +66,7 @@
             session.setAttribute("identifier", "login");
         %>
         <section class="login-section">
-            <form class="login-container" method="post" action="../LoginVerification">
+            <form autocomplete="off" class="login-container" method="POST" action="../LoginVerification">
                 <h2>Welcome Back</h2>
                 <h3>Don't have an account yet? <a href="../signup/signup.jsp">Sign up</a></h3>
 
@@ -94,14 +94,14 @@
     </body>
 
     <script>
-                            function toggleVisibility() {
-                                var psw = document.getElementById("psw");
-                                if (psw.type === "password") {
-                                    psw.type = "text";
-                                } else {
-                                    psw.type = "password";
-                                }
-                            }
+        function toggleVisibility() {
+            var psw = document.getElementById("psw");
+            if (psw.type === "password") {
+                psw.type = "text";
+            } else {
+                psw.type = "password";
+            }
+        }
     </script>
 </html>
 
